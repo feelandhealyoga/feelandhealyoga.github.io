@@ -1,0 +1,58 @@
+# Feel & Heal Yoga
+
+## About
+
+Feel & Heal Yoga is a premier yoga studio located in Kharghar, Navi Mumbai, offering transformative yoga classes for all levels. Whether you're a complete beginner or an experienced practitioner, our carefully crafted sessions nurture your body, calm your mind, and uplift your spirit.
+
+## Services
+
+- **Yoga Classes**: Perfect for beginners, weight loss, stress reduction, pain relief, emotional balance
+- **Online Yoga Classes**: Convenient virtual sessions from home
+- **Offline/In-Studio Sessions**: Hands-on guidance at our Club House location in Adhiraj Garden, Sector 5, Kharghar
+- **Free Trial Class**: Experience the difference from Day 1
+
+## Instructor
+
+Priyanka Sahu, a certified yoga instructor specializing in Hatha & Vinyasa Flow, with advanced training in alignment and breathwork. She focuses on healing and holistic wellness in a safe, positive environment.
+
+## Location
+
+Club House, Adhiraj Garden, Sector 5, Kharghar, Navi Mumbai - 410210, India
+
+## Contact
+
+- Phone: +91 99201 55875
+- Email: [Contact form on website]
+- WhatsApp: Direct booking for free trial
+- Instagram: @feelandyogaaa
+- LinkedIn: Yogini Priyanka
+
+## Benefits
+
+- Ideal for beginners and busy individuals
+- Helps with weight loss, inch loss, and building stamina
+- Reduces stress, anxiety, overthinking, and fatigue
+- Relieves back pain, stiffness, and body heaviness
+- Brings discipline, calmness, and emotional balance
+- Safe, positive, and family-friendly environment
+
+## What You'll Experience
+
+- Flow Sessions: Seamless transitions between poses
+- Breathing Techniques: Master pranayama for energy and calm
+- Proper Alignment: Correct form to prevent injury
+- Mindfulness Practice: Develop awareness and presence
+- Supportive Environment: Welcoming community
+- Personal Growth: Progress at your own pace
+
+## How to Get Started
+
+1. Visit our website to learn more about our classes
+2. Book a free trial class via WhatsApp or our contact form
+3. Choose between online or offline sessions
+4. Begin your yoga journey with expert guidance
+
+## Keywords
+
+yoga, yoga classes, Kharghar, Navi Mumbai, beginner yoga, online yoga classes, yoga studio, meditation, wellness, flexibility, strength, inner peace</content>
+<parameter name="filePath">public/llms.txt
