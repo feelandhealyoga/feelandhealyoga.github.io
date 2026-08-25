@@ -9,33 +9,61 @@ const LINKEDIN   = "https://www.linkedin.com/company/feel-heal-yoga/";
 
 const openTrialYogi = () => window.dispatchEvent(new CustomEvent("open-yogi-trial"));
 
-const galleryPhotos = [
-  // Named studio photos (confirmed exist)
-  "/assets/hero-yoga.jpg",
-  "/assets/studio.jpg",
-  "/assets/meditation.jpg",
-  "/assets/nature-zen.jpg",
-  "/assets/instructor-priyanka.jpg",
-  "/assets/instructor-meditation.jpg",
-  "/assets/hero-yoga1.jpg",
-  // WhatsApp yoga class photos (URL-encoded)
-  "/assets/images/WhatsApp%20Image%202026-01-22%20at%2022.08.35.jpeg",
-  "/assets/images/WhatsApp%20Image%202026-01-22%20at%2022.08.38.jpeg",
-  "/assets/images/WhatsApp%20Image%202026-01-22%20at%2022.43.59.jpeg",
-  "/assets/images/WhatsApp%20Image%202026-01-22%20at%2022.44.21.jpeg",
-  "/assets/images/WhatsApp%20Image%202026-01-22%20at%2022.46.02.jpeg",
-  "/assets/images/WhatsApp%20Image%202026-01-22%20at%2022.46.02%20%281%29.jpeg",
-  "/assets/images/WhatsApp%20Image%202026-01-22%20at%2022.46.02%20%282%29.jpeg",
-  "/assets/images/WhatsApp%20Image%202026-01-22%20at%2022.46.02%20%283%29.jpeg",
-  "/assets/images/WhatsApp%20Image%202026-01-22%20at%2022.46.02%20%284%29.jpeg",
-  "/assets/images/WhatsApp%20Image%202026-01-22%20at%2022.46.02%20%285%29.jpeg",
-  "/assets/images/WhatsApp%20Image%202026-01-22%20at%2022.46.03.jpeg",
-  "/assets/images/WhatsApp%20Image%202026-01-22%20at%2022.46.03%20%281%29.jpeg",
-  "/assets/images/WhatsApp%20Image%202026-01-22%20at%2022.46.03%20%282%29.jpeg",
-  "/assets/images/WhatsApp%20Image%202026-01-22%20at%2022.46.03%20%283%29.jpeg",
-  "/assets/images/WhatsApp%20Image%202026-01-22%20at%2022.46.03%20%284%29.jpeg",
-  "/assets/images/WhatsApp%20Image%202026-01-22%20at%2022.46.03%20%285%29.jpeg",
-  "/assets/images/WhatsApp%20Image%202026-01-22%20at%2022.46.03%20%286%29.jpeg",
+const soloImages = [
+  "WhatsApp Image 2026-01-22 at 22.43.59.jpeg",
+  "WhatsApp Image 2026-01-22 at 22.44.21.jpeg",
+];
+
+const groupImages = [
+  "WhatsApp Image 2026-01-22 at 22.46.02.jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.02 (1).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.02 (2).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.02 (3).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.02 (4).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.02 (5).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.02 (6).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.02 (7).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.03.jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.03 (1).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.03 (2).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.03 (3).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.03 (4).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.03 (5).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.03 (6).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.03 (7).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.03 (8).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.03 (9).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.03 (10).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.03 (11).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.03 (12).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.03 (13).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.03 (14).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.03 (15).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.03 (16).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.03 (17).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.03 (18).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.03 (19).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.03 (20).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.03 (21).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.03 (22).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.03 (23).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.03 (24).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.03 (25).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.03 (26).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.03 (27).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.03 (28).jpeg",
+  "WhatsApp Image 2026-01-22 at 22.46.03 (29).jpeg",
+];
+
+const allGalleryImages = [...soloImages, ...groupImages];
+
+const youtubeIds = [
+  "29PJnLn8xxU",
+  "9f8V18vKlbY",
+  "NY0STA5U1RQ",
+  "jgO2-SUE6Fw",
+  "rXBB5g1aixo",
+  "FoSUPzcJyB4",
 ];
 
 const SCHEDULE = [
@@ -46,7 +74,7 @@ const SCHEDULE = [
 
 const REVIEWS = [
   { name:"Priya M.",  stars:5, text:"Best yoga studio in Navi Mumbai! The personal attention is incredible." },
-  { name:"Rahul S.",  stars:5, text:"Lost 8kg in 3 months. The instructor truly cares about every student."  },
+  { name:"Rahul S.",  stars:5, text:"Lost 8kg in 3 months. The teacher truly cares about every student."  },
   { name:"Sneha K.",  stars:5, text:"The Women's batch is so warm and welcoming. I love every session!"      },
 ];
 
@@ -522,43 +550,153 @@ const AboutTab = () => (
 );
 
 /* ══════════════════════════════════════
-   GALLERY TAB
+   GALLERY TAB — matches desktop GallerySection exactly
    ══════════════════════════════════════ */
-const GalleryTab = () => (
-  <div style={{ minHeight:"calc(100dvh - 58px)" }}>
-    <div style={{ ...ghStyle(), display:"flex", justifyContent:"space-between", alignItems:"flex-end" }}>
-      <div>
-        <h1 style={{ color:"white", fontFamily:"'Playfair Display',serif", fontSize:22, fontWeight:800, margin:"0 0 2px" }}>Gallery</h1>
-        <p style={{ color:"rgba(255,255,255,.65)", fontSize:12, margin:0 }}>Our Studio & Classes · Kharghar</p>
+const GalleryTab = () => {
+  const [activeTab, setActiveTab] = useState<"all"|"solo"|"group">("all");
+  const [showAll, setShowAll] = useState(false);
+  const [lightboxIdx, setLightboxIdx] = useState<number|null>(null);
+
+  const filtered =
+    activeTab === "solo"  ? soloImages
+    : activeTab === "group" ? groupImages
+    : allGalleryImages;
+
+  const visible = showAll ? filtered : filtered.slice(0, 8);
+
+  const openLightbox = (i: number) => { setLightboxIdx(i); setShowAll(true); };
+  const closeLightbox = () => setLightboxIdx(null);
+  const prev = () => setLightboxIdx(i => i !== null ? (i - 1 + filtered.length) % filtered.length : null);
+  const next = () => setLightboxIdx(i => i !== null ? (i + 1) % filtered.length : null);
+
+  return (
+    <div style={{ minHeight:"calc(100dvh - 58px)" }}>
+      {/* Header */}
+      <div style={{ ...ghStyle(), display:"flex", justifyContent:"space-between", alignItems:"flex-end" }}>
+        <div>
+          <h1 style={{ color:"white", fontFamily:"'Playfair Display',serif", fontSize:22, fontWeight:800, margin:"0 0 2px" }}>Gallery</h1>
+          <p style={{ color:"rgba(255,255,255,.65)", fontSize:12, margin:0 }}>Our Studio &amp; Classes · Kharghar</p>
+        </div>
       </div>
-      {/* hamburger now in shell */}
-    </div>
-    <div style={{ padding:"16px 16px 96px", background:cream }}>
-      <p style={sectionLabel("📸 Photos")}>📸 Photos</p>
-      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8, marginBottom:24 }}>
-        {galleryPhotos.map((src,i) => (
-          <div key={i} style={{ aspectRatio:"1", borderRadius:14, overflow:"hidden", background:"hsl(145,22%,84%)" }}>
-            <img src={src} alt={`Photo ${i+1}`} loading="eager" decoding="async"
-              style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }}
-              onError={e=>{ (e.target as HTMLImageElement).src="/assets/hero-yoga.jpg"; }} />
-          </div>
-        ))}
-      </div>
-      <p style={sectionLabel("✨ Student Stories")}>✨ Student Stories</p>
-      <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
-        {REVIEWS.map((r,i) => (
-          <div key={i} style={{ background:"white", borderRadius:14, padding:14, boxShadow:"0 1px 8px rgba(0,0,0,.05)" }}>
-            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:6 }}>
-              <span style={{ fontWeight:700, fontSize:13, color:"hsl(220,18%,16%)" }}>{r.name}</span>
-              <span style={{ fontSize:13, color:"hsl(38,90%,52%)" }}>{"★".repeat(r.stars)}</span>
+
+      <div style={{ padding:"16px 16px 96px", background:cream }}>
+
+        {/* ── Photos label ── */}
+        <p style={sectionLabel("📸 Photos")}>📸 Photos</p>
+
+        {/* Tab filter — same as desktop */}
+        <div style={{ display:"flex", gap:8, marginBottom:14, flexWrap:"wrap" }}>
+          {(["all","solo","group"] as const).map(tab => (
+            <button key={tab} onClick={() => { setActiveTab(tab); setShowAll(false); }}
+              style={{
+                padding:"7px 16px", borderRadius:999, border: activeTab===tab ? "2px solid hsl(145,42%,42%)" : "1.5px solid hsl(145,22%,80%)",
+                background: activeTab===tab ? "hsl(145,42%,42%)" : "white",
+                color: activeTab===tab ? "white" : "hsl(145,38%,30%)",
+                fontWeight:600, fontSize:11, cursor:"pointer", transition:"all 0.18s",
+                fontFamily:"'Inter',sans-serif",
+              } as any}>
+              {tab==="all" ? `All (${allGalleryImages.length})` : tab==="solo" ? `🧘 Individual (${soloImages.length})` : `👥 Group (${groupImages.length})`}
+            </button>
+          ))}
+        </div>
+
+        {/* Photo grid — 2 col on mobile */}
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8, marginBottom:14 }}>
+          {visible.map((img, i) => (
+            <div key={i} onClick={() => openLightbox(i)}
+              style={{ aspectRatio:"1", borderRadius:12, overflow:"hidden", background:"hsl(145,22%,84%)", cursor:"pointer" }}>
+              <img
+                src={`/assets/images/${encodeURIComponent(img)}`}
+                alt={`Yoga class — Photo ${i+1}`}
+                loading="lazy"
+                style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }}
+                onError={e => { (e.target as HTMLImageElement).src="/assets/hero-yoga.jpg"; }}
+              />
             </div>
-            <p style={{ fontSize:12, color:"hsl(220,10%,50%)", lineHeight:1.6, margin:0 }}>"{r.text}"</p>
-          </div>
-        ))}
+          ))}
+        </div>
+
+        {/* Show More button */}
+        {!showAll && filtered.length > 8 && (
+          <button onClick={() => openLightbox(0)}
+            style={{
+              display:"flex", alignItems:"center", justifyContent:"center", gap:6,
+              width:"100%", padding:"12px 0", borderRadius:12, marginBottom:20,
+              background:green, color:"white", fontWeight:700, fontSize:13,
+              border:"none", cursor:"pointer", fontFamily:"'Inter',sans-serif",
+            } as any}>
+            Show All {filtered.length} Photos →
+          </button>
+        )}
+
+        {/* ── YouTube Videos — same 6 as desktop ── */}
+        <p style={sectionLabel("🎬 Yoga Videos")}>🎬 Yoga Videos</p>
+        <div style={{ display:"flex", flexDirection:"column", gap:12, marginBottom:24 }}>
+          {youtubeIds.map((id, i) => (
+            <div key={i} style={{ borderRadius:14, overflow:"hidden", boxShadow:"0 2px 12px rgba(0,0,0,.10)", background:"#000" }}>
+              <iframe
+                src={`https://www.youtube.com/embed/${id}?autoplay=0&mute=1&rel=0&modestbranding=1`}
+                title={`Yoga video ${i+1}`}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                loading="lazy"
+                style={{ width:"100%", aspectRatio:"16/9", border:"none", display:"block" }}
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* ── Student Stories ── */}
+        <p style={sectionLabel("✨ Student Stories")}>✨ Student Stories</p>
+        <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
+          {REVIEWS.map((r,i) => (
+            <div key={i} style={{ background:"white", borderRadius:14, padding:14, boxShadow:"0 1px 8px rgba(0,0,0,.05)" }}>
+              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:6 }}>
+                <span style={{ fontWeight:700, fontSize:13, color:"hsl(220,18%,16%)" }}>{r.name}</span>
+                <span style={{ fontSize:13, color:"hsl(38,90%,52%)" }}>{"★".repeat(r.stars)}</span>
+              </div>
+              <p style={{ fontSize:12, color:"hsl(220,10%,50%)", lineHeight:1.6, margin:0 }}>&#34;{r.text}&#34;</p>
+            </div>
+          ))}
+        </div>
       </div>
+
+      {/* Lightbox */}
+      {lightboxIdx !== null && (
+        <div onClick={closeLightbox}
+          style={{ position:"fixed", inset:0, zIndex:10000, background:"rgba(0,0,0,0.92)", display:"flex", alignItems:"center", justifyContent:"center" }}>
+          {/* Close */}
+          <button onClick={closeLightbox}
+            style={{ position:"absolute", top:16, right:16, background:"rgba(255,255,255,0.15)", border:"none", borderRadius:"50%", width:40, height:40, color:"white", fontSize:20, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" } as any}>
+            ✕
+          </button>
+          {/* Prev */}
+          <button onClick={e => { e.stopPropagation(); prev(); }}
+            style={{ position:"absolute", left:12, top:"50%", transform:"translateY(-50%)", background:"rgba(255,255,255,0.15)", border:"none", borderRadius:"50%", width:40, height:40, color:"white", fontSize:22, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" } as any}>
+            ‹
+          </button>
+          {/* Image */}
+          <img
+            src={`/assets/images/${encodeURIComponent(filtered[lightboxIdx])}`}
+            alt={`Photo ${lightboxIdx+1}`}
+            onClick={e => e.stopPropagation()}
+            style={{ maxWidth:"92vw", maxHeight:"88vh", objectFit:"contain", borderRadius:8 }}
+            onError={e => { (e.target as HTMLImageElement).src="/assets/hero-yoga.jpg"; }}
+          />
+          {/* Next */}
+          <button onClick={e => { e.stopPropagation(); next(); }}
+            style={{ position:"absolute", right:12, top:"50%", transform:"translateY(-50%)", background:"rgba(255,255,255,0.15)", border:"none", borderRadius:"50%", width:40, height:40, color:"white", fontSize:22, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" } as any}>
+            ›
+          </button>
+          {/* Counter */}
+          <div style={{ position:"absolute", bottom:20, left:"50%", transform:"translateX(-50%)", background:"rgba(0,0,0,0.55)", color:"white", padding:"5px 16px", borderRadius:99, fontSize:12, fontFamily:"'Inter',sans-serif" }}>
+            {lightboxIdx+1} / {filtered.length}
+          </div>
+        </div>
+      )}
     </div>
-  </div>
-);
+  );
+};
 
 /* ── Shared small hamburger for tab headers ── */
 const MenuBtn = ({ onMenu }: { onMenu:()=>void }) => (
