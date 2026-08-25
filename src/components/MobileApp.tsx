@@ -11,9 +11,6 @@ const openTrialYogi = () => window.dispatchEvent(new CustomEvent("open-yogi-tria
 
 const soloImages = [
   "WhatsApp Image 2026-01-22 at 22.08.35.jpeg",
-  "WhatsApp Image 2026-01-22 at 22.08.38.jpeg",
-  "WhatsApp Image 2026-01-22 at 22.43.59.jpeg",
-  "WhatsApp Image 2026-01-22 at 22.44.21.jpeg",
 ];
 
 const groupImages = [
