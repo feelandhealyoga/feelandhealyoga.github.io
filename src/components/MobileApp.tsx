@@ -10,6 +10,8 @@ const LINKEDIN   = "https://www.linkedin.com/company/feel-heal-yoga/";
 const openTrialYogi = () => window.dispatchEvent(new CustomEvent("open-yogi-trial"));
 
 const soloImages = [
+  "WhatsApp Image 2026-01-22 at 22.08.35.jpeg",
+  "WhatsApp Image 2026-01-22 at 22.08.38.jpeg",
   "WhatsApp Image 2026-01-22 at 22.43.59.jpeg",
   "WhatsApp Image 2026-01-22 at 22.44.21.jpeg",
 ];
