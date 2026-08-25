@@ -173,12 +173,11 @@ export const MobileApp = () => {
 
       {/* ─── Full-screen shell, NO overflow anywhere ─── */}
       <div
-        className="fixed inset-0 md:hidden"
+        className="fixed inset-0 md:hidden flex flex-col"
         style={{
           zIndex:60,
           fontFamily:"'Inter',sans-serif",
           overflow:"hidden",
-          display:"flex", flexDirection:"column",
         }}
       >
         {/* ─── Content area: exact fit, zero scroll ─── */}
