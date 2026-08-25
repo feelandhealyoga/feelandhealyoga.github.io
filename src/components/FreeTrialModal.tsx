@@ -10,7 +10,6 @@ interface FreeTrialModalProps {
 const BATCHES = [
   "Morning — 6:00–7:00 AM (Online / Offline)",
   "Morning — 8:00–9:00 AM (Online / Offline)",
-  "Women's Only — 10:00–11:00 AM (Online / Offline) 👩",
   "Evening — 7:30–8:30 PM (Online / Offline)",
 ];
 

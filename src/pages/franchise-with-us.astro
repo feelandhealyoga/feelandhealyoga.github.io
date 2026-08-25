@@ -1,0 +1,176 @@
+---
+import { Navigation } from "../components/Navigation";
+import { FranchiseForm } from "../components/FranchiseForm";
+import { SocietyFAQ } from "../components/SocietyFAQ";
+import { franchiseFAQs } from "../components/SocietyFAQ";
+import YogiChatbot from "../components/yogichatbot.jsx";
+import "../index.css";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="canonical" href="https://feelandhealyoga.com/franchise-with-us" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Franchise With Us | Feel & Heal Yoga — Partner Opportunity</title>
+    <meta name="description" content="Partner with Feel & Heal Yoga and open your own certified yoga studio. Join our growing wellness brand and bring yoga to your community." />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://feelandhealyoga.com/franchise-with-us" />
+    <meta property="og:title" content="Franchise With Feel & Heal Yoga | Partner Opportunity" />
+    <meta property="og:description" content="Open your own certified yoga studio with Feel & Heal Yoga's franchise model. Proven brand, expert training, and full support." />
+    <meta property="og:image" content="https://feelandhealyoga.com/assets/hero-yoga.jpg" />
+
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; font-family: 'Inter', sans-serif; background: hsl(42,30%,97%); }
+      #site-nav-header {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        z-index: 9999 !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Hidden Netlify form for crawler detection -->
+    <form name="franchise-enquiry" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="enquiryId" />
+      <input type="text" name="fullName" />
+      <input type="tel" name="mobile" />
+      <input type="email" name="email" />
+      <input type="text" name="city" />
+      <input type="text" name="state" />
+      <input type="text" name="preferredLocation" />
+      <input type="text" name="occupation" />
+      <input type="text" name="businessExp" />
+      <input type="text" name="investmentRange" />
+      <input type="text" name="space" />
+      <input type="text" name="timeline" />
+      <textarea name="whyJoin"></textarea>
+      <textarea name="notes"></textarea>
+      <input type="text" name="consent" />
+      <input name="bot-field" />
+    </form>
+
+    <Navigation client:load />
+
+    <!-- ═══════════════ HERO ═══════════════ -->
+    <section style="position:relative; background:linear-gradient(135deg,hsl(38,35%,22%) 0%,hsl(38,30%,32%) 50%,hsl(175,28%,22%) 100%); min-height:80vh; display:flex; align-items:center; justify-content:center; overflow:hidden; padding:100px 24px 80px; text-align:center;">
+      <div style="position:absolute; top:-60px; right:-60px; width:300px; height:300px; background:radial-gradient(circle,hsla(175,50%,50%,.10),transparent 70%); border-radius:50%;"></div>
+      <div style="position:absolute; bottom:-40px; left:-40px; width:240px; height:240px; background:radial-gradient(circle,hsla(38,60%,60%,.12),transparent 70%); border-radius:50%;"></div>
+
+      <div style="max-width:780px; margin:0 auto; position:relative; z-index:1;">
+        <span style="display:inline-block; padding:6px 16px; border-radius:99px; background:rgba(255,255,255,0.10); border:1px solid rgba(255,255,255,0.20); font-size:11px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,0.80); margin-bottom:24px;">
+          Franchise Opportunity
+        </span>
+        <h1 style="font-family:'Playfair Display',serif; font-size:clamp(2rem,5.5vw,3.4rem); font-weight:700; color:white; line-height:1.2; margin:0 0 20px; text-shadow:0 2px 24px rgba(0,0,0,0.3);">
+          Partner With Feel &amp; Heal Yoga
+        </h1>
+        <p style="font-size:clamp(1rem,2.5vw,1.15rem); color:rgba(255,255,255,0.80); line-height:1.7; margin:0 auto 36px; max-width:580px;">
+          Build a meaningful wellness business in your city with the support of a trusted, certified yoga brand. Be part of a growing community-first movement.
+        </p>
+        <a href="#franchise-form" style="display:inline-flex; align-items:center; gap:8px; padding:13px 28px; border-radius:99px; background:linear-gradient(135deg,hsl(38,90%,52%),hsl(30,86%,46%)); color:hsl(20,20%,12%); font-weight:800; font-size:0.95rem; text-decoration:none; box-shadow:0 6px 24px hsla(38,90%,52%,.40);">
+          🌿 Apply for Franchise
+        </a>
+      </div>
+    </section>
+
+    <!-- ═══════════════ WHY FRANCHISE ═══════════════ -->
+    <section style="padding:72px 24px; background:white;">
+      <div style="max-width:920px; margin:0 auto; text-align:center;">
+        <span style="font-size:11px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:hsl(175,32%,38%); display:block; margin-bottom:12px;">Why Partner With Us</span>
+        <h2 style="font-family:'Playfair Display',serif; font-size:clamp(1.7rem,4vw,2.4rem); font-weight:700; color:hsl(220,20%,18%); margin:0 0 40px;">Build a Wellness Business You're Proud Of</h2>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:16px;">
+          {[
+            ["🎓","Certified Training","Comprehensive yoga teacher and business operations training provided."],
+            ["🌿","Proven Brand","Established brand with 5-star Google rating and growing community trust."],
+            ["📚","Full Curriculum","Ready-to-use class plans, programs, and wellness content."],
+            ["📣","Marketing Support","Brand assets, digital content, and marketing strategy support."],
+            ["🤝","Ongoing Mentorship","Continuous guidance from our founding team for your success."],
+            ["📍","Territorial Rights","Defined territory with exclusivity to protect your franchise market."],
+          ].map(([icon, title, desc]) => (
+            <div style="background:hsl(42,30%,97%); border-radius:16px; padding:22px 18px; border:1px solid hsl(38,22%,91%); text-align:left;">
+              <span style="font-size:26px; display:block; margin-bottom:10px;">{icon}</span>
+              <p style="font-size:14px; font-weight:700; color:hsl(220,20%,18%); margin:0 0 6px;">{title}</p>
+              <p style="font-size:12.5px; color:hsl(220,12%,52%); margin:0; line-height:1.6;">{desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ PROCESS ═══════════════ -->
+    <section style="padding:72px 24px; background:hsl(42,30%,97%);">
+      <div style="max-width:800px; margin:0 auto; text-align:center;">
+        <h2 style="font-family:'Playfair Display',serif; font-size:clamp(1.7rem,4vw,2.4rem); font-weight:700; color:hsl(220,20%,18%); margin:0 0 48px;">Franchise Application Process</h2>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:24px;">
+          {[
+            ["01","Apply","Submit the application form with your details and vision."],
+            ["02","Review","Our team reviews your application in 5–7 working days."],
+            ["03","Discussion","A detailed call to understand goals, location, and investment."],
+            ["04","Onboarding","Training, setup, and launch support for a smooth start."],
+          ].map(([num, title, desc]) => (
+            <div>
+              <div style="width:52px; height:52px; border-radius:50%; background:white; border:2px solid hsl(38,78%,52%); display:flex; align-items:center; justify-content:center; margin:0 auto 14px; font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; color:hsl(38,78%,46%);">{num}</div>
+              <h3 style="font-size:14px; font-weight:700; color:hsl(220,20%,18%); margin:0 0 6px;">{title}</h3>
+              <p style="font-size:12.5px; color:hsl(220,12%,52%); line-height:1.6; margin:0;">{desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ FORM ═══════════════ -->
+    <section id="franchise-form" style="padding:72px 24px; background:white;">
+      <div style="max-width:780px; margin:0 auto;">
+        <div style="text-align:center; margin-bottom:40px;">
+          <span style="font-size:11px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:hsl(175,32%,38%); display:block; margin-bottom:12px;">Apply Now</span>
+          <h2 style="font-family:'Playfair Display',serif; font-size:clamp(1.7rem,4vw,2.4rem); font-weight:700; color:hsl(220,20%,18%); margin:0 0 14px;">Franchise Application Form</h2>
+          <p style="font-size:0.97rem; color:hsl(220,12%,52%); max-width:500px; margin:0 auto; line-height:1.7;">
+            Share your details and we'll get back to you with everything you need to know about our franchise program.
+          </p>
+        </div>
+        <FranchiseForm client:load />
+      </div>
+    </section>
+
+    <!-- ═══════════════ FAQ ═══════════════ -->
+    <section style="padding:72px 24px; background:hsl(42,30%,97%);">
+      <div style="max-width:720px; margin:0 auto;">
+        <div style="text-align:center; margin-bottom:40px;">
+          <h2 style="font-family:'Playfair Display',serif; font-size:clamp(1.7rem,4vw,2.4rem); font-weight:700; color:hsl(220,20%,18%); margin:0;">Franchise FAQs</h2>
+        </div>
+        <SocietyFAQ items={franchiseFAQs} client:load />
+      </div>
+    </section>
+
+    <!-- ═══════════════ BOTTOM CTA ═══════════════ -->
+    <section style="padding:60px 24px; background:hsl(175,28%,20%); text-align:center;">
+      <h2 style="font-family:'Playfair Display',serif; font-size:clamp(1.4rem,3.5vw,2rem); font-weight:700; color:white; margin:0 0 12px;">Have Questions Before Applying?</h2>
+      <p style="color:rgba(255,255,255,0.72); margin:0 auto 28px; max-width:460px; line-height:1.7; font-size:0.95rem;">Our team is happy to have an informal conversation before you submit the form.</p>
+      <a href="https://wa.me/919920155875?text=Namaste!%20I%27m%20interested%20in%20the%20Feel%20%26%20Heal%20Yoga%20franchise%20opportunity.%20Please%20share%20more%20details."
+        target="_blank" rel="noopener noreferrer"
+        style="display:inline-flex; align-items:center; gap:8px; padding:13px 28px; border-radius:99px; background:linear-gradient(135deg,hsl(38,90%,52%),hsl(30,86%,46%)); color:hsl(20,20%,12%); font-weight:800; font-size:0.95rem; text-decoration:none; box-shadow:0 6px 24px hsla(38,90%,52%,.40);">
+        💬 WhatsApp Us About Franchise
+      </a>
+    </section>
+
+    <div style="text-align:center; padding:20px; background:white; border-top:1px solid hsl(38,22%,91%);">
+      <a href="/" style="font-size:13px; color:hsl(175,32%,38%); font-weight:600; text-decoration:none;">← Back to Feel &amp; Heal Yoga Home</a>
+      &nbsp;·&nbsp;
+      <a href="/bring-yoga-to-your-society" style="font-size:13px; color:hsl(175,32%,38%); font-weight:600; text-decoration:none;">Bring Yoga to Your Society →</a>
+    </div>
+
+    <YogiChatbot client:load />
+  </body>
+</html>

@@ -125,7 +125,7 @@ export const HeroSection = () => {
 
         {/* Body copy */}
         <p
-          className="animate-fade-in-up font-light leading-relaxed whitespace-nowrap mx-auto"
+          className="animate-fade-in-up font-light leading-relaxed mx-auto text-center"
           style={{
             color: "rgba(255,255,255,0.80)",
             fontSize: "0.97rem",
@@ -173,6 +173,27 @@ export const HeroSection = () => {
             }}
           >
             📅 View Schedule
+          </a>
+        </div>
+
+        {/* Society CTA */}
+        <div
+          className="animate-fade-in-up"
+          style={{ animationDelay: "0.56s", animationFillMode: "both", marginTop: 12 }}
+        >
+          <a
+            href="/bring-yoga-to-your-society"
+            className="inline-flex items-center gap-2 font-semibold px-6 py-2.5 rounded-full no-underline transition-all"
+            style={{
+              background: "rgba(255,255,255,0.07)",
+              border: "1px solid rgba(255,255,255,0.22)",
+              color: "rgba(255,255,255,0.78)",
+              fontSize: "0.85rem",
+              backdropFilter: "blur(8px)",
+              WebkitBackdropFilter: "blur(8px)",
+            }}
+          >
+            🏘️ Bring Yoga to Your Society
           </a>
         </div>
       </div>

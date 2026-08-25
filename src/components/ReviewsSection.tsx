@@ -208,7 +208,7 @@ export const ReviewsSection = () => {
           {/* Arrow buttons */}
           <button
             onClick={goPrev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-5 md:-translate-x-6 w-11 h-11 rounded-full flex items-center justify-center shadow-lg transition-all duration-200 hover:-translate-x-7"
+            className="absolute left-0 top-1/2 -translate-y-1/2 translate-x-2 md:-translate-x-6 w-11 h-11 rounded-full flex items-center justify-center shadow-lg transition-all duration-200 md:hover:-translate-x-7"
             style={{ background: "hsl(36,50%,99%)", border: "1px solid hsl(38,18%,88%)" }}
             aria-label="Previous"
           >
@@ -216,7 +216,7 @@ export const ReviewsSection = () => {
           </button>
           <button
             onClick={goNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-5 md:translate-x-6 w-11 h-11 rounded-full flex items-center justify-center shadow-lg transition-all duration-200 hover:translate-x-7"
+            className="absolute right-0 top-1/2 -translate-y-1/2 -translate-x-2 md:translate-x-6 w-11 h-11 rounded-full flex items-center justify-center shadow-lg transition-all duration-200 md:hover:translate-x-7"
             style={{ background: "hsl(36,50%,99%)", border: "1px solid hsl(38,18%,88%)" }}
             aria-label="Next"
           >

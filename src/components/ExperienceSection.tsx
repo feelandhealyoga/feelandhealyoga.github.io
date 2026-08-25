@@ -5,6 +5,7 @@ const experiences = [
   { number: "02", icon: "🌬️", title: "Pranayama (Breathwork)", description: "Master ancient breathing techniques for enhanced energy, lung capacity, and profound calm.", gradient: "from-[hsl(160,40%,95%)] to-[hsl(145,30%,93%)]", border: "border-emerald-200" },
   { number: "03", icon: "🎯", title: "Correct Alignment", description: "Learn proper form and body mechanics to prevent injury and maximize the healing benefits of every posture.", gradient: "from-[hsl(145,35%,95%)] to-[hsl(160,30%,94%)]", border: "border-green-200" },
   { number: "04", icon: "🧘", title: "Mindfulness & Dhyana", description: "Cultivate deep awareness and presence — on and off the mat — through guided meditation and inner focus.", gradient: "from-[hsl(270,35%,96%)] to-[hsl(260,30%,95%)]", border: "border-purple-200" },
+  { number: "05", icon: "🌈", title: "Chakra Healing", description: "Balance and awaken your seven energy centres through targeted asanas, breathwork, and sound — restoring harmony across body, mind, and spirit.", gradient: "from-[hsl(30,55%,96%)] to-[hsl(20,45%,94%)]", border: "border-orange-200" },
 ];
 
 export const ExperienceSection = () => {

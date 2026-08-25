@@ -1,12 +1,12 @@
 ---
 import { Navigation } from "../components/Navigation";
-import { ScrollspyNav } from "../components/ScrollspyNav";
 import { ScrollProgressBar } from "../components/ScrollProgressBar";
 import { HeroSection } from "../components/HeroSection";
 import { AboutSection } from "../components/AboutSection";
 import { InstructorSection } from "../components/InstructorSection";
 import { ExperienceSection } from "../components/ExperienceSection";
 import { ReasonsSection } from "../components/ReasonsSection";
+import { SocietySection } from "../components/SocietySection";
 import { ReviewsSection } from "../components/ReviewsSection";
 import { InstagramSection } from "../components/InstagramSection";
 import { GallerySection } from "../components/GallerySection";
@@ -15,6 +15,7 @@ import { MapSection } from "../components/MapSection";
 import { ContactSection } from "../components/ContactSection";
 import { TrialPopup } from "../components/TrialPopup";
 import { PremiumBackground } from "../components/PremiumBackground";
+import { MobileApp } from "../components/MobileApp";
 import YogiChatbot from "../components/yogichatbot.jsx";
 import "../index.css";
 ---
@@ -104,17 +105,65 @@ import "../index.css";
     </script>
   </head>
 
-  <body>
-    <PremiumBackground client:load />
-    <Navigation client:load />
-    <ScrollspyNav client:load />
+  <style>
+    /* Force nav to stay pinned — must be in <head> to prevent any parent stacking context interference */
+    #site-nav-header {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      width: 100% !important;
+      z-index: 9999 !important;
+    }
+  </style>
 
-    <main>
+  <body>
+    <!-- Hidden Netlify forms — DO NOT REMOVE — required for form detection -->
+    <form name="society-enquiry" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="enquiryId" /><input type="text" name="fullName" />
+      <input type="tel" name="mobile" /><input type="tel" name="whatsapp" />
+      <input type="email" name="email" /><input type="text" name="societyName" />
+      <input type="text" name="address" /><input type="text" name="area" />
+      <input type="text" name="city" /><input type="text" name="pincode" />
+      <input type="text" name="locationType" /><input type="text" name="role" />
+      <input type="text" name="participants" /><input type="text" name="ageGroups" />
+      <input type="text" name="programs" /><input type="text" name="timings" />
+      <input type="text" name="mode" /><input type="text" name="space" />
+      <input type="text" name="startDate" /><textarea name="notes"></textarea>
+      <input type="text" name="consent" /><input name="bot-field" />
+    </form>
+    <form name="franchise-enquiry" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="enquiryId" /><input type="text" name="fullName" />
+      <input type="tel" name="mobile" /><input type="email" name="email" />
+      <input type="text" name="city" /><input type="text" name="state" />
+      <input type="text" name="preferredLocation" /><input type="text" name="occupation" />
+      <input type="text" name="businessExp" /><input type="text" name="investmentRange" />
+      <input type="text" name="space" /><input type="text" name="timeline" />
+      <textarea name="whyJoin"></textarea><textarea name="notes"></textarea>
+      <input type="text" name="consent" /><input name="bot-field" />
+    </form>
+
+    <!-- Navigation — must be FIRST in body, direct child, before any transform/filter ancestors -->
+    <div class="hidden md:block">
+      <Navigation client:load />
+    </div>
+
+    <!-- Mobile app shell (phones & tablets only) -->
+    <MobileApp client:load />
+
+    <!-- Desktop: background (hidden on mobile) -->
+    <div class="hidden md:block">
+      <PremiumBackground client:load />
+    </div>
+
+    <!-- Desktop: full page content (hidden on mobile) -->
+    <main class="hidden md:block">
       <HeroSection client:load />
       <AboutSection client:load />
       <InstructorSection client:load />
       <ExperienceSection client:load />
       <ReasonsSection client:load />
+      <SocietySection client:load />
       <ReviewsSection client:load />
       <GallerySection client:load />
       <InstagramSection client:load />
@@ -164,7 +213,7 @@ import "../index.css";
             <h4 class="font-bold text-sm mb-5 tracking-widest uppercase" style="color:hsl(38,80%,62%);">Quick Links</h4>
             <ul class="space-y-3 text-sm" style="color:hsl(38,20%,70%);">
               <li><a href="#about" class="hover:text-white transition-colors">About Us</a></li>
-              <li><a href="#instructor" class="hover:text-white transition-colors">Meet the Instructor</a></li>
+              <li><a href="#instructor" class="hover:text-white transition-colors">Meet the Teacher</a></li>
               <li><a href="#schedule" class="hover:text-white transition-colors">Class Schedule</a></li>
               <li><a href="#gallery" class="hover:text-white transition-colors">Gallery</a></li>
               <li><a href="#contact" class="hover:text-white transition-colors">Contact</a></li>

@@ -101,6 +101,11 @@
     line-height: 1.75;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  html {
+    overflow-x: hidden;
   }
 
   h1,
@@ -244,7 +249,7 @@
 
 .yogic-section-heading {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(2.9rem, 6vw, 5rem);
+  font-size: clamp(1.75rem, 6vw, 5rem);
   font-weight: 900;
   color: hsl(220, 18%, 12%);
   text-align: center;
@@ -653,4 +658,54 @@
    ═══════════════════════════════════════════ */
 .absolute-important {
   position: absolute !important;
+}
+
+/* ═══════════════════════════════════════════
+   MOBILE MINIMAL DESIGN
+   Phones & tablets only (< 768px).
+   Desktop is completely unchanged.
+   ═══════════════════════════════════════════ */
+@media (max-width: 767px) {
+
+  /* ── Hide floating Yogi button — Chat tab replaces it ── */
+  .yogi-float {
+    display: none !important;
+  }
+
+  /* ── Hero emblem pulsing rings ── */
+  .yogi-ring-1 {
+    animation: yogiPulse 3s ease-out infinite;
+  }
+  .yogi-ring-2 {
+    animation: yogiPulse 3s ease-out infinite 1.5s;
+  }
+
+  @keyframes yogiPulse {
+    0%   { transform: scale(1);    opacity: 0.7; }
+    60%  { transform: scale(1.18); opacity: 0.22; }
+    100% { transform: scale(1.28); opacity: 0; }
+  }
+
+  /* ── Orange ripple CTA button ── */
+  .mobile-ripple-btn {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mobile-ripple-btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, rgba(255,255,255,0.38) 0%, transparent 70%);
+    transform: scale(0);
+    opacity: 0;
+    border-radius: inherit;
+    animation: mobileRipple 1.8s ease-out infinite;
+  }
+
+  @keyframes mobileRipple {
+    0%   { transform: scale(0);   opacity: 0.7; }
+    60%  { transform: scale(2.2); opacity: 0.18; }
+    100% { transform: scale(2.8); opacity: 0; }
+  }
 }

@@ -200,7 +200,8 @@ export const GallerySection = () => {
   return (
     <section id="gallery" className="py-20 px-6 bg-secondary/30">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-bold text-foreground text-center mb-8">
+        <div className="yogic-label mb-3">Photo Gallery</div>
+        <h2 className="yogic-section-heading section-title-decor mb-8">
           Photo Gallery
         </h2>
 
@@ -228,7 +229,7 @@ export const GallerySection = () => {
           ))}
         </div>
 
-        <div className="grid md:grid-cols-4 gap-4 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-12">
           {(showAllPhotos
             ? filteredImages
             : filteredImages.slice(0, initialPhotoCount)
@@ -260,18 +261,19 @@ export const GallerySection = () => {
           </div>
         )}
 
-        <h2 className="text-4xl md:text-5xl font-bold text-foreground text-center mb-16">
+        <div className="yogic-label mb-3">Yoga Videos</div>
+        <h2 className="yogic-section-heading section-title-decor mb-10">
           Yoga Videos
         </h2>
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           {youtubeIds.map((id, index) => (
             <div
               key={index}
-              className="overflow-hidden rounded-sm shadow-lg hover:shadow-2xl transition-shadow duration-300"
+              className="overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
             >
               <div
                 id={`player-${index}`}
-                className="w-full h-full aspect-[9/16]"
+                className="w-full aspect-[9/16]"
               />
             </div>
           ))}

@@ -1,0 +1,249 @@
+---
+import { Navigation } from "../components/Navigation";
+import { SocietyForm } from "../components/SocietyForm";
+import { SocietyFAQ } from "../components/SocietyFAQ";
+import YogiChatbot from "../components/yogichatbot.jsx";
+import "../index.css";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="canonical" href="https://feelandhealyoga.com/bring-yoga-to-your-society" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bring Yoga to Your Society | Feel & Heal Yoga — Kharghar, Navi Mumbai</title>
+    <meta name="description" content="Start professional yoga and wellness sessions inside your residential society, workplace, school, or community with Feel & Heal Yoga. Call us or request a free callback." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Bring Feel & Heal Yoga to Your Society | Call +91 99201 55875" />
+    <meta property="og:description" content="Transform your society with certified yoga classes. Call us directly or request a callback — we'll design a customized program for your community." />
+    <meta property="og:image" content="https://feelandhealyoga.com/assets/hero-yoga.jpg" />
+
+    <!-- Hidden Netlify forms -->
+    <form name="society-enquiry" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="enquiryId" /><input type="text" name="fullName" />
+      <input type="tel" name="mobile" /><input type="tel" name="whatsapp" />
+      <input type="email" name="email" /><input type="text" name="societyName" />
+      <input type="text" name="address" /><input type="text" name="area" />
+      <input type="text" name="city" /><input type="text" name="pincode" />
+      <input type="text" name="locationType" /><input type="text" name="role" />
+      <input type="text" name="participants" /><input type="text" name="ageGroups" />
+      <input type="text" name="programs" /><input type="text" name="timings" />
+      <input type="text" name="mode" /><input type="text" name="space" />
+      <input type="text" name="startDate" /><textarea name="notes"></textarea>
+      <input type="text" name="consent" /><input name="bot-field" />
+    </form>
+
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body { font-family: 'Inter', sans-serif; background: hsl(42,30%,97%); }
+      .pill { display:inline-block; padding:5px 14px; border-radius:99px; font-size:11px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; }
+      .call-btn { display:inline-flex; align-items:center; gap:8px; padding:13px 26px; border-radius:99px; font-weight:800; font-size:.95rem; text-decoration:none; transition:transform .15s,box-shadow .15s; }
+      .call-btn:hover { transform:translateY(-2px); }
+      .ghost-btn { display:inline-flex; align-items:center; gap:8px; padding:12px 22px; border-radius:99px; font-weight:700; font-size:.88rem; text-decoration:none; transition:transform .15s; }
+      .ghost-btn:hover { transform:translateY(-2px); }
+      .card { background:white; border-radius:16px; border:1px solid hsl(38,22%,91%); }
+      .connect-card { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:28px 20px; border-radius:18px; text-decoration:none; text-align:center; gap:10px; transition:transform .18s,box-shadow .18s; }
+      .connect-card:hover { transform:translateY(-3px); }
+      @media(max-width:600px){
+        .hero-btns { flex-direction:column !important; align-items:stretch !important; }
+        .hero-btns a, .hero-btns button { text-align:center; justify-content:center; }
+        .two-col { grid-template-columns:1fr !important; }
+        .three-col { grid-template-columns:1fr 1fr !important; }
+      }
+      #site-nav-header {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        z-index: 9999 !important;
+      }
+    </style>
+  </head>
+  <body>
+    <Navigation client:load />
+
+    <!-- ══════════════════════════════════════════
+         HERO — with Call Now + Callback CTAs
+    ══════════════════════════════════════════ -->
+    <section style="position:relative; background:linear-gradient(135deg,hsl(175,28%,18%) 0%,hsl(165,30%,26%) 55%,hsl(38,30%,24%) 100%); padding:100px 24px 64px; text-align:center; overflow:hidden;">
+      <!-- decorative blobs -->
+      <div style="position:absolute;top:-60px;right:-80px;width:320px;height:320px;background:radial-gradient(circle,hsla(38,60%,60%,.13),transparent 70%);border-radius:50%;pointer-events:none;"></div>
+      <div style="position:absolute;bottom:-40px;left:-60px;width:260px;height:260px;background:radial-gradient(circle,hsla(175,50%,50%,.10),transparent 70%);border-radius:50%;pointer-events:none;"></div>
+
+      <div style="max-width:720px;margin:0 auto;position:relative;z-index:1;">
+        <span class="pill" style="background:rgba(255,255,255,.10);color:rgba(255,255,255,.80);border:1px solid rgba(255,255,255,.20);margin-bottom:22px;">Community Wellness Program</span>
+
+        <h1 style="font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:700;color:white;line-height:1.18;margin:0 0 16px;">
+          Bring Feel &amp; Heal Yoga<br/>to Your Society
+        </h1>
+        <p style="font-size:clamp(.95rem,2.2vw,1.1rem);color:rgba(255,255,255,.78);line-height:1.72;max-width:540px;margin:0 auto 32px;">
+          Professional yoga &amp; wellness sessions for your residential society or community — delivered at your doorstep by certified teachers.
+        </p>
+
+        <!-- PRIMARY CTAs: Call Now + Callback -->
+        <div class="hero-btns" style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:28px;">
+          <a href="tel:+919920155875" class="call-btn" style="background:linear-gradient(135deg,hsl(38,90%,52%),hsl(28,88%,44%));color:hsl(20,20%,12%);box-shadow:0 6px 24px hsla(38,90%,52%,.50);">
+            📞 Call Us Now
+          </a>
+          <a href="#callback-form" class="call-btn" style="background:rgba(255,255,255,.12);color:white;border:1.5px solid rgba(255,255,255,.28);box-shadow:none;backdrop-filter:blur(8px);">
+            📋 Request Callback
+          </a>
+          <a href="https://wa.me/919920155875?text=Namaste!%20I%27m%20interested%20in%20bringing%20Feel%20%26%20Heal%20Yoga%20to%20my%20society." target="_blank" rel="noopener noreferrer" class="ghost-btn" style="color:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.20);">
+            💬 WhatsApp
+          </a>
+        </div>
+
+
+        <!-- 4 stats strip -->
+        <div style="display:flex;gap:24px;justify-content:center;flex-wrap:wrap;padding-top:28px;border-top:1px solid rgba(255,255,255,.12);">
+          {[["⭐ 5.0","Google Rating"],["🏘️ Trusted","By Communities"],["👥 100+","Happy Students"],["🌿 Certified","Teachers"]]
+            .map(([v,s])=>(
+              <div style="text-align:center;">
+                <p style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:white;margin:0 0 2px;">{v}</p>
+                <p style="font-size:10px;color:rgba(255,255,255,.55);margin:0;font-weight:500;letter-spacing:.05em;">{s}</p>
+              </div>
+            ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         COMPACT INFO STRIP — Who, Programs, Process
+    ══════════════════════════════════════════ -->
+    <section style="padding:48px 24px;background:white;">
+      <div style="max-width:960px;margin:0 auto;">
+
+        <!-- Who can apply — compact chips -->
+        <div style="text-align:center;margin-bottom:28px;">
+          <p style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:hsl(175,32%,38%);margin-bottom:14px;">Who Can Apply</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;">
+            {["🏘️ Residential Society","👴 Senior Groups","👩 Women's Groups","🏠 Housing Association","🌿 Any Community"].map(t=>(
+              <span style="padding:7px 16px;border-radius:99px;background:hsl(42,30%,96%);border:1px solid hsl(38,22%,90%);font-size:12.5px;color:hsl(220,18%,28%);font-weight:500;">{t}</span>
+            ))}
+          </div>
+        </div>
+
+        <hr style="border:none;border-top:1px solid hsl(38,22%,92%);margin:0 0 28px;" />
+
+        <!-- Programs — 3-col compact grid -->
+        <div style="text-align:center;margin-bottom:20px;">
+          <p style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:hsl(175,32%,38%);margin-bottom:16px;">Programs Available</p>
+        </div>
+        <div class="three-col" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:28px;">
+          {[
+            ["🧘","Group Yoga"],["🌱","Beginner Yoga"],["⚖️","Weight Management"],
+            ["👩","Women's Wellness"],["👶","Kids Yoga"],["👴","Senior Yoga"],
+            ["🧘‍♂️","Meditation"],["🔙","Back Pain Care"],["🗓️","Weekend Workshops"],
+          ].map(([icon,name])=>(
+            <div style="background:hsl(42,30%,97%);border-radius:12px;padding:12px 8px;text-align:center;border:1px solid hsl(38,22%,91%);">
+              <span style="font-size:18px;display:block;margin-bottom:4px;">{icon}</span>
+              <p style="font-size:10.5px;font-weight:600;color:hsl(220,18%,28%);margin:0;line-height:1.3;">{name}</p>
+            </div>
+          ))}
+        </div>
+
+        <hr style="border:none;border-top:1px solid hsl(38,22%,92%);margin:0 0 28px;" />
+
+        <!-- How it works — inline horizontal steps -->
+        <div style="text-align:center;margin-bottom:16px;">
+          <p style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:hsl(175,32%,38%);">How It Works</p>
+        </div>
+        <div style="display:flex;gap:0;justify-content:center;flex-wrap:wrap;">
+          {[
+            ["01","Submit Details","Fill the form below"],
+            ["02","We Call You","Within 24 hours"],
+            ["03","Custom Plan","Designed for your community"],
+            ["04","Classes Begin","Teacher comes to you"],
+          ].map(([num,title,desc],i)=>(
+            <div style="display:flex;align-items:center;gap:0;">
+              <div style="text-align:center;padding:0 16px;min-width:110px;">
+                <div style="width:36px;height:36px;border-radius:50%;background:hsl(42,30%,97%);border:2px solid hsl(175,32%,38%);display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-family:'Playfair Display',serif;font-size:.85rem;font-weight:700;color:hsl(175,32%,38%);">{num}</div>
+                <p style="font-size:12px;font-weight:700;color:hsl(220,18%,22%);margin:0 0 2px;">{title}</p>
+                <p style="font-size:10.5px;color:hsl(220,12%,52%);margin:0;">{desc}</p>
+              </div>
+              {i < 3 && <div style="width:28px;height:1px;background:hsl(38,22%,86%);flex-shrink:0;"></div>}
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         CONNECT SECTION — Cards + Form
+    ══════════════════════════════════════════ -->
+    <section id="callback-form" style="padding:56px 24px 72px;background:hsl(42,30%,97%);scroll-margin-top:70px;">
+      <div style="max-width:800px;margin:0 auto;">
+
+        <div style="text-align:center;margin-bottom:32px;">
+          <p style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:hsl(175,32%,38%);margin-bottom:10px;">Get Started Today</p>
+          <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.5vw,2.2rem);font-weight:700;color:hsl(220,20%,18%);margin-bottom:12px;">How Would You Like to Connect?</h2>
+          <p style="font-size:.95rem;color:hsl(220,12%,52%);line-height:1.7;">Choose the quickest way to reach us.</p>
+        </div>
+
+        <!-- 2 connect cards -->
+        <div class="two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:40px;">
+          <a href="tel:+919920155875" class="connect-card" style="background:linear-gradient(135deg,hsl(38,90%,50%),hsl(28,88%,44%));box-shadow:0 6px 24px hsla(38,90%,50%,.35);">
+            <span style="font-size:32px;">📞</span>
+            <div>
+              <p style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:hsl(20,20%,12%);margin:0 0 4px;">Call Us Now</p>
+              <p style="font-size:12px;color:hsla(20,20%,12%,.65);margin:0;line-height:1.5;">Instant connection. Mon–Sat 6AM–9PM</p>
+            </div>
+            <span style="padding:7px 16px;border-radius:99px;background:rgba(0,0,0,.10);color:hsl(20,20%,12%);font-size:13px;font-weight:800;">+91 99201 55875</span>
+          </a>
+
+          <a href="https://wa.me/919920155875?text=Namaste!%20I%27m%20interested%20in%20bringing%20Feel%20%26%20Heal%20Yoga%20to%20my%20society.%20Please%20share%20more%20details." target="_blank" rel="noopener noreferrer" class="connect-card" style="background:linear-gradient(135deg,hsl(142,50%,28%),hsl(142,44%,38%));box-shadow:0 6px 24px hsla(142,50%,28%,.30);">
+            <span style="font-size:32px;">💬</span>
+            <div>
+              <p style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:white;margin:0 0 4px;">WhatsApp Us</p>
+              <p style="font-size:12px;color:rgba(255,255,255,.68);margin:0;line-height:1.5;">Chat now, get reply within minutes</p>
+            </div>
+            <span style="padding:7px 16px;border-radius:99px;background:rgba(255,255,255,.15);color:white;font-size:12px;font-weight:700;border:1px solid rgba(255,255,255,.25);">Open WhatsApp →</span>
+          </a>
+        </div>
+
+        <!-- Divider -->
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:32px;">
+          <div style="flex:1;height:1px;background:hsl(38,22%,88%);"></div>
+          <span style="font-size:12px;color:hsl(220,12%,60%);font-weight:600;">Or fill the form for a callback</span>
+          <div style="flex:1;height:1px;background:hsl(38,22%,88%);"></div>
+        </div>
+
+        <!-- Form -->
+        <SocietyForm client:load />
+
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         COMPACT FAQ
+    ══════════════════════════════════════════ -->
+    <section style="padding:48px 24px 64px;background:white;">
+      <div style="max-width:720px;margin:0 auto;">
+        <div style="text-align:center;margin-bottom:28px;">
+          <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.4rem,3vw,1.9rem);font-weight:700;color:hsl(220,20%,18%);">Frequently Asked Questions</h2>
+        </div>
+        <SocietyFAQ client:load />
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         BOTTOM BAR
+    ══════════════════════════════════════════ -->
+    <div style="background:hsl(175,28%,20%);padding:20px 24px;display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;">
+      <p style="color:rgba(255,255,255,.75);font-size:13px;margin:0;">Ready to start? Call us directly —</p>
+      <a href="tel:+919920155875" style="display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:99px;background:linear-gradient(135deg,hsl(38,90%,52%),hsl(28,88%,44%));color:hsl(20,20%,12%);font-weight:800;font-size:13px;text-decoration:none;">
+        📞 +91 99201 55875
+      </a>
+      <a href="/" style="font-size:12px;color:rgba(255,255,255,.50);text-decoration:none;">← Back to Home</a>
+    </div>
+
+    <YogiChatbot client:load />
+  </body>
+</html>

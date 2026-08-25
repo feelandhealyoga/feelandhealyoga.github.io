@@ -5,6 +5,7 @@ const CREDENTIALS = [
     icon: "🌍",
     title: "Internationally Certified",
     sub: "Yoga Teacher",
+    hideOnMobile: true,
   },
   {
     icon: "🌿",
@@ -37,6 +38,7 @@ export const InstructorSection = () => {
   return (
     <section
       id="instructor"
+      className="instructor-section"
       style={{
         padding: "100px 24px",
         background: "linear-gradient(170deg, hsl(145,14%,96%) 0%, hsl(40,28%,97%) 60%, hsl(145,12%,95%) 100%)",
@@ -141,7 +143,7 @@ export const InstructorSection = () => {
 
               <img
                 src={instructorImage}
-                alt="Priyanka Sahu — Certified Yoga Instructor, Feel & Heal Yoga"
+                alt="Priyanka Sahu — Certified Yoga Teacher, Feel & Heal Yoga"
                 width={370}
                 height={460}
                 loading="lazy"
@@ -193,7 +195,7 @@ export const InstructorSection = () => {
                 border: "1px solid rgba(255,255,255,0.7)",
               }}>
                 <p style={{ margin: 0, fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: 14.5, color: "hsl(220,18%,14%)", letterSpacing: "0.02em" }}>Priyanka Sahu</p>
-                <p style={{ margin: 0, fontFamily: "'Inter', sans-serif", fontSize: 10.5, color: "hsl(145,44%,36%)", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", marginTop: 3 }}>Yoga Instructor</p>
+                <p style={{ margin: 0, fontFamily: "'Inter', sans-serif", fontSize: 10.5, color: "hsl(145,44%,36%)", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", marginTop: 3 }}>Yoga Teacher</p>
               </div>
             </div>
           </div>
@@ -280,6 +282,7 @@ export const InstructorSection = () => {
               {CREDENTIALS.map((c, i) => (
                 <div
                   key={i}
+                  className={c.hideOnMobile ? "cred-card-hide-mobile" : undefined}
                   style={{
                     display: "flex",
                     flexDirection: "column",
@@ -447,11 +450,14 @@ export const InstructorSection = () => {
             gap: 64px !important;
           }
         }
-        @media (max-width: 700px) {
+        @media (max-width: 767px) {
           .cred-grid { grid-template-columns: 1fr 1fr !important; }
+          .instructor-section { padding: 60px 20px !important; }
+          .cred-card-hide-mobile { display: none !important; }
         }
         @media (max-width: 440px) {
           .cred-grid { grid-template-columns: 1fr !important; }
+          .instructor-section { padding: 48px 16px !important; }
         }
         /* Dark-background overrides for shared yogic heading classes */
         .instructor-label {
