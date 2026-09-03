@@ -115,15 +115,19 @@ const CSS = `
 
   /* Yogi pulse ring */
   @keyframes yogiRing {
-    0%   { box-shadow: 0 0 0 0px rgba(27,67,50,0.50); }
-    70%  { box-shadow: 0 0 0 10px rgba(27,67,50,0); }
-    100% { box-shadow: 0 0 0 0px rgba(27,67,50,0); }
+    0%   { box-shadow: 0 0 0 0px rgba(27,67,50,0.50), 0 6px 24px rgba(27,67,50,0.45); }
+    70%  { box-shadow: 0 0 0 12px rgba(27,67,50,0), 0 6px 24px rgba(27,67,50,0.45); }
+    100% { box-shadow: 0 0 0 0px rgba(27,67,50,0), 0 6px 24px rgba(27,67,50,0.45); }
   }
-  .yogi-ring { animation: yogiRing 2.2s ease-in-out infinite; }
+  .yogi-ring { animation: yogiRing 2.4s ease-in-out infinite; }
 
   /* Tap feedback */
   .fh-tap { transition: transform 0.12s ease, opacity 0.12s ease; }
   .fh-tap:active { transform: scale(0.96); opacity:0.85; }
+
+  /* Active pill slide */
+  @keyframes pillPop { from{transform:scale(0.80);opacity:0} to{transform:scale(1);opacity:1} }
+  .pill-pop { animation: pillPop 0.22s cubic-bezier(0.34,1.56,0.64,1) both; }
 
   /* Horizontal swipe */
   .fh-swipe { display:flex; overflow-x:auto; gap:12px; scrollbar-width:none; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; }
@@ -160,14 +164,15 @@ export const MobileApp = () => {
 
         {/* ── Scrollable area ── */}
         <div className="flex-1 overflow-y-auto fh-scroll"
-          style={{ WebkitOverflowScrolling:"touch", overflowX:"hidden" } as any}>
+          style={{ WebkitOverflowScrolling:"touch", overflowX:"hidden",
+            paddingBottom:"calc(90px + max(20px, env(safe-area-inset-bottom)))" } as any}>
           {tab==="home"    && <HomeScreen    setTab={setTab} setMenu={setMenu} />}
           {tab==="classes" && <ClassesScreen setMenu={setMenu} />}
           {tab==="gallery" && <GalleryScreen setMenu={setMenu} />}
           {tab==="about"   && <AboutScreen   setMenu={setMenu} />}
         </div>
 
-        {/* ── Bottom nav ── */}
+        {/* ── Floating nav (fixed, outside flex flow) ── */}
         <BottomNav tab={tab} setTab={setTab} />
 
         {/* ── Menu drawer ── */}
@@ -178,61 +183,118 @@ export const MobileApp = () => {
 };
 
 /* ─────────────────────────────────────
-   BOTTOM NAV
-   Home | Classes | [🧘 YOGI] | Gallery | About
+   FLOATING SEGMENTED NAV
+   Two pill clusters flank a glowing Yogi orb — all floating above bottom
 ───────────────────────────────────────*/
-const BottomNav = ({ tab, setTab }: { tab:Tab; setTab:(t:Tab)=>void }) => {
-  const navItems: {id:Tab; label:string; icon:JSX.Element}[] = [
-    { id:"home",    label:"Home",    icon:<IcoHome    on={tab==="home"}    /> },
-    { id:"classes", label:"Classes", icon:<IcoClasses on={tab==="classes"} /> },
-    { id:"gallery", label:"Gallery", icon:<IcoGallery on={tab==="gallery"} /> },
-    { id:"about",   label:"About",   icon:<IcoAbout   on={tab==="about"}   /> },
-  ];
+const BottomNav = ({ tab, setTab }: { tab:Tab; setTab:(t:Tab)=>void }) => (
+  <div style={{
+    position: "fixed",
+    bottom: "max(18px, env(safe-area-inset-bottom))",
+    left: 0, right: 0,
+    display: "flex", alignItems: "center", justifyContent: "center",
+    gap: 12, zIndex: 70,
+    pointerEvents: "none",
+  } as any}>
 
-  return (
+    {/* ── Left pill: Home + Classes ── */}
     <div style={{
-      flexShrink:0,
-      background:T.white,
-      borderTop:`1px solid ${T.border}`,
-      paddingBottom:"env(safe-area-inset-bottom)",
-    }}>
-      <div style={{ display:"flex", alignItems:"flex-end", minHeight:60 }}>
-
-        {/* Left 2 tabs */}
-        {navItems.slice(0,2).map(it=>(
-          <NavTab key={it.id} item={it} active={tab===it.id} onClick={()=>setTab(it.id)} />
-        ))}
-
-        {/* ── YOGI AI — centre elevated ── */}
-        <div style={{ flex:1, display:"flex", flexDirection:"column", alignItems:"center", paddingBottom:8 }}>
-          <button
-            onClick={openYogi}
-            className="yogi-ring fh-tap"
-            style={{
-              width:54, height:54, borderRadius:"50%",
-              background:`linear-gradient(145deg, #2D6A4F, ${T.yogi})`,
-              border:`2.5px solid ${T.white}`,
-              display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center",
-              gap:1, cursor:"pointer", outline:"none",
-              boxShadow:`0 4px 18px rgba(27,67,50,0.42)`,
-              marginBottom:-6,
-            } as any}
-            aria-label="Chat with Yogi AI"
-          >
-            <YogiIcon />
-          </button>
-          <span style={{ fontSize:9, fontWeight:600, color:T.sage, marginTop:8, letterSpacing:"0.03em" }}>Yogi AI</span>
-        </div>
-
-        {/* Right 2 tabs */}
-        {navItems.slice(2).map(it=>(
-          <NavTab key={it.id} item={it} active={tab===it.id} onClick={()=>setTab(it.id)} />
-        ))}
-
-      </div>
+      pointerEvents: "all",
+      display: "flex", alignItems: "center",
+      background: "rgba(255,255,255,0.88)",
+      backdropFilter: "blur(20px)",
+      WebkitBackdropFilter: "blur(20px)",
+      borderRadius: 99,
+      boxShadow: "0 6px 24px rgba(27,67,50,0.14), 0 1px 4px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9)",
+      padding: "6px",
+      gap: 2,
+    } as any}>
+      <SegTab id="home"    label="Home"    active={tab==="home"}    setTab={setTab} icon={<IcoHome    on={tab==="home"}    />} />
+      <SegTab id="classes" label="Classes" active={tab==="classes"} setTab={setTab} icon={<IcoClasses on={tab==="classes"} />} />
     </div>
-  );
-};
+
+    {/* ── Centre Yogi orb ── */}
+    <div style={{ pointerEvents: "all", display: "flex", flexDirection: "column", alignItems: "center", gap: 4 } as any}>
+      <button
+        onClick={openYogi}
+        className="yogi-ring fh-tap"
+        style={{
+          width: 58, height: 58, borderRadius: "50%",
+          background: `linear-gradient(145deg, #2D6A4F, ${T.yogi})`,
+          border: `3px solid rgba(255,255,255,0.95)`,
+          display: "flex", alignItems: "center", justifyContent: "center",
+          cursor: "pointer", outline: "none",
+        } as any}
+        aria-label="Chat with Yogi AI"
+      >
+        <YogiIcon large />
+      </button>
+      <span style={{
+        fontSize: 9, fontWeight: 700, letterSpacing: "0.06em",
+        color: T.yogi, textTransform: "uppercase",
+        background: "rgba(255,255,255,0.88)", backdropFilter: "blur(8px)",
+        padding: "2px 8px", borderRadius: 99,
+        boxShadow: "0 1px 4px rgba(27,67,50,0.12)",
+      } as any}>Yogi AI</span>
+    </div>
+
+    {/* ── Right pill: Gallery + About ── */}
+    <div style={{
+      pointerEvents: "all",
+      display: "flex", alignItems: "center",
+      background: "rgba(255,255,255,0.88)",
+      backdropFilter: "blur(20px)",
+      WebkitBackdropFilter: "blur(20px)",
+      borderRadius: 99,
+      boxShadow: "0 6px 24px rgba(27,67,50,0.14), 0 1px 4px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9)",
+      padding: "6px",
+      gap: 2,
+    } as any}>
+      <SegTab id="gallery" label="Gallery" active={tab==="gallery"} setTab={setTab} icon={<IcoGallery on={tab==="gallery"} />} />
+      <SegTab id="about"   label="About"   active={tab==="about"}   setTab={setTab} icon={<IcoAbout   on={tab==="about"}   />} />
+    </div>
+
+  </div>
+);
+
+/* Segment tab button inside pill cluster */
+const SegTab = ({ id, label, active, setTab, icon }: {
+  id: Tab; label: string; active: boolean;
+  setTab: (t:Tab)=>void; icon: JSX.Element;
+}) => (
+  <button
+    onClick={() => setTab(id)}
+    style={{
+      display: "flex", alignItems: "center",
+      gap: active ? 6 : 0,
+      padding: active ? "8px 14px" : "8px 12px",
+      borderRadius: 99, border: "none",
+      background: active ? T.green : "transparent",
+      color: active ? "#fff" : T.muted,
+      cursor: "pointer", outline: "none",
+      transition: "all 0.28s cubic-bezier(0.34,1.30,0.64,1)",
+      fontFamily: "'Inter', sans-serif",
+      WebkitTapHighlightColor: "transparent",
+      minWidth: 44,
+      overflow: "hidden",
+    } as any}
+    aria-label={label}
+  >
+    {/* Icon — white when active, muted when not */}
+    <span style={{ display:"flex", flexShrink:0, transition:"transform 0.22s ease",
+      transform: active ? "scale(1.05)" : "scale(1)" }}>
+      {icon}
+    </span>
+    {/* Label slides in when active */}
+    <span style={{
+      fontSize: 11, fontWeight: 700, whiteSpace: "nowrap",
+      color: active ? "#fff" : "transparent",
+      maxWidth: active ? 56 : 0,
+      opacity: active ? 1 : 0,
+      overflow: "hidden",
+      transition: "max-width 0.28s ease, opacity 0.20s ease",
+    }}>{label}</span>
+  </button>
+);
 
 const NavTab = ({ item, active, onClick }: { item:any; active:boolean; onClick:()=>void }) => (
   <button onClick={onClick} style={{
