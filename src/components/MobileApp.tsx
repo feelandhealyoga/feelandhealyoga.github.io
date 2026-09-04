@@ -412,7 +412,7 @@ const HomeScreen = ({ setTab, setMenu }: { setTab:(t:Tab)=>void; setMenu:(v:bool
       {/* Hero content */}
       <div style={{ position:"absolute", bottom:0, left:0, right:0, padding:"0 20px 22px" }}>
         <div style={{ display:"flex", gap:8, marginBottom:12 }}>
-          {["\u2605 5.0","5+ Years","500+ Students"].map(t=>(
+          {["\u2605 5.0","5+ Years"].map(t=>(
             <span key={t} style={{ background:"rgba(255,255,255,0.16)", backdropFilter:"blur(6px)",
               color:"rgba(255,255,255,0.90)", fontSize:10, fontWeight:600,
               padding:"3px 10px", borderRadius:99 }}>{t}</span>
@@ -424,17 +424,10 @@ const HomeScreen = ({ setTab, setMenu }: { setTab:(t:Tab)=>void; setMenu:(v:bool
         <p style={{ color:"rgba(255,255,255,0.60)", fontSize:11, margin:"0 0 16px" }}>
           Online &amp; Offline Yoga · Kharghar, Navi Mumbai
         </p>
-        <div style={{ display:"flex", gap:10 }}>
-          <button onClick={openTrial} className="fh-tap" style={{ flex:2, padding:"12px 0",
+        <button onClick={openTrial} className="fh-tap" style={{ width:"100%", padding:"13px 0",
             borderRadius:8, background:T.green, border:"none", cursor:"pointer",
             color:"#fff", fontSize:13, fontWeight:700, fontFamily:"'Inter',sans-serif",
             boxShadow:"0 4px 14px rgba(27,67,50,0.40)" } as any}>Book Free Trial</button>
-          <button onClick={openYogi} className="fh-tap" style={{ flex:1, padding:"12px 0",
-            borderRadius:8, background:"rgba(255,255,255,0.14)", backdropFilter:"blur(8px)",
-            border:"1px solid rgba(255,255,255,0.28)", cursor:"pointer",
-            color:"#fff", fontSize:12, fontWeight:600, fontFamily:"'Inter',sans-serif" } as any}>
-            Ask Yogi 🤖</button>
-        </div>
       </div>
     </section>
 
@@ -457,34 +450,8 @@ const HomeScreen = ({ setTab, setMenu }: { setTab:(t:Tab)=>void; setMenu:(v:bool
         </div>
         <span style={{ color:"rgba(255,255,255,0.50)", fontSize:20, flexShrink:0 }}>›</span>
       </button>
-
-      <div style={{ display:"flex", alignItems:"center", gap:12, padding:"10px 16px",
-        borderBottom:`1px solid ${T.border}` }}>
-        <div style={{ width:40, height:40, borderRadius:"50%", overflow:"hidden",
-          flexShrink:0, border:`2px solid ${T.mint}` }}>
-          <img src="/assets/instructor-priyanka.jpg" alt="Priyanka Sahu"
-            style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center 12%" }} />
-        </div>
-        <div style={{ flex:1 }}>
-          <p style={{ fontFamily:"'Playfair Display',serif", fontSize:14, fontWeight:700,
-            color:T.green, margin:0 }}>Priyanka Sahu</p>
-          <p style={{ color:T.muted, fontSize:11, margin:0 }}>
-            Int'l Certified · 5+ Yrs &nbsp;·&nbsp;
-            <span style={{ color:T.gold }}>\u2605\u2605\u2605\u2605\u2605</span>
-          </p>
-        </div>
-        <button onClick={()=>setTab("about")} style={{ background:T.mint, border:"none",
-          borderRadius:6, padding:"5px 10px", cursor:"pointer",
-          color:T.sage, fontSize:11, fontWeight:600, fontFamily:"'Inter',sans-serif" } as any}>View</button>
-      </div>
-
-      <div style={{ padding:"10px 16px" }}>
-        <button onClick={openTrial} className="fh-tap" style={{ width:"100%", padding:"13px 0",
-          borderRadius:10, background:T.green, border:"none", cursor:"pointer",
-          color:"#fff", fontSize:14, fontWeight:700, fontFamily:"'Inter',sans-serif",
-          boxShadow:"0 3px 12px rgba(27,67,50,0.28)" } as any}>Book Your Free Trial →</button>
-      </div>
     </div>
+
 
   </div>
 );
