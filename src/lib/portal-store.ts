@@ -101,8 +101,7 @@ export interface PortalSettings {
 const MOCK_PASSWORDS: Record<string, string> = {
   'admin@feelandhealyoga.com': 'Admin@1234',
   'priyanka@feelandhealyoga.com': 'Teacher@1234',
-  'ananya@feelandhealyoga.com': 'Teacher@1234',
-  'ritu@feelandhealyoga.com': 'Teacher@1234',
+  'prajakta@feelandhealyoga.com': 'Teacher@1234',
 };
 
 export const MOCK_USERS: User[] = [
@@ -117,35 +116,23 @@ export const MOCK_USERS: User[] = [
     status: 'active',
   },
   {
-    id: 'u-senior-1',
-    name: 'Priyanka Sahu',
+    id: 'u-teacher-1',
+    name: 'Priyanka',
     email: 'priyanka@feelandhealyoga.com',
     phone: '+919876543210',
-    role: 'senior',
+    role: 'teacher',
     joining_date: '2022-03-01',
     batch_ids: ['b1', 'b2'],
     status: 'active',
   },
   {
-    id: 'u-teacher-1',
-    name: 'Ananya Sharma',
-    email: 'ananya@feelandhealyoga.com',
+    id: 'u-teacher-2',
+    name: 'Prajakta',
+    email: 'prajakta@feelandhealyoga.com',
     phone: '+919765432109',
     role: 'teacher',
-    senior_id: 'u-senior-1',
     joining_date: '2023-06-01',
-    batch_ids: ['b1'],
-    status: 'active',
-  },
-  {
-    id: 'u-teacher-2',
-    name: 'Ritu Verma',
-    email: 'ritu@feelandhealyoga.com',
-    phone: '+919654321098',
-    role: 'teacher',
-    senior_id: 'u-senior-1',
-    joining_date: '2023-09-01',
-    batch_ids: ['b2', 'b5'],
+    batch_ids: ['b3', 'b4'],
     status: 'active',
   },
 ];
@@ -166,7 +153,7 @@ function uid() { return Math.random().toString(36).slice(2,11); }
 // Generate sample attendance for last 30 days
 function generateSampleAttendance(): AttendanceRecord[] {
   const records: AttendanceRecord[] = [];
-  const teachers = ['u-teacher-1', 'u-teacher-2', 'u-senior-1'];
+  const teachers = ['u-teacher-1', 'u-teacher-2'];
   const statuses: AttendanceStatus[] = ['present','present','present','present','late','present','present'];
   for (let i = 0; i < 25; i++) {
     const date = daysAgo(i);
@@ -187,13 +174,13 @@ function generateSampleAttendance(): AttendanceRecord[] {
 
 // ─── STORAGE CLASS ───────────────────────────────────────
 const LS_KEYS = {
-  users: 'fh_portal_users',
-  attendance: 'fh_portal_attendance',
-  leaves: 'fh_portal_leaves',
-  notifications: 'fh_portal_notifications',
-  reviews: 'fh_portal_reviews',
-  settings: 'fh_portal_settings',
-  session: 'fh_portal_session',
+  users: 'fh_portal_users_v2',
+  attendance: 'fh_portal_attendance_v2',
+  leaves: 'fh_portal_leaves_v2',
+  notifications: 'fh_portal_notifications_v2',
+  reviews: 'fh_portal_reviews_v2',
+  settings: 'fh_portal_settings_v2',
+  session: 'fh_portal_session_v2',
 };
 
 function load<T>(key: string, fallback: T): T {

@@ -105,20 +105,7 @@ export function AuthGate({ onLogin }: Props) {
               </button>
             </form>
 
-            {/* Demo hints */}
-            <div style={{ marginTop:20, padding:'12px 14px', background:'#f0fdf4', borderRadius:8, border:'1px solid #bbf7d0' }}>
-              <p style={{ fontSize:11, fontWeight:600, color:G, marginBottom:6 }}>Demo Credentials</p>
-              {[
-                ['Admin', 'admin@feelandhealyoga.com', 'Admin@1234'],
-                ['Senior', 'priyanka@feelandhealyoga.com', 'Teacher@1234'],
-                ['Teacher', 'ananya@feelandhealyoga.com', 'Teacher@1234'],
-              ].map(([role, em, pw]) => (
-                <button key={role} type="button" onClick={() => { setEmail(em); setPassword(pw); }}
-                  style={{ display:'block', background:'none', border:'none', cursor:'pointer', fontSize:11, color:'#4b5563', padding:'1px 0', textAlign:'left' }}>
-                  <strong style={{ color:G }}>{role}:</strong> {em}
-                </button>
-              ))}
-            </div>
+
           </>
         ) : (
           <>
