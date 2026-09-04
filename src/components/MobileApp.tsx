@@ -387,10 +387,7 @@ const HomeScreen = ({ setTab, setMenu }: { setTab:(t:Tab)=>void; setMenu:(v:bool
           borderRadius:99, padding:"8px 8px 8px 18px",
           boxShadow:"0 2px 20px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.12)",
         } as any}>
-          <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-            <div style={{ width:8, height:8, borderRadius:"50%", flexShrink:0,
-              background:"radial-gradient(circle, #52D68A, #1B4332)",
-              animation:"yogiRing 2.4s ease-in-out infinite" }} />
+          <div style={{ display:"flex", alignItems:"center" }}>
             <span style={{ fontFamily:"'Playfair Display',serif", fontSize:13, fontWeight:700,
               color:"rgba(255,255,255,0.95)", letterSpacing:"0.06em",
               textTransform:"uppercase" as const }}>Feel &amp; Heal Yoga</span>
