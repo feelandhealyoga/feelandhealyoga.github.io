@@ -424,10 +424,17 @@ const HomeScreen = ({ setTab, setMenu }: { setTab:(t:Tab)=>void; setMenu:(v:bool
         <p style={{ color:"rgba(255,255,255,0.60)", fontSize:11, margin:"0 0 16px" }}>
           Online &amp; Offline Yoga · Kharghar, Navi Mumbai
         </p>
-        <button onClick={openTrial} className="fh-tap" style={{ width:"100%", padding:"13px 0",
-            borderRadius:8, background:T.green, border:"none", cursor:"pointer",
-            color:"#fff", fontSize:13, fontWeight:700, fontFamily:"'Inter',sans-serif",
-            boxShadow:"0 4px 14px rgba(27,67,50,0.40)" } as any}>Book Free Trial</button>
+        <button onClick={openTrial} className="fh-tap" style={{
+            width:"100%", padding:"14px 0",
+            borderRadius:99,
+            background:"linear-gradient(135deg, hsl(38,92%,52%), hsl(30,86%,46%))",
+            border:"none", cursor:"pointer",
+            color:"hsl(220,18%,12%)",
+            fontSize:14, fontWeight:700,
+            fontFamily:"'Inter',sans-serif",
+            letterSpacing:"0.02em",
+            boxShadow:"0 6px 28px hsla(38,92%,52%,0.55), inset 0 1px 0 rgba(255,255,255,0.28)",
+          } as any}>🌿 Book Free Trial</button>
       </div>
     </section>
 
