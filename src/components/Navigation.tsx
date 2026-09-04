@@ -87,7 +87,7 @@ export const Navigation = () => {
     <header
       id="site-nav-header"
       className={cn(
-        "hidden md:block transition-all duration-300",
+        "transition-all duration-300",
         scrolled
           ? "bg-[hsl(38,35%,96%)]/92 backdrop-blur-md shadow-sm border-b border-[hsl(38,18%,84%)]"
           : "bg-[hsl(38,35%,96%)] border-b border-[hsl(38,18%,84%)]"
@@ -98,7 +98,7 @@ export const Navigation = () => {
         left: 0,
         right: 0,
         width: "100%",
-        zIndex: 99999,
+        zIndex: 50,
       }}
     >
       <div className="max-w-6xl mx-auto px-4">
