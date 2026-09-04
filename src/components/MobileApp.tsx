@@ -711,6 +711,55 @@ const AboutScreen = ({ setMenu, setTab }: { setMenu:(v:boolean)=>void; setTab:(t
 
       <div style={{ height:1, background:T.border, marginBottom:20 }} />
 
+      {/* ── WHY JOIN US ── */}
+      <p style={{ fontSize:10, color:T.muted, letterSpacing:"0.16em", textTransform:"uppercase", margin:"0 0 4px", fontWeight:600 }}>Why Choose Us</p>
+      <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:20, fontWeight:700, color:T.green, margin:"0 0 14px" }}>Why Join Feel &amp; Heal</h2>
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10, marginBottom:24 }}>
+        {[
+          { icon:"🌍", title:"Int'l Certified",   sub:"Yoga Teacher" },
+          { icon:"🌿", title:"Naturopathy",        sub:"Natural & Yogic Therapy" },
+          { icon:"👶", title:"Pre & Post Natal",   sub:"Certified Specialist" },
+          { icon:"🧘", title:"Hatha & Vinyasa",    sub:"Traditional fusion" },
+          { icon:"🫁", title:"Pranayama",           sub:"Breathwork & Alignment" },
+          { icon:"💫", title:"Holistic Wellness",  sub:"Mind, body & breath" },
+        ].map((c,i)=>(
+          <div key={i} style={{ background:T.white, borderRadius:10, padding:"12px",
+            border:`1px solid ${T.border}`, boxShadow:"0 1px 6px rgba(27,67,50,0.06)" }}>
+            <span style={{ fontSize:22, display:"block", marginBottom:4 }}>{c.icon}</span>
+            <p style={{ fontFamily:"'Playfair Display',serif", fontSize:12, fontWeight:700, color:T.green, margin:"0 0 2px" }}>{c.title}</p>
+            <p style={{ color:T.muted, fontSize:10, margin:0, lineHeight:1.4 }}>{c.sub}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* ── STUDENT TESTIMONIALS ── */}
+      <p style={{ fontSize:10, color:T.muted, letterSpacing:"0.16em", textTransform:"uppercase", margin:"0 0 4px", fontWeight:600 }}>Testimonials</p>
+      <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:20, fontWeight:700, color:T.green, margin:"0 0 14px" }}>What Students Say</h2>
+      <div style={{ display:"flex", flexDirection:"column", gap:10, marginBottom:24 }}>
+        {[
+          { name:"Nidhi Shree",      text:"I absolutely love attending this yoga class every day! Incredibly knowledgeable instructors, calming atmosphere — the perfect place to find peace.", color:"#2d8a5f" },
+          { name:"Vinu NS",          text:"Best Yoga Class — A True Mind-Body-Spirit Experience. Each session is truly transformative and leaves me feeling renewed.", color:"#d4810e" },
+          { name:"Bharti Paunikar", text:"Your classes always nourish me in the most amazing ways. It's HEALING. I really loved the meditation — so helpful for my daily life.", color:"#b5395e" },
+          { name:"Nilam Shinde",    text:"Priyanka gives individual attention. Teaches advanced asanas too. Bahut acchi teacher hai — very kind and patient.", color:"#6c4eb8" },
+        ].map((r,i)=>(
+          <div key={i} style={{ background:T.white, borderRadius:12, padding:"14px 16px",
+            border:`1px solid ${T.border}`, borderLeft:`3px solid ${r.color}`,
+            boxShadow:"0 1px 8px rgba(27,67,50,0.05)" }}>
+            <div style={{ color:"#f59e0b", fontSize:13, marginBottom:6, letterSpacing:1 }}>★★★★★</div>
+            <p style={{ fontFamily:"'Playfair Display',serif", fontSize:14, fontStyle:"italic",
+              color:T.ink, lineHeight:1.5, margin:"0 0 8px" }}>"{r.text}"</p>
+            <p style={{ color:T.muted, fontSize:11, margin:0, fontWeight:600 }}>— {r.name}</p>
+          </div>
+        ))}
+      </div>
+      <p style={{ textAlign:"center", fontSize:11, color:T.muted, marginBottom:20 }}>
+        ⭐⭐⭐⭐⭐ 5.0 on Google &nbsp;·&nbsp;
+        <a href="https://g.page/r/feelandhealyoga" target="_blank" rel="noopener noreferrer"
+          style={{ color:T.sage, fontWeight:600 }}>See all reviews</a>
+      </p>
+
+      <div style={{ height:1, background:T.border, marginBottom:20 }} />
+
       {/* Contact */}
       <p style={{ fontSize:10, color:T.muted, letterSpacing:"0.16em", textTransform:"uppercase", margin:"0 0 12px", fontWeight:600 }}>Get In Touch</p>
 
