@@ -310,41 +310,50 @@ const NavTab = ({ item, active, onClick }: { item:any; active:boolean; onClick:(
 );
 
 /* ─────────────────────────────────────
-   SHARED HEADER (non-home)
+   SHARED HEADER (non-home) — luxury centered style
 ───────────────────────────────────────*/
 const Topbar = ({ title, setMenu, setTab }: { title:string; setMenu:(v:boolean)=>void; setTab?:(t:Tab)=>void }) => (
   <div style={{
     position:"sticky", top:0, zIndex:20,
-    display:"grid", gridTemplateColumns:"44px 1fr 44px",
-    alignItems:"center",
-    padding:"max(12px,env(safe-area-inset-top)) 12px 12px",
-    background:"rgba(255,255,255,0.95)",
-    backdropFilter:"blur(16px)",
-    WebkitBackdropFilter:"blur(16px)",
+    background:"rgba(255,255,255,0.97)",
+    backdropFilter:"blur(20px)",
+    WebkitBackdropFilter:"blur(20px)",
     borderBottom:`1px solid ${T.border}`,
+    paddingTop:"max(10px,env(safe-area-inset-top))",
   } as any}>
-    {/* Left: home icon */}
-    <button
-      onClick={()=>setTab?.("home")}
-      style={{ background:"none", border:"none", cursor:"pointer", padding:8,
-        display:"flex", alignItems:"center", justifyContent:"center",
-        color:T.muted, borderRadius:8 } as any}
-      aria-label="Home">
-      <IcoHome on={false} />
-    </button>
-    {/* Centre: page title */}
-    <div style={{ textAlign:"center" }}>
-      <span style={{ fontFamily:"'Playfair Display',serif", fontSize:16, fontWeight:700,
-        color:T.green, letterSpacing:"0.01em" }}>{title}</span>
+    {/* Top strip: back · logo · menu */}
+    <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"0 14px 10px" }}>
+      <button
+        onClick={()=>setTab?.("home")}
+        style={{ width:36, height:36, borderRadius:"50%", border:`1px solid ${T.border}`,
+          background:"transparent", display:"flex", alignItems:"center", justifyContent:"center",
+          cursor:"pointer", color:T.muted, flexShrink:0 } as any}
+        aria-label="Home">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={T.muted} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+
+      {/* Centered brand + page */}
+      <div style={{ textAlign:"center", flex:1 }}>
+        <p style={{ fontFamily:"'Playfair Display',serif", fontSize:16, fontWeight:700,
+          color:T.green, margin:0, letterSpacing:"0.01em" }}>{title}</p>
+        <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:6, marginTop:2 }}>
+          <div style={{ height:1, width:24, background:T.border }} />
+          <span style={{ fontSize:8, fontWeight:700, letterSpacing:"0.18em",
+            textTransform:"uppercase", color:T.muted }}>Feel &amp; Heal Yoga</span>
+          <div style={{ height:1, width:24, background:T.border }} />
+        </div>
+      </div>
+
+      <button onClick={()=>setMenu(true)}
+        style={{ width:36, height:36, borderRadius:"50%", border:`1px solid ${T.border}`,
+          background:"transparent", display:"flex", alignItems:"center", justifyContent:"center",
+          cursor:"pointer", color:T.ink, flexShrink:0 } as any}
+        aria-label="Menu">
+        <IcoMenu />
+      </button>
     </div>
-    {/* Right: menu */}
-    <button onClick={()=>setMenu(true)}
-      style={{ background:"none", border:"none", cursor:"pointer", padding:8,
-        display:"flex", alignItems:"center", justifyContent:"center",
-        color:T.ink, borderRadius:8 } as any}
-      aria-label="Menu">
-      <IcoMenu />
-    </button>
   </div>
 );
 
@@ -370,34 +379,66 @@ const HomeScreen = ({ setTab, setMenu }: { setTab:(t:Tab)=>void; setMenu:(v:bool
         <div style={{ position:"absolute", inset:0,
           background:"linear-gradient(to bottom, rgba(5,15,10,0.22) 0%, rgba(5,15,10,0.80) 100%)" }} />
 
-        {/* ── Hero header — ultra minimal ── */}
+        {/* ── UNIQUE HERO TOP NAV ── */}
+        {/* A frosted glass pill floats at the top centre of the hero */}
         <div style={{
           position:"absolute", top:0, left:0, right:0, zIndex:2,
-          display:"flex", justifyContent:"space-between", alignItems:"center",
-          padding:"max(14px,env(safe-area-inset-top)) 16px 12px",
+          display:"flex", justifyContent:"center", alignItems:"flex-start",
+          padding:"max(14px,env(safe-area-inset-top)) 16px 0",
+          pointerEvents:"none",
         }}>
-          {/* Brand name: centered, frosted pill */}
-          <span style={{
-            fontFamily:"'Playfair Display',serif",
-            fontSize:13, fontStyle:"italic", fontWeight:500,
-            color:"rgba(255,255,255,0.85)",
-            letterSpacing:"0.04em",
-          }}>Feel &amp; Heal</span>
+          {/* The pill */}
+          <div style={{
+            pointerEvents:"all",
+            display:"flex", alignItems:"center", justifyContent:"space-between",
+            width:"100%",
+            background:"rgba(255,255,255,0.10)",
+            backdropFilter:"blur(16px)",
+            WebkitBackdropFilter:"blur(16px)",
+            border:"1px solid rgba(255,255,255,0.22)",
+            borderRadius:99,
+            padding:"8px 8px 8px 18px",
+            boxShadow:"0 2px 20px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.12)",
+          } as any}>
+            {/* Left side: green dot + brand name */}
+            <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+              {/* Animated green dot */}
+              <div style={{ position:"relative", width:8, height:8, flexShrink:0 }}>
+                <div style={{
+                  width:8, height:8, borderRadius:"50%",
+                  background:`radial-gradient(circle, #52D68A, ${T.green})`,
+                  boxShadow:`0 0 0 0 rgba(82,214,138,0.6)`,
+                  animation:"yogiRing 2.4s ease-in-out infinite",
+                }} />
+              </div>
+              <span style={{
+                fontFamily:"'Playfair Display',serif",
+                fontSize:13, fontWeight:700,
+                color:"rgba(255,255,255,0.95)",
+                letterSpacing:"0.06em",
+                textTransform:"uppercase" as const,
+              }}>Feel &amp; Heal Yoga</span>
+            </div>
 
-          {/* Menu button */}
-          <button onClick={()=>setMenu(true)}
-            style={{
-              width:36, height:36,
-              background:"rgba(255,255,255,0.14)",
-              backdropFilter:"blur(10px)",
-              WebkitBackdropFilter:"blur(10px)",
-              border:"1px solid rgba(255,255,255,0.20)",
-              borderRadius:"50%", cursor:"pointer",
-              display:"flex", alignItems:"center", justifyContent:"center",
-            } as any}
-            aria-label="Menu">
-            <IcoMenu white />
-          </button>
+            {/* Right: compact circular menu button */}
+            <button
+              onClick={()=>setMenu(true)}
+              style={{
+                width:34, height:34, borderRadius:"50%",
+                background:"rgba(255,255,255,0.18)",
+                border:"1px solid rgba(255,255,255,0.28)",
+                display:"flex", alignItems:"center", justifyContent:"center",
+                cursor:"pointer", flexShrink:0,
+              } as any}
+              aria-label="Menu">
+              {/* Three lines icon */}
+              <svg width="14" height="14" viewBox="0 0 18 18" fill="none">
+                <line x1="2" y1="5" x2="16" y2="5" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
+                <line x1="2" y1="9" x2="12" y2="9" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
+                <line x1="2" y1="13" x2="16" y2="13" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
+              </svg>
+            </button>
+          </div>
         </div>
 
         {/* ── Hero content ── */}
