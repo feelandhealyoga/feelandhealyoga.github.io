@@ -358,217 +358,137 @@ const Topbar = ({ title, setMenu, setTab }: { title:string; setMenu:(v:boolean)=
 );
 
 /* ═════════════════════════════════════
-   HOME SCREEN
-              boxShadow:"0 4px 16px rgba(27,67,50,0.40)",
-            } as any}>Book Free Trial</button>
-            <button onClick={openYogi} className="fh-tap" style={{
-              flex:1, padding:"13px 0", borderRadius:8,
-              background:"rgba(255,255,255,0.16)", backdropFilter:"blur(8px)",
-              border:"1px solid rgba(255,255,255,0.30)",
-              cursor:"pointer", color:"#fff", fontSize:12, fontWeight:600,
-              fontFamily:"'Inter',sans-serif",
-            } as any}>Ask Yogi 🤖</button>
-          </div>
-        </div>
-      </section>
+   HOME SCREEN — ZERO SCROLL
+   Hero (flex:1) + Yogi + Teacher strip + Book CTA
+═════════════════════════════════════*/
+const HomeScreen = ({ setTab, setMenu }: { setTab:(t:Tab)=>void; setMenu:(v:boolean)=>void }) => (
+  <div style={{
+    height:"calc(100dvh - max(80px, calc(60px + max(18px, env(safe-area-inset-bottom)))))",
+    display:"flex", flexDirection:"column", overflow:"hidden",
+  }}>
 
-      {/* ════ YOGI AI BANNER ════ */}
-      <section style={{ margin:"16px 16px 0" }}>
-        <button onClick={openYogi} className="fh-tap" style={{
-          width:"100%", display:"flex", alignItems:"center", gap:14,
-          padding:"14px 16px", borderRadius:14,
-          background:`linear-gradient(135deg, ${T.yogi}, #2D6A4F)`,
-          border:"none", cursor:"pointer", textAlign:"left",
-          boxShadow:"0 4px 20px rgba(27,67,50,0.28)",
+    {/* ════ HERO ════ */}
+    <section style={{ flex:1, position:"relative", overflow:"hidden", minHeight:0 }}>
+      <img src="/assets/hero-yoga.jpg" alt="Feel &amp; Heal Yoga"
+        loading="eager"
+        style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center 30%", display:"block" }} />
+      <div style={{ position:"absolute", inset:0,
+        background:"linear-gradient(to bottom, rgba(5,15,10,0.15) 0%, rgba(5,15,10,0.75) 100%)" }} />
+
+      {/* Pill nav */}
+      <div style={{ position:"absolute", top:0, left:0, right:0, zIndex:2,
+        display:"flex", justifyContent:"center",
+        padding:"max(14px,env(safe-area-inset-top)) 16px 0",
+        pointerEvents:"none" }}>
+        <div style={{ pointerEvents:"all", display:"flex", alignItems:"center",
+          justifyContent:"space-between", width:"100%",
+          background:"rgba(255,255,255,0.10)", backdropFilter:"blur(16px)",
+          WebkitBackdropFilter:"blur(16px)", border:"1px solid rgba(255,255,255,0.22)",
+          borderRadius:99, padding:"8px 8px 8px 18px",
+          boxShadow:"0 2px 20px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.12)",
         } as any}>
-          <div style={{
-            width:44, height:44, borderRadius:"50%",
-            background:"rgba(255,255,255,0.18)", flexShrink:0,
-            display:"flex", alignItems:"center", justifyContent:"center",
-          }}>
-            <YogiIcon large />
+          <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+            <div style={{ width:8, height:8, borderRadius:"50%", flexShrink:0,
+              background:"radial-gradient(circle, #52D68A, #1B4332)",
+              animation:"yogiRing 2.4s ease-in-out infinite" }} />
+            <span style={{ fontFamily:"'Playfair Display',serif", fontSize:13, fontWeight:700,
+              color:"rgba(255,255,255,0.95)", letterSpacing:"0.06em",
+              textTransform:"uppercase" as const }}>Feel &amp; Heal Yoga</span>
           </div>
-          <div>
-            <p style={{ color:"#fff", fontWeight:700, fontSize:14, margin:"0 0 2px", fontFamily:"'Playfair Display',serif" }}>
-              Chat with Yogi AI
-            </p>
-            <p style={{ color:"rgba(255,255,255,0.65)", fontSize:11, margin:0 }}>
-              Ask about yoga, get a personalised plan →
-            </p>
-          </div>
-          <span style={{ marginLeft:"auto", color:"rgba(255,255,255,0.60)", fontSize:18 }}>›</span>
-        </button>
-      </section>
-
-      {/* ════ PROGRAMS — 2×3 grid, zero scroll ════ */}
-      <section style={{ padding:"22px 16px 0" }}>
-        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:14 }}>
-          <div>
-            <p style={{ fontSize:10, color:T.muted, letterSpacing:"0.16em", textTransform:"uppercase", margin:"0 0 3px", fontWeight:600 }}>Find Your Practice</p>
-            <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:20, fontWeight:700, color:T.green, margin:0 }}>Our Programs</h2>
-          </div>
-          <button onClick={openTrial} style={{ fontSize:11, color:T.sage, fontWeight:600, background:"none", border:"none", cursor:"pointer" }}>
-            Book Any →
+          <button onClick={()=>setMenu(true)}
+            style={{ width:34, height:34, borderRadius:"50%",
+              background:"rgba(255,255,255,0.18)", border:"1px solid rgba(255,255,255,0.28)",
+              display:"flex", alignItems:"center", justifyContent:"center",
+              cursor:"pointer", flexShrink:0 } as any} aria-label="Menu">
+            <svg width="14" height="14" viewBox="0 0 18 18" fill="none">
+              <line x1="2" y1="5" x2="16" y2="5" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
+              <line x1="2" y1="9" x2="12" y2="9" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
+              <line x1="2" y1="13" x2="16" y2="13" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
+            </svg>
           </button>
         </div>
+      </div>
 
-        {/* 2-column × 3-row grid — all 6 visible, NO scroll */}
-        <div style={{
-          display:"grid",
-          gridTemplateColumns:"1fr 1fr",
-          gap:10,
-          marginBottom:20,
-        }}>
-          {PROGRAMS.map((p,i)=>(
-            <div key={i} onClick={openTrial} className="fh-tap"
-              style={{
-                height:120, borderRadius:12, overflow:"hidden",
-                cursor:"pointer", position:"relative",
-                transition:"transform 0.12s",
-              }}>
-              <img src={p.img} alt={p.name} loading="lazy"
-                style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }}
-                onError={e=>{ (e.target as HTMLImageElement).src="/assets/hero-yoga.jpg"; }} />
-              <div style={{ position:"absolute", inset:0,
-                background:"linear-gradient(to top,rgba(5,15,10,0.78) 0%,transparent 60%)" }} />
-              <p style={{
-                position:"absolute", bottom:8, left:10, right:6,
-                color:"#fff", fontFamily:"'Playfair Display',serif",
-                fontSize:13, fontWeight:700, margin:0, lineHeight:1.2,
-              }}>{p.name}</p>
-            </div>
+      {/* Hero content */}
+      <div style={{ position:"absolute", bottom:0, left:0, right:0, padding:"0 20px 22px" }}>
+        <div style={{ display:"flex", gap:8, marginBottom:12 }}>
+          {["\u2605 5.0","5+ Years","500+ Students"].map(t=>(
+            <span key={t} style={{ background:"rgba(255,255,255,0.16)", backdropFilter:"blur(6px)",
+              color:"rgba(255,255,255,0.90)", fontSize:10, fontWeight:600,
+              padding:"3px 10px", borderRadius:99 }}>{t}</span>
           ))}
         </div>
-      </section>
-
-      {/* ════ SCHEDULE SELECTOR ════ */}
-      <section style={{ padding:"0 16px 20px" }}>
-        <p style={{ fontSize:10, color:T.muted, letterSpacing:"0.16em", textTransform:"uppercase", margin:"0 0 4px", fontWeight:600 }}>Choose Your Time</p>
-        <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:20, fontWeight:700, color:T.green, margin:"0 0 12px" }}>
-          Class Schedule
-        </h2>
-
-        {/* Batch tabs */}
-        <div style={{ display:"flex", gap:6, marginBottom:12 }}>
-          {BATCHES.map((b,i)=>(
-            <button key={i} onClick={()=>setBatch(i)} style={{
-              flex:1, padding:"8px 4px", borderRadius:8, border:"none",
-              background: batch===i ? T.green : T.mint,
-              color: batch===i ? "#fff" : T.sage,
-              fontSize:11, fontWeight:600, cursor:"pointer",
-              fontFamily:"'Inter',sans-serif", transition:"all 0.2s",
-            } as any}>{b.short}</button>
-          ))}
-        </div>
-
-        {/* Expanded batch */}
-        <div style={{
-          background:T.white, borderRadius:12, padding:"16px",
-          borderLeft:`3px solid ${T.green}`,
-          boxShadow:"0 2px 12px rgba(27,67,50,0.08)",
-        }}>
-          <p style={{ fontFamily:"'Playfair Display',serif", fontSize:28, fontWeight:700, color:T.ink, margin:"0 0 3px" }}>
-            {BATCHES[batch].time}
-          </p>
-          <p style={{ color:T.muted, fontSize:12, margin:"0 0 12px" }}>
-            {BATCHES[batch].label} &nbsp;·&nbsp; {BATCHES[batch].days} &nbsp;·&nbsp; Online &amp; Offline
-          </p>
-          <button onClick={openTrial} className="fh-tap" style={{
-            width:"100%", padding:"11px 0", borderRadius:8,
-            background:T.green, border:"none", cursor:"pointer",
-            color:"#fff", fontSize:13, fontWeight:700,
-            fontFamily:"'Inter',sans-serif",
-          } as any}>Book This Batch →</button>
-        </div>
-      </section>
-
-      {/* ════ TEACHER CARD ════ */}
-      <section style={{ margin:"0 16px 20px", borderRadius:14, overflow:"hidden", position:"relative", height:220 }}>
-        <img src="/assets/instructor-priyanka.jpg" alt="Priyanka Sahu" loading="lazy"
-          style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center 12%" }} />
-        <div style={{ position:"absolute", inset:0, background:"linear-gradient(to top,rgba(5,15,10,0.88) 0%,rgba(5,15,10,0.05) 55%)" }} />
-        <div style={{ position:"absolute", bottom:0, left:0, right:0, padding:"0 16px 16px" }}>
-          <p style={{ color:"rgba(255,255,255,0.50)", fontSize:9, letterSpacing:"0.18em", textTransform:"uppercase", margin:"0 0 4px" }}>Your Teacher</p>
-          <p style={{ fontFamily:"'Playfair Display',serif", fontSize:20, fontWeight:700, color:"#fff", margin:"0 0 3px" }}>Priyanka Sahu</p>
-          <p style={{ color:"rgba(255,255,255,0.60)", fontSize:11, margin:"0 0 12px" }}>Internationally Certified · 5+ Years</p>
-          <div style={{ display:"flex", gap:8 }}>
-            <button onClick={openYogi} className="fh-tap" style={{
-              padding:"8px 14px", borderRadius:8,
-              background:"rgba(255,255,255,0.16)", backdropFilter:"blur(8px)",
-              border:"1px solid rgba(255,255,255,0.25)",
-              color:"#fff", fontSize:11, fontWeight:600, cursor:"pointer",
-              fontFamily:"'Inter',sans-serif",
-            } as any}>Ask Yogi 🤖</button>
-            <button onClick={openTrial} className="fh-tap" style={{
-              padding:"8px 14px", borderRadius:8,
-              background:T.green, border:"none",
-              color:"#fff", fontSize:11, fontWeight:700, cursor:"pointer",
-              fontFamily:"'Inter',sans-serif",
-            } as any}>Book Trial</button>
-          </div>
-        </div>
-      </section>
-
-      {/* ════ REVIEWS ════ */}
-      <section style={{ padding:"0 16px 20px" }}>
-        <p style={{ fontSize:10, color:T.muted, letterSpacing:"0.16em", textTransform:"uppercase", margin:"0 0 4px", fontWeight:600 }}>Reviews</p>
-        <div style={{ overflow:"hidden" }}
-          onTouchStart={e=>{ touchX.current=e.touches[0].clientX; }}
-          onTouchEnd={e=>{
-            const dx=touchX.current-e.changedTouches[0].clientX;
-            if(Math.abs(dx)>44){ if(dx>0) setRIdx(i=>Math.min(i+1,REVIEWS.length-1)); else setRIdx(i=>Math.max(i-1,0)); }
-          }}>
-          <div style={{ display:"flex", transform:`translateX(${-rIdx*100}%)`, transition:"transform 0.32s ease" }}>
-            {REVIEWS.map((r,i)=>(
-              <div key={i} style={{ minWidth:"100%", paddingRight:2 }}>
-                <div style={{ background:T.white, borderRadius:12, padding:"16px", border:`1px solid ${T.border}` }}>
-                  <div style={{ color:T.gold, fontSize:14, marginBottom:10, letterSpacing:2 }}>★★★★★</div>
-                  <p style={{ fontFamily:"'Playfair Display',serif", fontSize:17, fontWeight:500, fontStyle:"italic",
-                    color:T.ink, lineHeight:1.45, margin:"0 0 10px" }}>"{r.text}"</p>
-                  <p style={{ color:T.muted, fontSize:11, margin:0 }}>— {r.name}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div style={{ display:"flex", justifyContent:"center", gap:5, marginTop:10 }}>
-          {REVIEWS.map((_,i)=>(
-            <button key={i} onClick={()=>setRIdx(i)} style={{
-              width:i===rIdx?18:5, height:5, borderRadius:99,
-              background:i===rIdx?T.green:T.border,
-              border:"none", padding:0, cursor:"pointer", transition:"all 0.25s",
-            } as any} />
-          ))}
-        </div>
-      </section>
-
-      {/* ════ FINAL CTA ════ */}
-      <section style={{ margin:"0 16px 40px", borderRadius:14, overflow:"hidden",
-        background:T.green, padding:"28px 20px", textAlign:"center" }}>
-        <p style={{ color:"rgba(255,255,255,0.48)", fontSize:9, letterSpacing:"0.18em", textTransform:"uppercase", margin:"0 0 8px" }}>Limited Spots</p>
-        <p style={{ fontFamily:"'Playfair Display',serif", fontSize:26, fontWeight:700, color:"#fff",
-          margin:"0 0 7px", lineHeight:1.15, fontStyle:"italic" }}>
-          Your first class<br/>is on us.
+        <h1 style={{ fontFamily:"'Playfair Display',serif",
+          fontSize:"clamp(30px,8.5vw,40px)", fontWeight:700, color:"#fff",
+          lineHeight:1.08, margin:"0 0 4px" }}>Move Better.<br/>Breathe Deeper.</h1>
+        <p style={{ color:"rgba(255,255,255,0.60)", fontSize:11, margin:"0 0 16px" }}>
+          Online &amp; Offline Yoga · Kharghar, Navi Mumbai
         </p>
-        <p style={{ color:"rgba(255,255,255,0.55)", fontSize:12, margin:"0 0 20px" }}>No commitment. No credit card.</p>
-        <button onClick={openTrial} className="fh-tap" style={{
-          width:"100%", padding:"13px 0", borderRadius:8,
-          background:"#fff", border:"none", cursor:"pointer",
-          color:T.green, fontSize:14, fontWeight:700,
-          fontFamily:"'Inter',sans-serif",
-        } as any}>Book Free Trial</button>
+        <div style={{ display:"flex", gap:10 }}>
+          <button onClick={openTrial} className="fh-tap" style={{ flex:2, padding:"12px 0",
+            borderRadius:8, background:T.green, border:"none", cursor:"pointer",
+            color:"#fff", fontSize:13, fontWeight:700, fontFamily:"'Inter',sans-serif",
+            boxShadow:"0 4px 14px rgba(27,67,50,0.40)" } as any}>Book Free Trial</button>
+          <button onClick={openYogi} className="fh-tap" style={{ flex:1, padding:"12px 0",
+            borderRadius:8, background:"rgba(255,255,255,0.14)", backdropFilter:"blur(8px)",
+            border:"1px solid rgba(255,255,255,0.28)", cursor:"pointer",
+            color:"#fff", fontSize:12, fontWeight:600, fontFamily:"'Inter',sans-serif" } as any}>
+            Ask Yogi 🤖</button>
+        </div>
+      </div>
+    </section>
 
-        {/* Yogi hint */}
-        <button onClick={openYogi} className="fh-tap" style={{
-          marginTop:10, background:"none", border:"none", cursor:"pointer",
-          color:"rgba(255,255,255,0.55)", fontSize:11,
-          fontFamily:"'Inter',sans-serif",
-        } as any}>Or ask Yogi AI for a personalised plan 🤖</button>
-      </section>
+    {/* ════ BOTTOM STRIP ════ */}
+    <div style={{ background:T.white, flexShrink:0 }}>
+      <button onClick={openYogi} className="fh-tap" style={{ display:"flex", alignItems:"center",
+        gap:12, width:"100%", padding:"12px 16px",
+        background:`linear-gradient(135deg, ${T.yogi}, #2D6A4F)`,
+        border:"none", cursor:"pointer", textAlign:"left" as const } as any}>
+        <div style={{ width:36, height:36, borderRadius:"50%", background:"rgba(255,255,255,0.18)",
+          display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+          <YogiIcon />
+        </div>
+        <div style={{ flex:1 }}>
+          <p style={{ color:"#fff", fontWeight:700, fontSize:13, margin:0,
+            fontFamily:"'Playfair Display',serif" }}>Chat with Yogi AI</p>
+          <p style={{ color:"rgba(255,255,255,0.60)", fontSize:11, margin:0 }}>
+            Programs · Schedule · Personalised plan →
+          </p>
+        </div>
+        <span style={{ color:"rgba(255,255,255,0.50)", fontSize:20, flexShrink:0 }}>›</span>
+      </button>
 
+      <div style={{ display:"flex", alignItems:"center", gap:12, padding:"10px 16px",
+        borderBottom:`1px solid ${T.border}` }}>
+        <div style={{ width:40, height:40, borderRadius:"50%", overflow:"hidden",
+          flexShrink:0, border:`2px solid ${T.mint}` }}>
+          <img src="/assets/instructor-priyanka.jpg" alt="Priyanka Sahu"
+            style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center 12%" }} />
+        </div>
+        <div style={{ flex:1 }}>
+          <p style={{ fontFamily:"'Playfair Display',serif", fontSize:14, fontWeight:700,
+            color:T.green, margin:0 }}>Priyanka Sahu</p>
+          <p style={{ color:T.muted, fontSize:11, margin:0 }}>
+            Int'l Certified · 5+ Yrs &nbsp;·&nbsp;
+            <span style={{ color:T.gold }}>\u2605\u2605\u2605\u2605\u2605</span>
+          </p>
+        </div>
+        <button onClick={()=>setTab("about")} style={{ background:T.mint, border:"none",
+          borderRadius:6, padding:"5px 10px", cursor:"pointer",
+          color:T.sage, fontSize:11, fontWeight:600, fontFamily:"'Inter',sans-serif" } as any}>View</button>
+      </div>
+
+      <div style={{ padding:"10px 16px" }}>
+        <button onClick={openTrial} className="fh-tap" style={{ width:"100%", padding:"13px 0",
+          borderRadius:10, background:T.green, border:"none", cursor:"pointer",
+          color:"#fff", fontSize:14, fontWeight:700, fontFamily:"'Inter',sans-serif",
+          boxShadow:"0 3px 12px rgba(27,67,50,0.28)" } as any}>Book Your Free Trial →</button>
+      </div>
     </div>
-  );
-};
+
+  </div>
+);
+
 
 /* ═════════════════════════════════════
    CLASSES SCREEN
