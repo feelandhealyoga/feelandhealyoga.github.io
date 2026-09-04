@@ -87,7 +87,7 @@ export const Navigation = () => {
     <header
       id="site-nav-header"
       className={cn(
-        "transition-all duration-300",
+        "hidden md:block transition-all duration-300",
         scrolled
           ? "bg-[hsl(38,35%,96%)]/92 backdrop-blur-md shadow-sm border-b border-[hsl(38,18%,84%)]"
           : "bg-[hsl(38,35%,96%)] border-b border-[hsl(38,18%,84%)]"
