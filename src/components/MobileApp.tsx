@@ -167,9 +167,9 @@ export const MobileApp = () => {
           style={{ WebkitOverflowScrolling:"touch", overflowX:"hidden",
             paddingBottom:"calc(90px + max(20px, env(safe-area-inset-bottom)))" } as any}>
           {tab==="home"    && <HomeScreen    setTab={setTab} setMenu={setMenu} />}
-          {tab==="classes" && <ClassesScreen setMenu={setMenu} />}
-          {tab==="gallery" && <GalleryScreen setMenu={setMenu} />}
-          {tab==="about"   && <AboutScreen   setMenu={setMenu} />}
+          {tab==="classes" && <ClassesScreen setMenu={setMenu} setTab={setTab} />}
+          {tab==="gallery" && <GalleryScreen setMenu={setMenu} setTab={setTab} />}
+          {tab==="about"   && <AboutScreen   setMenu={setMenu} setTab={setTab} />}
         </div>
 
         {/* ── Floating nav (fixed, outside flex flow) ── */}
@@ -312,22 +312,36 @@ const NavTab = ({ item, active, onClick }: { item:any; active:boolean; onClick:(
 /* ─────────────────────────────────────
    SHARED HEADER (non-home)
 ───────────────────────────────────────*/
-const Topbar = ({ title, setMenu }: { title:string; setMenu:(v:boolean)=>void }) => (
+const Topbar = ({ title, setMenu, setTab }: { title:string; setMenu:(v:boolean)=>void; setTab?:(t:Tab)=>void }) => (
   <div style={{
     position:"sticky", top:0, zIndex:20,
-    display:"flex", alignItems:"center", justifyContent:"space-between",
-    padding:"max(14px,env(safe-area-inset-top)) 20px 14px",
-    background:T.white, borderBottom:`1px solid ${T.border}`,
-  }}>
-    <div style={{ display:"flex", alignItems:"center", gap:9 }}>
-      <img src="/assets/feel-and-heal-yoga-logo.svg" alt="Feel & Heal Yoga"
-        style={{ width:26, height:26, flexShrink:0 }} />
-      <span style={{ fontFamily:"'Playfair Display',serif", fontSize:17, fontWeight:700, color:T.green }}>
-        {title}
-      </span>
+    display:"grid", gridTemplateColumns:"44px 1fr 44px",
+    alignItems:"center",
+    padding:"max(12px,env(safe-area-inset-top)) 12px 12px",
+    background:"rgba(255,255,255,0.95)",
+    backdropFilter:"blur(16px)",
+    WebkitBackdropFilter:"blur(16px)",
+    borderBottom:`1px solid ${T.border}`,
+  } as any}>
+    {/* Left: home icon */}
+    <button
+      onClick={()=>setTab?.("home")}
+      style={{ background:"none", border:"none", cursor:"pointer", padding:8,
+        display:"flex", alignItems:"center", justifyContent:"center",
+        color:T.muted, borderRadius:8 } as any}
+      aria-label="Home">
+      <IcoHome on={false} />
+    </button>
+    {/* Centre: page title */}
+    <div style={{ textAlign:"center" }}>
+      <span style={{ fontFamily:"'Playfair Display',serif", fontSize:16, fontWeight:700,
+        color:T.green, letterSpacing:"0.01em" }}>{title}</span>
     </div>
+    {/* Right: menu */}
     <button onClick={()=>setMenu(true)}
-      style={{ background:"none", border:"none", cursor:"pointer", padding:6, color:T.ink }}
+      style={{ background:"none", border:"none", cursor:"pointer", padding:8,
+        display:"flex", alignItems:"center", justifyContent:"center",
+        color:T.ink, borderRadius:8 } as any}
       aria-label="Menu">
       <IcoMenu />
     </button>
@@ -356,22 +370,32 @@ const HomeScreen = ({ setTab, setMenu }: { setTab:(t:Tab)=>void; setMenu:(v:bool
         <div style={{ position:"absolute", inset:0,
           background:"linear-gradient(to bottom, rgba(5,15,10,0.22) 0%, rgba(5,15,10,0.80) 100%)" }} />
 
-        {/* ── Hero header ── */}
+        {/* ── Hero header — ultra minimal ── */}
         <div style={{
-          position:"absolute", top:0, left:0, right:0,
+          position:"absolute", top:0, left:0, right:0, zIndex:2,
           display:"flex", justifyContent:"space-between", alignItems:"center",
-          padding:"max(14px,env(safe-area-inset-top)) 18px 12px",
+          padding:"max(14px,env(safe-area-inset-top)) 16px 12px",
         }}>
-          <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-            <img src="/assets/feel-and-heal-yoga-logo.svg" alt="logo"
-              style={{ width:26, height:26, filter:"brightness(0) invert(1)" }} />
-            <span style={{ fontFamily:"'Playfair Display',serif", fontSize:14, color:"#fff", fontWeight:700 }}>
-              Feel &amp; Heal Yoga
-            </span>
-          </div>
+          {/* Brand name: centered, frosted pill */}
+          <span style={{
+            fontFamily:"'Playfair Display',serif",
+            fontSize:13, fontStyle:"italic", fontWeight:500,
+            color:"rgba(255,255,255,0.85)",
+            letterSpacing:"0.04em",
+          }}>Feel &amp; Heal</span>
+
+          {/* Menu button */}
           <button onClick={()=>setMenu(true)}
-            style={{ background:"rgba(255,255,255,0.15)", backdropFilter:"blur(8px)",
-              border:"none", borderRadius:8, padding:8, cursor:"pointer" } as any}>
+            style={{
+              width:36, height:36,
+              background:"rgba(255,255,255,0.14)",
+              backdropFilter:"blur(10px)",
+              WebkitBackdropFilter:"blur(10px)",
+              border:"1px solid rgba(255,255,255,0.20)",
+              borderRadius:"50%", cursor:"pointer",
+              display:"flex", alignItems:"center", justifyContent:"center",
+            } as any}
+            aria-label="Menu">
             <IcoMenu white />
           </button>
         </div>
@@ -449,33 +473,42 @@ const HomeScreen = ({ setTab, setMenu }: { setTab:(t:Tab)=>void; setMenu:(v:bool
         </button>
       </section>
 
-      {/* ════ PROGRAMS — horizontal swipe ════ */}
-      <section style={{ padding:"22px 0 0" }}>
-        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", padding:"0 18px 12px" }}>
+      {/* ════ PROGRAMS — 2×3 grid, zero scroll ════ */}
+      <section style={{ padding:"22px 16px 0" }}>
+        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:14 }}>
           <div>
             <p style={{ fontSize:10, color:T.muted, letterSpacing:"0.16em", textTransform:"uppercase", margin:"0 0 3px", fontWeight:600 }}>Find Your Practice</p>
-            <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:20, fontWeight:700, color:T.green, margin:0 }}>
-              Our Programs
-            </h2>
+            <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:20, fontWeight:700, color:T.green, margin:0 }}>Our Programs</h2>
           </div>
           <button onClick={openTrial} style={{ fontSize:11, color:T.sage, fontWeight:600, background:"none", border:"none", cursor:"pointer" }}>
             Book Any →
           </button>
         </div>
 
-        <div className="fh-swipe" style={{ padding:"0 18px 20px" }}>
+        {/* 2-column × 3-row grid — all 6 visible, NO scroll */}
+        <div style={{
+          display:"grid",
+          gridTemplateColumns:"1fr 1fr",
+          gap:10,
+          marginBottom:20,
+        }}>
           {PROGRAMS.map((p,i)=>(
-            <div key={i} onClick={openTrial} className="fh-snap fh-tap"
-              style={{ minWidth:140, height:185, borderRadius:12, overflow:"hidden", flexShrink:0, cursor:"pointer", position:"relative" }}>
+            <div key={i} onClick={openTrial} className="fh-tap"
+              style={{
+                height:120, borderRadius:12, overflow:"hidden",
+                cursor:"pointer", position:"relative",
+                transition:"transform 0.12s",
+              }}>
               <img src={p.img} alt={p.name} loading="lazy"
-                style={{ width:"100%", height:"100%", objectFit:"cover" }}
+                style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }}
                 onError={e=>{ (e.target as HTMLImageElement).src="/assets/hero-yoga.jpg"; }} />
-              <div style={{ position:"absolute", inset:0, background:"linear-gradient(to top,rgba(5,15,10,0.82) 0%,transparent 55%)" }} />
-              <p style={{ position:"absolute", bottom:10, left:10, right:6,
+              <div style={{ position:"absolute", inset:0,
+                background:"linear-gradient(to top,rgba(5,15,10,0.78) 0%,transparent 60%)" }} />
+              <p style={{
+                position:"absolute", bottom:8, left:10, right:6,
                 color:"#fff", fontFamily:"'Playfair Display',serif",
-                fontSize:14, fontWeight:700, margin:0, lineHeight:1.2 }}>
-                {p.name}
-              </p>
+                fontSize:13, fontWeight:700, margin:0, lineHeight:1.2,
+              }}>{p.name}</p>
             </div>
           ))}
         </div>
@@ -613,12 +646,12 @@ const HomeScreen = ({ setTab, setMenu }: { setTab:(t:Tab)=>void; setMenu:(v:bool
 /* ═════════════════════════════════════
    CLASSES SCREEN
 ═════════════════════════════════════*/
-const ClassesScreen = ({ setMenu }: { setMenu:(v:boolean)=>void }) => {
+const ClassesScreen = ({ setMenu, setTab }: { setMenu:(v:boolean)=>void; setTab:(t:Tab)=>void }) => {
   const [batch, setBatch] = useState(0);
 
   return (
     <div className="fh-in">
-      <Topbar title="Classes" setMenu={setMenu} />
+      <Topbar title="Classes" setMenu={setMenu} setTab={setTab} />
 
       <div style={{ padding:"20px 16px 40px" }}>
 
@@ -701,7 +734,7 @@ const ClassesScreen = ({ setMenu }: { setMenu:(v:boolean)=>void }) => {
 /* ═════════════════════════════════════
    GALLERY SCREEN
 ═════════════════════════════════════*/
-const GalleryScreen = ({ setMenu }: { setMenu:(v:boolean)=>void }) => {
+const GalleryScreen = ({ setMenu, setTab }: { setMenu:(v:boolean)=>void; setTab:(t:Tab)=>void }) => {
   const [filter, setFilter] = useState<"all"|"solo"|"group">("all");
   const [lb,     setLb]     = useState<number|null>(null);
 
@@ -711,7 +744,7 @@ const GalleryScreen = ({ setMenu }: { setMenu:(v:boolean)=>void }) => {
 
   return (
     <div className="fh-in">
-      <Topbar title="Gallery" setMenu={setMenu} />
+      <Topbar title="Gallery" setMenu={setMenu} setTab={setTab} />
 
       <div style={{ padding:"16px 16px 40px" }}>
 
@@ -805,9 +838,9 @@ const GalleryScreen = ({ setMenu }: { setMenu:(v:boolean)=>void }) => {
 /* ═════════════════════════════════════
    ABOUT SCREEN
 ═════════════════════════════════════*/
-const AboutScreen = ({ setMenu }: { setMenu:(v:boolean)=>void }) => (
+const AboutScreen = ({ setMenu, setTab }: { setMenu:(v:boolean)=>void; setTab:(t:Tab)=>void }) => (
   <div className="fh-in">
-    <Topbar title="About" setMenu={setMenu} />
+    <Topbar title="About" setMenu={setMenu} setTab={setTab} />
 
     <div style={{ padding:"24px 16px 48px" }}>
 
