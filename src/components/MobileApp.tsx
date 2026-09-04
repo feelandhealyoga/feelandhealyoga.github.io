@@ -751,18 +751,15 @@ const AboutScreen = ({ setMenu, setTab }: { setMenu:(v:boolean)=>void; setTab:(t
         </div>
       </div>
 
-      <div style={{ display:"flex", gap:10, marginTop:12 }}>
-        <a href="/bring-yoga-to-your-society" style={{ flex:1, display:"flex", flexDirection:"column", gap:4,
-          padding:"14px", borderRadius:10, background:T.mint, textDecoration:"none" } as any}>
-          <span style={{ fontSize:20 }}>🏘️</span>
-          <span style={{ fontWeight:700, fontSize:12, color:T.green }}>Society Yoga</span>
-          <span style={{ fontSize:11, color:T.muted }}>Bring yoga to your community</span>
-        </a>
-        <a href="/franchise-with-us" style={{ flex:1, display:"flex", flexDirection:"column", gap:4,
-          padding:"14px", borderRadius:10, background:T.mint, textDecoration:"none" } as any}>
-          <span style={{ fontSize:20 }}>🤝</span>
-          <span style={{ fontWeight:700, fontSize:12, color:T.green }}>Franchise</span>
-          <span style={{ fontSize:11, color:T.muted }}>Partner with us</span>
+      <div style={{ marginTop:12 }}>
+        <a href="/bring-yoga-to-your-society" style={{ display:"flex", alignItems:"center", gap:14,
+          padding:"14px 16px", borderRadius:10, background:T.mint, textDecoration:"none" } as any}>
+          <span style={{ fontSize:22, flexShrink:0 }}>🏘️</span>
+          <div style={{ flex:1 }}>
+            <span style={{ fontWeight:700, fontSize:13, color:T.green, display:"block" }}>Society Yoga &amp; Franchise</span>
+            <span style={{ fontSize:11, color:T.muted }}>Bring yoga to your community · Partner with us</span>
+          </div>
+          <span style={{ color:T.muted, fontSize:18 }}>›</span>
         </a>
       </div>
     </div>
@@ -787,8 +784,7 @@ const MenuSheet = ({ onClose, setTab }: { onClose:()=>void; setTab:(t:Tab)=>void
         { l:"Classes",           f:()=>{ onClose(); setTab("classes"); } },
         { l:"Gallery",           f:()=>{ onClose(); setTab("gallery"); } },
         { l:"About / Contact",   f:()=>{ onClose(); setTab("about");   } },
-        { l:"Society Yoga",      f:()=>{ onClose(); window.location.href="/bring-yoga-to-your-society"; } },
-        { l:"Franchise",         f:()=>{ onClose(); window.location.href="/franchise-with-us"; } },
+        { l:"Society & Franchise", f:()=>{ onClose(); window.location.href="/bring-yoga-to-your-society"; } },
       ].map((it,i,arr)=>(
         <button key={it.l} onClick={it.f} style={{
           display:"block", width:"100%", padding:"14px 22px",
