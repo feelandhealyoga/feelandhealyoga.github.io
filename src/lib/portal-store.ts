@@ -97,11 +97,36 @@ export interface PortalSettings {
   leave_approval_required: boolean;
 }
 
+export type ClassType = 'group' | 'personal';
+export type ClassStatus = 'scheduled' | 'completed' | 'cancelled';
+
+export interface ClassSession {
+  id: string;
+  type: ClassType;
+  teacher_id: string;
+  assigned_by: string;
+  date: string;           // YYYY-MM-DD
+  time_start: string;     // HH:MM
+  time_end: string;       // HH:MM
+  // Group class
+  batch_id?: string;
+  batch_name?: string;
+  // Personal class
+  student_name?: string;
+  student_phone?: string;
+  // Common
+  location?: string;
+  notes?: string;
+  status: ClassStatus;
+  completion_note?: string;
+  created_at: string;
+}
+
 // ─── MOCK DATA ───────────────────────────────────────────
 const MOCK_PASSWORDS: Record<string, string> = {
   'admin@feelandhealyoga.com': 'Admin@1234',
-  'priyanka@feelandhealyoga.com': 'Teacher@1234',
-  'prajakta@feelandhealyoga.com': 'Teacher@1234',
+  'priyanka@feelandhealyoga.com': 'Priyanka@1234',
+  'prajakta@feelandhealyoga.com': 'Prajakta@1234',
 };
 
 export const MOCK_USERS: User[] = [
@@ -116,23 +141,24 @@ export const MOCK_USERS: User[] = [
     status: 'active',
   },
   {
-    id: 'u-teacher-1',
+    id: 'u-senior-1',
     name: 'Priyanka',
     email: 'priyanka@feelandhealyoga.com',
     phone: '+919876543210',
-    role: 'teacher',
+    role: 'senior',
     joining_date: '2022-03-01',
     batch_ids: ['b1', 'b2'],
     status: 'active',
   },
   {
-    id: 'u-teacher-2',
+    id: 'u-teacher-1',
     name: 'Prajakta',
     email: 'prajakta@feelandhealyoga.com',
     phone: '+919765432109',
     role: 'teacher',
+    senior_id: 'u-senior-1',
     joining_date: '2023-06-01',
-    batch_ids: ['b3', 'b4'],
+    batch_ids: ['b1', 'b3', 'b4'],
     status: 'active',
   },
 ];
@@ -153,7 +179,7 @@ function uid() { return Math.random().toString(36).slice(2,11); }
 // Generate sample attendance for last 30 days
 function generateSampleAttendance(): AttendanceRecord[] {
   const records: AttendanceRecord[] = [];
-  const teachers = ['u-teacher-1', 'u-teacher-2'];
+  const teachers = ['u-teacher-1', 'u-senior-1'];
   const statuses: AttendanceStatus[] = ['present','present','present','present','late','present','present'];
   for (let i = 0; i < 25; i++) {
     const date = daysAgo(i);
@@ -174,13 +200,14 @@ function generateSampleAttendance(): AttendanceRecord[] {
 
 // ─── STORAGE CLASS ───────────────────────────────────────
 const LS_KEYS = {
-  users: 'fh_portal_users_v2',
-  attendance: 'fh_portal_attendance_v2',
-  leaves: 'fh_portal_leaves_v2',
-  notifications: 'fh_portal_notifications_v2',
-  reviews: 'fh_portal_reviews_v2',
-  settings: 'fh_portal_settings_v2',
-  session: 'fh_portal_session_v2',
+  users: 'fh_portal_users_v3',
+  attendance: 'fh_portal_attendance_v3',
+  leaves: 'fh_portal_leaves_v3',
+  notifications: 'fh_portal_notifications_v3',
+  reviews: 'fh_portal_reviews_v3',
+  settings: 'fh_portal_settings_v3',
+  session: 'fh_portal_session_v3',
+  classes: 'fh_portal_classes_v3',
 };
 
 function load<T>(key: string, fallback: T): T {
@@ -323,6 +350,42 @@ export const portalDB = {
     });
   },
   saveSettings(s: PortalSettings) { save(LS_KEYS.settings, s); },
+
+  // CLASS SESSIONS
+  getClasses(): ClassSession[] { return load<ClassSession[]>(LS_KEYS.classes, []); },
+  saveClasses(classes: ClassSession[]) { save(LS_KEYS.classes, classes); },
+  getClassesByTeacher(teacherId: string): ClassSession[] {
+    return this.getClasses().filter(c => c.teacher_id === teacherId);
+  },
+  getClassesByDate(date: string): ClassSession[] {
+    return this.getClasses().filter(c => c.date === date);
+  },
+  getClassesByTeacherAndDate(teacherId: string, date: string): ClassSession[] {
+    return this.getClasses().filter(c => c.teacher_id === teacherId && c.date === date);
+  },
+  getUpcomingClasses(teacherId: string, days = 7): ClassSession[] {
+    const from = today();
+    const to = (() => { const d = new Date(); d.setDate(d.getDate()+days); return d.toISOString().split('T')[0]; })();
+    return this.getClasses().filter(c => c.teacher_id === teacherId && c.date >= from && c.date <= to)
+      .sort((a,b) => a.date.localeCompare(b.date) || a.time_start.localeCompare(b.time_start));
+  },
+  assignClass(session: Omit<ClassSession, 'id' | 'created_at' | 'status'>): ClassSession {
+    const all = this.getClasses();
+    const newSession: ClassSession = { ...session, id: uid(), status: 'scheduled', created_at: new Date().toISOString() };
+    all.push(newSession);
+    this.saveClasses(all);
+    return newSession;
+  },
+  updateClass(id: string, data: Partial<ClassSession>) {
+    const all = this.getClasses().map(c => c.id === id ? { ...c, ...data } : c);
+    this.saveClasses(all);
+  },
+  deleteClass(id: string) {
+    this.saveClasses(this.getClasses().filter(c => c.id !== id));
+  },
+  completeClass(id: string, note?: string) {
+    this.updateClass(id, { status: 'completed', completion_note: note || '' });
+  },
 
   // HELPERS
   getBatches(): Batch[] { return MOCK_BATCHES; },

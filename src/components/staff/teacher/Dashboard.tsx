@@ -1,6 +1,6 @@
 import { usePortal } from '../StaffPortal';
-import { portalDB } from '../../../lib/portal-store';
-import { Clock, Calendar, FileText, Star, ChevronRight, CheckCircle, AlertCircle, Info } from 'lucide-react';
+import { portalDB, type ClassSession } from '../../../lib/portal-store';
+import { Clock, Calendar, FileText, Star, ChevronRight, CheckCircle, AlertCircle, Info, Users, User } from 'lucide-react';
 
 const G = '#1b4332';
 
@@ -18,6 +18,10 @@ export function TeacherDashboard() {
   const pendingLeaves = portalDB.getLeavesByTeacher(user.id).filter(l => l.status === 'pending').length;
   const recentActivity = portalDB.getAttendanceByTeacher(user.id).slice(-5).reverse();
   const batches = portalDB.getBatches();
+  const todayStr = now.toISOString().split('T')[0];
+  const todayClasses = portalDB.getClassesByTeacherAndDate(user.id, todayStr)
+    .sort((a, b) => a.time_start.localeCompare(b.time_start));
+  const upcomingClasses = portalDB.getUpcomingClasses(user.id, 7).filter(c => c.date !== todayStr).slice(0, 3);
 
   const attendanceStatus = todayAttendance?.status || 'not_marked';
   const statusConfig = {
@@ -112,8 +116,53 @@ export function TeacherDashboard() {
         </div>
       )}
 
+      {/* Today's Classes */}
+      <div style={{ background:'#fff', borderRadius:12, border:'1px solid #e8e2da', overflow:'hidden', marginBottom:12 }}>
+        <div style={{ padding:'12px 16px', borderBottom:'1px solid #f3f4f6', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+          <p style={{ fontSize:11, fontWeight:600, color:'#78716c', textTransform:'uppercase', letterSpacing:'0.08em' }}>Today's Classes</p>
+          <span style={{ fontSize:11, color:G, fontWeight:600 }}>{todayClasses.filter(c=>c.status==='scheduled').length} scheduled</span>
+        </div>
+        {todayClasses.length === 0 ? (
+          <div style={{ padding:'20px', textAlign:'center', color:'#9ca3af', fontSize:13 }}>No classes assigned today</div>
+        ) : todayClasses.map(cls => (
+          <div key={cls.id} style={{ padding:'12px 16px', borderBottom:'1px solid #fafafa', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+            <div style={{ display:'flex', alignItems:'center', gap:10 }}>
+              <div style={{ width:36, height:36, borderRadius:8, background: cls.type==='personal' ? '#fef9c3' : '#f0fdf4', display:'flex', alignItems:'center', justifyContent:'center' }}>
+                {cls.type==='personal' ? <User size={16} color="#ca8a04"/> : <Users size={16} color={G}/>}
+              </div>
+              <div>
+                <p style={{ fontSize:13, fontWeight:600, color:'#1c1917' }}>
+                  {cls.type==='personal' ? cls.student_name : (cls.batch_name || 'Group Class')}
+                </p>
+                <p style={{ fontSize:11, color:'#78716c' }}>{cls.time_start} – {cls.time_end}{cls.location ? ` · ${cls.location}` : ''}</p>
+              </div>
+            </div>
+            <span style={{ padding:'3px 8px', borderRadius:99, fontSize:10, fontWeight:600,
+              background: cls.status==='completed' ? '#dcfce7' : cls.status==='cancelled' ? '#fee2e2' : '#eff6ff',
+              color: cls.status==='completed' ? '#16a34a' : cls.status==='cancelled' ? '#dc2626' : '#2563eb' }}>
+              {cls.status==='completed' ? '✓ Done' : cls.status==='cancelled' ? 'Cancelled' : 'Upcoming'}
+            </span>
+          </div>
+        ))}
+        {upcomingClasses.length > 0 && (
+          <div style={{ padding:'10px 16px', background:'#faf9f7', borderTop:'1px solid #f3f4f6' }}>
+            <p style={{ fontSize:11, fontWeight:600, color:'#78716c', marginBottom:6 }}>Coming Up</p>
+            {upcomingClasses.map(cls => (
+              <div key={cls.id} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'4px 0' }}>
+                <p style={{ fontSize:12, color:'#57534e' }}>
+                  {new Date(cls.date+'T12:00:00').toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short'})} · {cls.time_start}
+                </p>
+                <p style={{ fontSize:12, fontWeight:500, color:'#1c1917' }}>
+                  {cls.type==='personal' ? `👤 ${cls.student_name}` : `👥 ${cls.batch_name || 'Group'}`}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
       {/* Quick links */}
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10, marginBottom:16 }}>
+      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10, marginBottom:12 }}>
         {[
           { label:'Attendance History', icon:<Calendar size={15}/>, route:'teacher-history' as const },
           { label:'My Performance', icon:<Star size={15}/>, route:'teacher-performance' as const },
@@ -124,6 +173,7 @@ export function TeacherDashboard() {
           </button>
         ))}
       </div>
+
 
       {/* Recent Activity */}
       <div style={{ background:'#fff', borderRadius:12, border:'1px solid #e8e2da', overflow:'hidden' }}>

@@ -10,6 +10,7 @@ import { TeacherPerformance } from './teacher/Performance';
 import { SeniorDashboard } from './senior/Dashboard';
 import { TeamAttendance } from './senior/TeamAttendance';
 import { SeniorLeaveRequests } from './senior/LeaveRequests';
+import { ClassSchedule } from './senior/ClassSchedule';
 import { AdminDashboard } from './admin/Dashboard';
 import { AdminTeachers } from './admin/Teachers';
 import { AdminAllAttendance } from './admin/AllAttendance';
@@ -20,7 +21,7 @@ import { AdminSettings } from './admin/Settings';
 
 export type Route =
   | 'teacher-dashboard' | 'teacher-attendance' | 'teacher-history' | 'teacher-leave' | 'teacher-performance'
-  | 'senior-dashboard' | 'senior-team' | 'senior-leaves'
+  | 'senior-dashboard' | 'senior-team' | 'senior-leaves' | 'senior-classes'
   | 'admin-dashboard' | 'admin-teachers' | 'admin-attendance' | 'admin-leaves' | 'admin-performance' | 'admin-reports' | 'admin-settings';
 
 interface PortalCtx {
@@ -94,6 +95,7 @@ function RouteRenderer({ route, role }: { route: Route; role: Role }) {
     if (route === 'senior-dashboard') return <SeniorDashboard />;
     if (route === 'senior-team') return <TeamAttendance />;
     if (route === 'senior-leaves') return <SeniorLeaveRequests />;
+    if (route === 'senior-classes') return <ClassSchedule />;
   }
   // Admin routes
   if (role === 'admin') {

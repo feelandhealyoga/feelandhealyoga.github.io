@@ -23,7 +23,7 @@ function getNavItems(role: string): NavItem[] {
   ];
   if (role === 'senior') return [
     { label: 'Dashboard',   route: 'senior-dashboard',    icon: <LayoutDashboard size={18}/> },
-    { label: 'My Attend.',  route: 'teacher-attendance',  icon: <Clock size={18}/> },
+    { label: 'Classes',     route: 'senior-classes',      icon: <Calendar size={18}/> },
     { label: 'Team',        route: 'senior-team',         icon: <Users size={18}/> },
     { label: 'Leaves',      route: 'senior-leaves',       icon: <FileText size={18}/> },
     { label: 'Performance', route: 'teacher-performance', icon: <Star size={18}/> },
