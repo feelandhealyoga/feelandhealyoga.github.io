@@ -1,5 +1,6 @@
 import { usePortal, type Route } from '../StaffPortal';
 import { NotificationBell } from './NotificationBell';
+import { StaffYogi } from '../senior/StaffYogi';
 import {
   LayoutDashboard, Clock, Calendar, FileText, Star, Award,
   Users, ClipboardList, BarChart2, Settings, LogOut, Menu, X,
@@ -148,6 +149,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
           })}
         </nav>
       </div>
+
+      {/* ── YOGI FLOATING ASSISTANT (senior only) ── */}
+      {user.role === 'senior' && <StaffYogi />}
 
       {/* ── MOBILE DRAWER ── */}
       {mobileOpen && (
