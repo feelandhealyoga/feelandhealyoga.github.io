@@ -59,7 +59,7 @@ export const ContactSection = () => {
     saveBooking({ name: form.name, phone: form.phone });
     const text = `Hi Team Feel & Heal Yoga! 🙏 I'd like to book a FREE trial class.%0AName: ${form.name}%0AMobile: ${form.phone}${form.goal ? `%0AGoal: ${form.goal}` : ""}%0A%0AI have read and agreed to the Free Trial Terms & Conditions.`;
     window.open(`https://wa.me/${WA}?text=${text}`, "_blank");
-    setSubmitted(true);
+    window.location.href = `/thankyou?name=${encodeURIComponent(form.name)}&type=trial`;
   };
 
   const update = (field: string, val: string) => {
@@ -190,15 +190,8 @@ export const ContactSection = () => {
                   </div>
                 )}
 
-                {/* Success state */}
-                {submitted ? (
-                  <YogiThankYou
-                    name={form.name}
-                    type="trial"
-                    onReset={() => { setSubmitted(false); setForm({ name: "", phone: "", goal: "" }); setAgreed(false); }}
-                    resetLabel="Book Another"
-                  />
-                ) : (
+                {/* Form */}
+                {(
                   <form onSubmit={handleSubmit} className="space-y-3" noValidate>
 
                     {/* Name */}

@@ -138,22 +138,14 @@ export const SocietyForm = () => {
         headers: { "Content-Type": "application/json", "Accept": "application/json" },
         body: JSON.stringify(payload),
       });
-      setSubmitted(true);
+      window.location.href = `/thankyou?name=${encodeURIComponent(data.fullName)}&type=society`;
     } catch {
-      setSubmitted(true); // show success even on network issues
+      window.location.href = `/thankyou?name=${encodeURIComponent(data.fullName)}&type=society`;
     } finally {
       setLoading(false);
     }
   };
 
-  if (submitted) return (
-    <div style={{ background:"white", borderRadius:20, padding:"8px 4px", boxShadow:"0 4px 24px rgba(0,0,0,0.07)" }}>
-      <YogiThankYou
-        name={data.name}
-        type="society"
-      />
-    </div>
-  );
 
   const err = (k: string) => errors[k] ? (
     <p style={{ color:"hsl(0,70%,55%)", fontSize:11, marginTop:4 }}>{errors[k]}</p>

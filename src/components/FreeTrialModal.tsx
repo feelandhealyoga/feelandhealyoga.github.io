@@ -117,7 +117,7 @@ export const FreeTrialModal = ({ isOpen, onClose }: FreeTrialModalProps) => {
     saveBooking({ name: form.name, phone: form.phone, email: form.email, batch: form.batch, mode: form.mode });
     const msg = `Namaste Team Feel & Heal Yoga! 🙏 I'd like to book a FREE trial class.\n\nName: ${form.name}\nMobile: ${form.phone}${form.email ? `\nEmail: ${form.email}` : ""}\nBatch: ${form.batch}\nMode: ${form.mode}\n\nI have read and agreed to the Free Trial Terms & Conditions. 🌿`;
     window.open(`https://wa.me/${WA_NUM}?text=${encodeURIComponent(msg)}`, "_blank");
-    setSubmitted(true);
+    window.location.href = `/thankyou?name=${encodeURIComponent(form.name)}&type=trial`;
   };
 
   const update = (field: string, value: string) => {
@@ -420,15 +420,6 @@ export const FreeTrialModal = ({ isOpen, onClose }: FreeTrialModalProps) => {
               </button>
             </div>
           </div>
-        )}
-
-        {/* ── SUCCESS STATE ── */}
-        {submitted && (
-          <YogiThankYou
-            name={firstName}
-            type="trial"
-            onClose={onClose}
-          />
         )}
 
         {/* ── FORM ── */}

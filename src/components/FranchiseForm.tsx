@@ -88,24 +88,17 @@ export const FranchiseForm = () => {
         "Additional Information": data.notes || "None",
         "Submitted At": new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
       };
+      const redirect = () => { window.location.href = `/thankyou?name=${encodeURIComponent(data.fullName)}&type=franchise`; };
       await fetch("https://formsubmit.co/ajax/vishalnair198@gmail.com", {
         method: "POST",
         headers: { "Content-Type": "application/json", "Accept": "application/json" },
         body: JSON.stringify(payload),
       });
-      setSubmitted(true);
-    } catch { setSubmitted(true); }
+      redirect();
+    } catch { window.location.href = `/thankyou?name=${encodeURIComponent(data.fullName)}&type=franchise`; }
     finally { setLoading(false); }
   };
 
-  if (submitted) return (
-    <div style={{ background:"white", borderRadius:20, padding:"8px 4px", boxShadow:"0 4px 24px rgba(0,0,0,0.07)" }}>
-      <YogiThankYou
-        name={data.name}
-        type="franchise"
-      />
-    </div>
-  );
 
   const err = (k: string) => errors[k] ? <p style={{ color:"hsl(0,70%,55%)", fontSize:11, marginTop:4 }}>{errors[k]}</p> : null;
   const fi  = (k: keyof FData, ph: string, type="text", req=false) => (
