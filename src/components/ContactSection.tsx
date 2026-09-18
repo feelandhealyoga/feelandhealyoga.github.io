@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Phone, Mail, MessageCircle, Users, ShieldCheck, AlertCircle } from "lucide-react";
 import { useState } from "react";
+import { YogiThankYou } from "./YogiThankYou";
 
 const TERMS = [
   "The complimentary free trial is available only once per person.",
@@ -191,22 +192,12 @@ export const ContactSection = () => {
 
                 {/* Success state */}
                 {submitted ? (
-                  <div className="py-8 text-center">
-                    <div className="text-4xl mb-3">🌸</div>
-                    <h4 className="font-bold text-[hsl(145,38%,35%)] mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>
-                      You're all set, {form.name.split(" ")[0]}!
-                    </h4>
-                    <p className="text-sm text-[hsl(20,15%,42%)] leading-relaxed">
-                      Our team will confirm your free trial slot shortly. See you on the mat! 🙏
-                    </p>
-                    <button
-                      onClick={() => { setSubmitted(false); setForm({ name: "", phone: "", goal: "" }); setAgreed(false); }}
-                      className="mt-5 px-6 py-2.5 rounded-full text-sm font-bold text-white"
-                      style={{ background: "linear-gradient(135deg, hsl(145,38%,35%), hsl(160,40%,44%))" }}
-                    >
-                      Book Another
-                    </button>
-                  </div>
+                  <YogiThankYou
+                    name={form.name}
+                    type="trial"
+                    onReset={() => { setSubmitted(false); setForm({ name: "", phone: "", goal: "" }); setAgreed(false); }}
+                    resetLabel="Book Another"
+                  />
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-3" noValidate>
 

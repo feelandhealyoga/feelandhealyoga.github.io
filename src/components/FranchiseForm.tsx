@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { YogiThankYou } from "./YogiThankYou";
 
 const teal  = "hsl(175,32%,38%)";
 const gold  = "hsl(38,90%,52%)";
@@ -98,22 +99,11 @@ export const FranchiseForm = () => {
   };
 
   if (submitted) return (
-    <div style={{ background:"white", borderRadius:20, padding:"40px 28px", textAlign:"center", boxShadow:"0 4px 24px rgba(0,0,0,0.07)" }}>
-      <div style={{ fontSize:48, marginBottom:14 }}>🙏</div>
-      <h3 style={{ fontFamily:"'Playfair Display',serif", fontSize:"1.5rem", color:slate, marginBottom:10 }}>Application Received!</h3>
-      <p style={{ color:muted, lineHeight:1.7, fontSize:13.5, marginBottom:18, maxWidth:420, margin:"0 auto 18px" }}>
-        Thank you for your interest in partnering with Feel &amp; Heal Yoga. Our team will review your application and reach out within 5–7 working days.
-      </p>
-      <div style={{ display:"inline-block", background:cream, borderRadius:12, padding:"10px 20px", marginBottom:20 }}>
-        <span style={{ fontSize:12, color:muted }}>Application ID: </span>
-        <span style={{ fontWeight:800, fontSize:15, color:teal, letterSpacing:"0.06em" }}>{enquiryId}</span>
-      </div>
-      <br/>
-      <a href={`https://wa.me/919920155875?text=Namaste!%20I%20submitted%20a%20franchise%20application%20(ID%3A%20${enquiryId}).%20Looking%20forward%20to%20connecting!`}
-        target="_blank" rel="noopener noreferrer"
-        style={{ display:"inline-flex", alignItems:"center", gap:8, padding:"11px 22px", borderRadius:99, background:"hsl(145,44%,28%)", color:"white", fontWeight:700, fontSize:13, textDecoration:"none" }}>
-        💬 Connect on WhatsApp
-      </a>
+    <div style={{ background:"white", borderRadius:20, padding:"8px 4px", boxShadow:"0 4px 24px rgba(0,0,0,0.07)" }}>
+      <YogiThankYou
+        name={data.name}
+        type="franchise"
+      />
     </div>
   );
 

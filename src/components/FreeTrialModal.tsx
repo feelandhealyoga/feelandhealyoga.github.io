@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { CheckCircle2, AlertCircle, ShieldCheck } from "lucide-react";
+import { YogiThankYou } from "./YogiThankYou";
 
 interface FreeTrialModalProps {
   isOpen: boolean;
@@ -423,53 +424,11 @@ export const FreeTrialModal = ({ isOpen, onClose }: FreeTrialModalProps) => {
 
         {/* ── SUCCESS STATE ── */}
         {submitted && (
-          <div style={{ padding: "48px 28px", textAlign: "center" }}>
-            <div style={{
-              width: 72, height: 72, borderRadius: "50%",
-              background: "linear-gradient(145deg, hsl(145,44%,28%), hsl(155,40%,40%))",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              margin: "0 auto 20px",
-              boxShadow: "0 6px 24px hsla(145,44%,28%,0.38)",
-              animation: "trialSlideField 0.5s ease forwards",
-            }}>
-              <CheckCircle2 style={{ width: 34, height: 34, color: "white" }} />
-            </div>
-            <h3 style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: "1.5rem", fontWeight: 800,
-              color: "hsl(145,44%,26%)", marginBottom: 10,
-            }}>
-              You're all set{firstName ? `, ${firstName}` : ""}! 🌸
-            </h3>
-            <p style={{
-              fontSize: 14, color: "hsl(220,10%,46%)",
-              lineHeight: 1.75, marginBottom: 10,
-            }}>
-              WhatsApp has opened with your details pre-filled.
-            </p>
-            <p style={{
-              fontSize: 14, color: "hsl(220,10%,46%)",
-              lineHeight: 1.75, marginBottom: 32,
-            }}>
-              Our team will confirm your <strong>free trial slot</strong> shortly. See you on the mat! 🧘
-            </p>
-            <button
-              onClick={onClose}
-              style={{
-                padding: "13px 36px", borderRadius: "999px",
-                background: "linear-gradient(145deg, hsl(145,44%,28%), hsl(155,40%,40%))",
-                color: "white", fontWeight: 700, fontSize: 14,
-                fontFamily: "'Inter', sans-serif",
-                border: "none", cursor: "pointer",
-                boxShadow: "0 4px 18px hsla(145,44%,28%,0.32)",
-                transition: "transform 0.22s ease",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-2px)")}
-              onMouseLeave={(e) => (e.currentTarget.style.transform = "none")}
-            >
-              Close
-            </button>
-          </div>
+          <YogiThankYou
+            name={firstName}
+            type="trial"
+            onClose={onClose}
+          />
         )}
 
         {/* ── FORM ── */}
