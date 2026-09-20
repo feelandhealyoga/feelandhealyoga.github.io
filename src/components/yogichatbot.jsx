@@ -406,6 +406,23 @@ const intents = [
   },
 ];
 
+const MENU_CHIPS = [
+  "1️⃣ Personal 1-to-1 Yoga",
+  "2️⃣ Group Yoga",
+  "3️⃣ Society Yoga",
+  "4️⃣ Corporate Wellness",
+  "5️⃣ Specific Goals",
+  "6️⃣ Other Enquiry",
+];
+
+const PERSONAL_SUB_CHIPS = [
+  "1️⃣ Fitness, Strength & Mobility",
+  "2️⃣ Weight Loss / Gain",
+  "3️⃣ Stress Relief & Women's Wellness",
+  "4️⃣ Prenatal or Postnatal",
+  "5️⃣ Specific Needs",
+];
+
 const DEFAULT_CHIPS = [
   "⏰ Class Timings",
   "🍯 Free Trial",
@@ -512,11 +529,11 @@ export default function YogiChatbot() {
   const [messages, setMessages] = useState([
     {
       from: "bot",
-      text: `${timeGreeting()} ✨ I'm **Yogi** — Feel & Heal Yoga's intelligent AI wellness assistant.\n\nI'm trained to instantly answer anything: class timings, free trials, batch types, weight loss yoga, fees, and more. No hold music. No waiting. Just smart answers. 🧠🌿\n\nWhat would you like to know?`,
+      text: `🌿 *Namaste! Welcome to Feel & Heal Yoga* 🙏\n\nHow can we help you today?\n\n1️⃣ Personal 1-to-1 Yoga\n2️⃣ Group Yoga – Online / Offline\n3️⃣ Start Yoga in Your Society\n4️⃣ Corporate / Group Wellness\n5️⃣ Yoga for Specific Goals\n6️⃣ Other Enquiry\n\n👉 *Reply with a number to continue.*`,
       time: timeStr(),
     },
   ]);
-  const [chips, setChips] = useState(DEFAULT_CHIPS);
+  const [chips, setChips] = useState(MENU_CHIPS);
   const [cta, setCta] = useState(null);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
@@ -529,6 +546,11 @@ export default function YogiChatbot() {
   const [leadType, setLeadType] = useState("batch");
   const [isListening, setIsListening] = useState(false);
   const [micStatus, setMicStatus] = useState("");
+  // ── Structured Menu State ──
+  const [menuStage, setMenuStage] = useState("main"); // 'main' | 'personal_sub' | null
+  const [personalGoal, setPersonalGoal] = useState("");
+  const [personalInfo, setPersonalInfo] = useState({ name:"", age:"", gender:"", mode:"", timing:"", address:"" });
+  const [personalStep, setPersonalStep] = useState(""); // collecting personal session info
   const messagesEndRef = useRef(null);
   const idleTimerRef = useRef(null);
   const recognitionRef = useRef(null);
@@ -704,6 +726,215 @@ export default function YogiChatbot() {
     }
   };
 
+  /* ── Personal Session Info Collector ───────────────────────────── */
+  const PERSONAL_STEPS = ["name","age","gender","mode","timing","address"];
+
+  const startPersonalCollection = (goal) => {
+    setPersonalGoal(goal);
+    setPersonalStep("name");
+    setChips([]);
+    botReply(
+      `🌿 *Personal 1-to-1 Yoga*\n\nYour session will be customised according to your selected goal, experience, lifestyle and individual needs.\n\n*Sessions available:*\n•  Online & Offline\n•  45–60 minutes\n•  Personalised 1-to-1 guidance\n\nTo check availability, please share:\n•  Name\n•  Age\n•  Gender\n•  Online / Offline\n•  Preferred days in a week & timing\n•  Your complete address, if offline\n\nWe'll then share the available slots, fees & booking details. 🙏\n\nLet's start — what is your **Name**?`,
+      700
+    );
+  };
+
+  const handlePersonalStep = (text) => {
+    const val = text.trim();
+    if (personalStep === "name") {
+      setPersonalInfo(p => ({ ...p, name: val }));
+      setUserName(val.split(" ")[0]);
+      setPersonalStep("age");
+      botReply(`Lovely, **${val.split(" ")[0]}**! 🙏\n\nWhat is your **Age**?`, 350);
+      return;
+    }
+    if (personalStep === "age") {
+      setPersonalInfo(p => ({ ...p, age: val }));
+      setPersonalStep("gender");
+      setChips(["Male", "Female", "Other"]);
+      botReply(`Got it! What is your **Gender**?`, 300);
+      return;
+    }
+    if (personalStep === "gender") {
+      setPersonalInfo(p => ({ ...p, gender: val }));
+      setPersonalStep("mode");
+      setChips(["Online", "Offline"]);
+      botReply(`Would you prefer **Online** or **Offline** sessions?`, 300);
+      return;
+    }
+    if (personalStep === "mode") {
+      setPersonalInfo(p => ({ ...p, mode: val }));
+      setPersonalStep("timing");
+      setChips([]);
+      botReply(`What are your **preferred days in a week & timing**?\n\n_(e.g. Mon/Wed/Fri, 7am or Weekdays evenings 7pm)_`, 350);
+      return;
+    }
+    if (personalStep === "timing") {
+      const info = { ...personalInfo, timing: val };
+      setPersonalInfo(info);
+      const isOffline = info.mode.toLowerCase().includes("offline");
+      if (isOffline) {
+        setPersonalStep("address");
+        botReply(`Great! Please share your **complete address** (for the offline session):`, 300);
+      } else {
+        setPersonalStep("");
+        submitPersonalEnquiry({ ...info, address: "N/A (Online)" });
+      }
+      return;
+    }
+    if (personalStep === "address") {
+      setPersonalStep("");
+      const info = { ...personalInfo, address: val };
+      setPersonalInfo(info);
+      submitPersonalEnquiry(info);
+      return;
+    }
+  };
+
+  const submitPersonalEnquiry = (info) => {
+    const subject = `🧘 1-on-1 Session Enquiry — ${info.name} | Goal: ${personalGoal}`;
+    fetch("https://formsubmit.co/ajax/vishalnair198@gmail.com", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({
+        _subject: subject,
+        _template: "table",
+        "Name": info.name,
+        "Age": info.age,
+        "Gender": info.gender,
+        "Session Mode": info.mode,
+        "Preferred Days & Timing": info.timing,
+        "Address": info.address,
+        "Goal": personalGoal,
+        "Session Type": "1-on-1 Personal Yoga",
+        "Source": "Yogi Chatbot",
+        "Submitted At": new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
+      }),
+    }).catch(() => {});
+
+    const waMsg = `Namaste! 🙏 I'm interested in a *1-on-1 Personal Yoga Session* at Feel & Heal Yoga.\n\n*Name:* ${info.name}\n*Age:* ${info.age}\n*Gender:* ${info.gender}\n*Mode:* ${info.mode}\n*Goal:* ${personalGoal}\n*Preferred Timing:* ${info.timing}${info.address && info.address !== "N/A (Online)" ? `\n*Address:* ${info.address}` : ""}\n\nPlease share available slots, fees & booking details. 🌿`;
+
+    setMenuStage(null);
+    botReply(
+      `Thank you, **${info.name}**! 🙏\n\nYour enquiry has been received. Our team will review your details and contact you shortly with available slots, fees and booking details.\n\nYou can also connect with us directly on WhatsApp right now 👇`,
+      700
+    );
+    setTimeout(() => {
+      addSpecial("wa", { text: "💬 Connect on WhatsApp", url: waUrl(waMsg) });
+      setChips(["⏰ Class Timings", "🌿 Benefits", "🏠 Main Menu"]);
+    }, 2000);
+  };
+
+  /* ── Structured Menu Handler ────────────────────────────────────── */
+  const handleMenuInput = (text) => {
+    const t = text.trim().toLowerCase();
+    // Extract number from input ("1", "1️⃣", chip text starting with 1️⃣, etc.)
+    const num = t.match(/^([1-6])/) ? t.match(/^([1-6])/)[1]
+      : t.includes("1️⃣") || t.startsWith("personal") ? "1"
+      : t.includes("2️⃣") || t.startsWith("group") ? "2"
+      : t.includes("3️⃣") || t.startsWith("society") || t.startsWith("start yoga") ? "3"
+      : t.includes("4️⃣") || t.startsWith("corporate") ? "4"
+      : t.includes("5️⃣") || t.startsWith("yoga for specific") ? "5"
+      : t.includes("6️⃣") || t.startsWith("other") ? "6"
+      : null;
+
+    if (menuStage === "main") {
+      if (num === "1") {
+        setMenuStage("personal_sub");
+        setChips(PERSONAL_SUB_CHIPS);
+        botReply(
+          `🌿 *Personal 1-to-1 Yoga*\n\nPersonalised sessions designed around your goals, lifestyle and individual needs.\n\nWhat would you like to work on?\n\n1️⃣ Fitness, Strength & Mobility\n2️⃣ Weight Loss / Gain\n3️⃣ Stress Relief & Women's Wellness\n4️⃣ Prenatal or Postnatal\n5️⃣ Specific Needs\n\n👉 *Reply with a number to continue.*`,
+          500
+        );
+        return true;
+      }
+      if (num === "2") {
+        setMenuStage(null);
+        setChips(["🍯 Book Free Trial", "⏰ Class Timings", "💰 Pricing"]);
+        botReply(
+          `🌿 *Group Yoga – Online / Offline*\n\nJoin our welcoming group batches — suitable for all levels!\n\n⏰ *Batch Timings (Mon – Fri):*\n• 6:00 – 7:00 AM (Online & Offline)\n• 8:00 – 9:00 AM (Online & Offline)\n• 7:30 – 8:30 PM (Online & Offline)\n\n💰 *Pricing from ₹1,500/month (Online) · ₹2,000/month (Offline)*\n\nWould you like to book a **FREE trial class** first? 🎉`,
+          500
+        );
+        return true;
+      }
+      if (num === "3") {
+        setMenuStage(null);
+        botReply(
+          `🏡 *Start Yoga in Your Society*\n\nBring Feel & Heal Yoga to your residential society or community! 🌿\n\nWe offer regular group yoga classes conducted at your society — for all age groups.\n\nTap below to submit your enquiry and our team will get in touch within 24 hours. 🙏`,
+          500
+        );
+        setTimeout(() => {
+          addSpecial("gform", { text: "🏘️ Submit Society Yoga Request", url: "/bring-yoga-to-your-society" });
+          setChips(["💬 WhatsApp", "🏠 Main Menu"]);
+        }, 1800);
+        return true;
+      }
+      if (num === "4") {
+        setMenuStage(null);
+        const waMsg = "Namaste! 🙏 I'm interested in Corporate / Group Wellness Yoga sessions from Feel & Heal Yoga. Please share more details.";
+        botReply(
+          `🏢 *Corporate / Group Wellness*\n\nWe offer customised corporate wellness yoga programs for teams and organisations.\n\n🌿 *Program includes:*\n• Stress management yoga & breathwork\n• Desk yoga & mobility sessions\n• Group meditation workshops\n• Flexible scheduling (online or at your office)\n\nConnect with our team to discuss a customised program for your organisation 👇`,
+          500
+        );
+        setTimeout(() => {
+          addSpecial("wa", { text: "💬 Enquire on WhatsApp", url: waUrl(waMsg) });
+          setChips(["🏠 Main Menu", "💬 WhatsApp"]);
+        }, 1800);
+        return true;
+      }
+      if (num === "5") {
+        setMenuStage("personal_sub");
+        setChips(PERSONAL_SUB_CHIPS);
+        botReply(
+          `🌿 *Yoga for Specific Goals*\n\nOur personalised sessions are designed around your specific needs.\n\nWhat would you like to work on?\n\n1️⃣ Fitness, Strength & Mobility\n2️⃣ Weight Loss / Gain\n3️⃣ Stress Relief & Women's Wellness\n4️⃣ Prenatal or Postnatal\n5️⃣ Specific Needs\n\n👉 *Reply with a number to continue.*`,
+          500
+        );
+        return true;
+      }
+      if (num === "6") {
+        setMenuStage(null);
+        const waMsg = "Namaste! 🙏 I have an enquiry about Feel & Heal Yoga. Could you please help me?";
+        botReply(
+          `🌿 *Other Enquiry*\n\nHappy to help! You can reach our team directly:\n\n📞 **+91 99201 55875** (Call or WhatsApp)\n✉️ feelandhealyoga@gmail.com\n📍 Kharghar, Navi Mumbai\n\nOr tap below to open WhatsApp and we'll respond instantly 👇`,
+          500
+        );
+        setTimeout(() => {
+          addSpecial("wa", { text: "💬 WhatsApp Us", url: waUrl(waMsg) });
+          setChips(["🏠 Main Menu"]);
+        }, 1600);
+        return true;
+      }
+      return false;
+    }
+
+    if (menuStage === "personal_sub") {
+      const subNum = t.match(/^([1-5])/) ? t.match(/^([1-5])/)[1]
+        : t.includes("1️⃣") || t.includes("fitness") || t.includes("strength") || t.includes("mobility") ? "1"
+        : t.includes("2️⃣") || t.includes("weight") ? "2"
+        : t.includes("3️⃣") || t.includes("stress") || t.includes("women") ? "3"
+        : t.includes("4️⃣") || t.includes("prenatal") || t.includes("postnatal") ? "4"
+        : t.includes("5️⃣") || t.includes("specific") ? "5"
+        : null;
+
+      const GOALS = {
+        "1": "Fitness, Strength & Mobility",
+        "2": "Weight Loss / Gain",
+        "3": "Stress Relief & Women's Wellness",
+        "4": "Prenatal or Postnatal",
+        "5": "Specific Needs",
+      };
+
+      if (subNum && GOALS[subNum]) {
+        setMenuStage("personal_details");
+        startPersonalCollection(GOALS[subNum]);
+        return true;
+      }
+      return false;
+    }
+
+    return false;
+  };
+
   const resolveIntent = (msg) => {
     touch();
     const lower = msg.toLowerCase().trim();
@@ -819,8 +1050,21 @@ export default function YogiChatbot() {
     setChips([]);
     setCta(null);
     touch();
-    if (collecting) handleLeadStep(msg);
-    else resolveIntent(msg);
+    // Main menu back button
+    if (msg.toLowerCase().includes("main menu") || msg.toLowerCase() === "menu") {
+      setMenuStage("main");
+      setPersonalStep("");
+      setTimeout(() => setChips(MENU_CHIPS), 400);
+      botReply(`🌿 *Namaste! Welcome to Feel & Heal Yoga* 🙏\n\nHow can we help you today?\n\n1️⃣ Personal 1-to-1 Yoga\n2️⃣ Group Yoga – Online / Offline\n3️⃣ Start Yoga in Your Society\n4️⃣ Corporate / Group Wellness\n5️⃣ Yoga for Specific Goals\n6️⃣ Other Enquiry\n\n👉 *Reply with a number to continue.*`, 400);
+      return;
+    }
+    if (menuStage === "personal_details" && personalStep) {
+      handlePersonalStep(msg);
+      return;
+    }
+    if ((menuStage === "main" || menuStage === "personal_sub") && handleMenuInput(msg)) return;
+    if (collecting) { handleLeadStep(msg); return; }
+    resolveIntent(msg);
   };
 
   const chipClick = (chip) => {
@@ -828,8 +1072,17 @@ export default function YogiChatbot() {
     setChips([]);
     setCta(null);
     touch();
-    if (collecting) handleLeadStep(chip);
-    else resolveIntent(chip);
+    if (chip.toLowerCase().includes("main menu") || chip.toLowerCase() === "menu") {
+      setMenuStage("main");
+      setPersonalStep("");
+      setTimeout(() => setChips(MENU_CHIPS), 400);
+      botReply(`🌿 *Namaste! Welcome to Feel & Heal Yoga* 🙏\n\nHow can we help you today?\n\n1️⃣ Personal 1-to-1 Yoga\n2️⃣ Group Yoga – Online / Offline\n3️⃣ Start Yoga in Your Society\n4️⃣ Corporate / Group Wellness\n5️⃣ Yoga for Specific Goals\n6️⃣ Other Enquiry\n\n👉 *Reply with a number to continue.*`, 400);
+      return;
+    }
+    if (menuStage === "personal_details" && personalStep) { handlePersonalStep(chip); return; }
+    if ((menuStage === "main" || menuStage === "personal_sub") && handleMenuInput(chip)) return;
+    if (collecting) { handleLeadStep(chip); return; }
+    resolveIntent(chip);
   };
 
   const renderText = (text) =>
