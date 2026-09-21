@@ -122,7 +122,7 @@ FRANCHISE: Feel & Heal offers franchise partnerships. Low investment, high commu
 
   try {
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${apiKey}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -131,8 +131,9 @@ FRANCHISE: Feel & Heal offers franchise partnerships. Low investment, high commu
           contents: geminiMessages,
           generationConfig: {
             temperature: 0.7,
-            maxOutputTokens: 512,
+            maxOutputTokens: 800,
             topP: 0.9,
+            thinkingConfig: { thinkingBudget: 0 }, // disable thinking — use tokens for output only
           },
           safetySettings: [
             { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
@@ -149,7 +150,10 @@ FRANCHISE: Feel & Heal offers franchise partnerships. Low investment, high commu
       return res.status(502).json({ error: "Gemini API error", details: data });
     }
 
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+    // Extract text — skip any internal thought parts (thought: true)
+    const parts = data?.candidates?.[0]?.content?.parts || [];
+    const text = parts.filter(p => !p.thought).map(p => p.text).join("").trim();
+
     if (!text) return res.status(502).json({ error: "Empty response from Gemini" });
 
     return res.status(200).json({ reply: text });
