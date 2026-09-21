@@ -267,7 +267,7 @@ const intents = [
   },
   {
     id: "beginner",
-    keys: ["beginner", "new", "start", "never", "first time", "no experience", "fresh", "absolute", "zero", "brand new", "newbie", "just starting"],
+    keys: ["beginner", "never done yoga", "first time", "no experience", "fresh to yoga", "absolute beginner", "zero experience", "brand new to yoga", "newbie", "just starting yoga", "never tried yoga", "can i start", "am i too old"],
     answer: () => KB.beginner,
     followUp: "Shall I set up a free trial so you can experience it firsthand? 🌱",
     chips: ["🍯 Yes, Book Trial!", "⏰ See Timings"],
@@ -388,6 +388,9 @@ const intents = [
       "community yoga", "community group", "bulk classes",
       "group yoga", "yoga for society", "yoga at society", "society yoga",
       "bring yoga", "yoga classes in society",
+      "start yoga in society", "yoga in my society", "yoga in our society",
+      "society classes", "yoga for my building", "colony yoga",
+      "yoga in colony", "yoga in apartment", "flat yoga", "tower yoga",
     ],
     answer: () => KB.society_yoga,
     chips: ["🏘️ Submit Society Request", "💬 WhatsApp", "⏰ Class Timings"],
@@ -880,7 +883,7 @@ export default function YogiChatbot() {
 
     const waMsg = `Namaste! 🙏 I'm interested in a *1-on-1 Personal Yoga Session* at Feel & Heal Yoga.\n\n*Name:* ${info.name}\n*Age:* ${info.age}\n*Gender:* ${info.gender}\n*Mode:* ${info.mode}\n*Goal:* ${personalGoal}\n*Preferred Timing:* ${info.timing}${info.address && info.address !== "N/A (Online)" ? `\n*Address:* ${info.address}` : ""}\n\nPlease share available slots, fees & booking details. 🌿`;
 
-    setMenuStage(null);
+    setMenuStage("main");
     botReply(
       `Thank you, **${info.name}**! 🙏\n\nYour enquiry has been received. Our team will review your details and contact you shortly with available slots, fees and booking details.\n\nYou can also connect with us directly on WhatsApp right now 👇`,
       700
@@ -915,7 +918,7 @@ export default function YogiChatbot() {
         return true;
       }
       if (num === "2") {
-        setMenuStage(null);
+        setMenuStage("main");
         setChips(["🍯 Book Free Trial", "⏰ Class Timings"]);
         botReply(
           `🌿 *Group Yoga – Online / Offline*\n\nJoin our welcoming group batches — suitable for all levels!\n\n⏰ *Batch Timings (Mon – Fri):*\n• 6:00 – 7:00 AM (Online & Offline)\n• 8:00 – 9:00 AM (Online & Offline)\n• 7:30 – 8:30 PM (Online & Offline)\n\nWould you like to book a **FREE trial class** first? 🎉`,
@@ -924,7 +927,7 @@ export default function YogiChatbot() {
         return true;
       }
       if (num === "3") {
-        setMenuStage(null);
+        setMenuStage("main");
         botReply(
           `🏡 *Start Yoga in Your Society*\n\nBring Feel & Heal Yoga to your residential society or community! 🌿\n\nWe offer regular group yoga classes conducted at your society — for all age groups.\n\nTap below to submit your enquiry and our team will get in touch within 24 hours. 🙏`,
           500
@@ -936,7 +939,7 @@ export default function YogiChatbot() {
         return true;
       }
       if (num === "4") {
-        setMenuStage(null);
+        setMenuStage("main");
         const waMsg = "Namaste! 🙏 I'm interested in Corporate / Group Wellness Yoga sessions from Feel & Heal Yoga. Please share more details.";
         botReply(
           `🏢 *Corporate / Group Wellness*\n\nWe offer customised corporate wellness yoga programs for teams and organisations.\n\n🌿 *Program includes:*\n• Stress management yoga & breathwork\n• Desk yoga & mobility sessions\n• Group meditation workshops\n• Flexible scheduling (online or at your office)\n\nConnect with our team to discuss a customised program for your organisation 👇`,
@@ -958,7 +961,7 @@ export default function YogiChatbot() {
         return true;
       }
       if (num === "6") {
-        setMenuStage(null);
+        setMenuStage("main");
         const waMsg = "Namaste! 🙏 I have an enquiry about Feel & Heal Yoga. Could you please help me?";
         botReply(
           `🌿 *Other Enquiry*\n\nHappy to help! You can reach our team directly:\n\n📞 **+91 99201 55875** (Call or WhatsApp)\n✉️ feelandhealyoga@gmail.com\n📍 Kharghar, Navi Mumbai\n\nOr tap below to open WhatsApp and we'll respond instantly 👇`,
