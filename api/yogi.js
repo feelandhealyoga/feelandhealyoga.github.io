@@ -6,8 +6,12 @@ export default async function handler(req, res) {
   if (req.method === "OPTIONS") return res.status(200).end();
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) return res.status(503).json({ error: "API key not configured" });
+  const openRouterKey = process.env.OPENROUTER_API_KEY;
+  const geminiKey = process.env.GEMINI_API_KEY;
+
+  if (!openRouterKey && !geminiKey) {
+    return res.status(503).json({ error: "API key not configured" });
+  }
 
   const { messages = [], userMessage = "" } = req.body || {};
 
@@ -105,80 +109,125 @@ FRANCHISE: Feel & Heal offers franchise partnerships. Low investment, high commu
 5️⃣ Yoga for Specific Goals
 6️⃣ Other Enquiry`;
 
-  // Build conversation history for Gemini
-  const geminiMessages = [];
+  /* ── 1. Try OpenRouter API (if OPENROUTER_API_KEY is configured) ── */
+  if (openRouterKey) {
+    const OR_MODELS = [
+      process.env.OPENROUTER_MODEL || "google/gemini-2.5-flash",
+      "anthropic/claude-3.5-haiku",
+      "openai/gpt-4o-mini",
+      "meta-llama/llama-3.3-70b-instruct",
+      "deepseek/deepseek-chat",
+    ];
 
-  // Add past messages (skip the very first bot welcome message)
-  for (const m of messages.slice(-12)) { // last 12 messages for context
-    if (m.from === "user") {
-      geminiMessages.push({ role: "user", parts: [{ text: m.text }] });
-    } else if (m.from === "bot" && m.text) {
-      geminiMessages.push({ role: "model", parts: [{ text: m.text }] });
-    }
-  }
+    const openRouterMessages = [
+      { role: "system", content: SYSTEM_PROMPT },
+      ...messages.slice(-12).map((m) => ({
+        role: m.from === "user" ? "user" : "assistant",
+        content: m.text || "",
+      })),
+      { role: "user", content: userMessage },
+    ];
 
-  // Add current user message
-  geminiMessages.push({ role: "user", parts: [{ text: userMessage }] });
-
-  // Try models in order — fallback on overload/error
-  const MODELS = [
-    "gemini-flash-lite-latest",   // resolves to gemini-3.5-flash-lite — confirmed working ✅
-    "gemini-2.5-flash-lite",
-    "gemini-flash-latest",
-  ];
-
-  let lastError = null;
-  for (const model of MODELS) {
-    try {
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
-        {
+    for (const model of OR_MODELS) {
+      try {
+        const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Authorization": `Bearer ${openRouterKey}`,
+            "Content-Type": "application/json",
+            "HTTP-Referer": "https://feelandhealyoga.com",
+            "X-Title": "Feel & Heal Yoga Yogi Bot",
+          },
           body: JSON.stringify({
-            system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
-            contents: geminiMessages,
-            generationConfig: {
-              temperature: 0.75,
-              maxOutputTokens: 600,
-              topP: 0.9,
-            },
-            safetySettings: [
-              { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
-              { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_NONE" },
-            ],
+            model: model,
+            messages: openRouterMessages,
+            temperature: 0.7,
+            max_tokens: 600,
           }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          const reply = data?.choices?.[0]?.message?.content?.trim();
+          if (reply) {
+            return res.status(200).json({ reply, provider: "openrouter", model });
+          }
         }
-      );
-
-      const data = await response.json();
-
-      // Skip to next model on transient/not-found errors
-      if (!response.ok) {
-        lastError = data;
-        continue;
+      } catch (err) {
+        console.error(`OpenRouter error with model ${model}:`, err.message);
       }
-
-      // Extract text — ignore thought/signature parts
-      const parts = data?.candidates?.[0]?.content?.parts || [];
-      const text = parts
-        .filter(p => !p.thought && typeof p.text === "string")
-        .map(p => p.text)
-        .join("")
-        .trim();
-
-      if (!text) {
-        lastError = { error: "empty text in response", raw: data };
-        continue;
-      }
-
-      return res.status(200).json({ reply: text });
-    } catch (err) {
-      lastError = err.message;
-      continue;
     }
   }
 
-  console.error("All Gemini models failed:", lastError);
-  return res.status(502).json({ error: "All models unavailable", details: lastError });
+  /* ── 2. Fallback to Direct Gemini API ── */
+  if (geminiKey) {
+    const geminiMessages = [];
+    for (const m of messages.slice(-12)) {
+      if (m.from === "user") {
+        geminiMessages.push({ role: "user", parts: [{ text: m.text }] });
+      } else if (m.from === "bot" && m.text) {
+        geminiMessages.push({ role: "model", parts: [{ text: m.text }] });
+      }
+    }
+    geminiMessages.push({ role: "user", parts: [{ text: userMessage }] });
+
+    const MODELS = [
+      "gemini-flash-lite-latest",
+      "gemini-2.5-flash-lite",
+      "gemini-flash-latest",
+    ];
+
+    let lastError = null;
+    for (const model of MODELS) {
+      try {
+        const response = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${geminiKey}`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
+              contents: geminiMessages,
+              generationConfig: {
+                temperature: 0.75,
+                maxOutputTokens: 600,
+                topP: 0.9,
+              },
+              safetySettings: [
+                { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
+                { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_NONE" },
+              ],
+            }),
+          }
+        );
+
+        const data = await response.json();
+        if (!response.ok) {
+          lastError = data;
+          continue;
+        }
+
+        const parts = data?.candidates?.[0]?.content?.parts || [];
+        const text = parts
+          .filter((p) => !p.thought && typeof p.text === "string")
+          .map((p) => p.text)
+          .join("")
+          .trim();
+
+        if (!text) {
+          lastError = { error: "empty text in response", raw: data };
+          continue;
+        }
+
+        return res.status(200).json({ reply: text, provider: "gemini", model });
+      } catch (err) {
+        lastError = err.message;
+        continue;
+      }
+    }
+    console.error("All Gemini models failed:", lastError);
+  }
+
+  return res.status(502).json({ error: "All LLM models unavailable" });
 }
+
