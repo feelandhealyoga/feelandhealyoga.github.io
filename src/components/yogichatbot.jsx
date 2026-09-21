@@ -916,9 +916,9 @@ export default function YogiChatbot() {
       }
       if (num === "2") {
         setMenuStage(null);
-        setChips(["🍯 Book Free Trial", "⏰ Class Timings", "💰 Pricing"]);
+        setChips(["🍯 Book Free Trial", "⏰ Class Timings"]);
         botReply(
-          `🌿 *Group Yoga – Online / Offline*\n\nJoin our welcoming group batches — suitable for all levels!\n\n⏰ *Batch Timings (Mon – Fri):*\n• 6:00 – 7:00 AM (Online & Offline)\n• 8:00 – 9:00 AM (Online & Offline)\n• 7:30 – 8:30 PM (Online & Offline)\n\n💰 *Pricing from ₹1,500/month (Online) · ₹2,000/month (Offline)*\n\nWould you like to book a **FREE trial class** first? 🎉`,
+          `🌿 *Group Yoga – Online / Offline*\n\nJoin our welcoming group batches — suitable for all levels!\n\n⏰ *Batch Timings (Mon – Fri):*\n• 6:00 – 7:00 AM (Online & Offline)\n• 8:00 – 9:00 AM (Online & Offline)\n• 7:30 – 8:30 PM (Online & Offline)\n\nWould you like to book a **FREE trial class** first? 🎉`,
           500
         );
         return true;
