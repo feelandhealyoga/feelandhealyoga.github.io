@@ -1037,6 +1037,8 @@ export default function YogiChatbot() {
     touch();
     const lower = msg.toLowerCase().trim();
     const mapped = CHIP_MAP[lower];
+
+    /* ── Special chip actions — handled directly, no LLM needed ── */
     if (mapped === "__wa__") {
       addSpecial("wa", { text: "💬 Open WhatsApp Chat", url: WA_DEFAULT });
       setChips(DEFAULT_CHIPS);
@@ -1063,69 +1065,9 @@ export default function YogiChatbot() {
       }, 1600);
       return;
     }
-    const queryText = mapped || msg;
-    const intent = findBestIntent(queryText);
-    if (intent) {
-      setCtx((c) => [...c.slice(-3), intent.id]);
-      if (intent.noLead) {
-        if (intent.answer) botReply(intent.answer(userName), typingDelay(intent.answer(userName)));
-        if (intent.chips?.length) setTimeout(() => setChips(intent.chips), 500);
-        else setChips(DEFAULT_CHIPS);
-        setCta(null);
-        return;
-      }
-      if (intent.triggerLead && !intent.answer) {
-        startLead(null, intent.leadType || "batch");
-        return;
-      }
-      if (intent.answer) {
-        const txt = intent.answer(userName);
-        botReply(txt, typingDelay(txt));
-      }
-      if (intent.followUp) {
-        const delay = intent.answer ? typingDelay(intent.answer(userName)) + 700 : 500;
-        setTimeout(() => botReply(intent.followUp, 400), delay);
-      }
-      if (intent.cta === "wa") {
-        const delay = intent.answer ? typingDelay(intent.answer(userName)) + 900 : 600;
-        setTimeout(() => {
-          addSpecial("wa", { text: intent.ctaText, url: waUrl(intent.ctaMsg) });
-        }, delay);
-      }
-      if (intent.triggerLead && intent.answer) {
-        const delay = intent.answer ? typingDelay(intent.answer(userName)) + 1600 : 900;
-        setTimeout(() => startLead(null, intent.leadType || "batch"), delay);
-        return;
-      }
-      if (intent.chips?.length) {
-        setTimeout(() => setChips(intent.chips), 600);
-      } else {
-        setChips(DEFAULT_CHIPS);
-      }
-      return;
-    }
-    const lower2 = msg.toLowerCase();
-    const topicHints = [
-      { words: ["time", "class", "batch", "morning", "evening", "schedule"], chip: "⏰ Class Timings", label: "class timings" },
-      { words: ["fee", "cost", "price", "charge", "pay", "how much", "monthly", "plan", "membership"], chip: "💰 Pricing", label: "pricing & plans" },
-      { words: ["compare", "vs", "difference", "which plan", "best plan", "recommend"], chip: "🤔 Which Plan?", label: "plan comparison" },
-      { words: ["couple", "partner", "husband", "wife", "together"], chip: "👫 Couple Plans", label: "couple pricing" },
-      { words: ["family", "members", "3 people", "4 people"], chip: "👨‍👩‍👧 Family Plan", label: "family pricing" },
-      { words: ["private", "personal", "one on one", "1 on 1", "solo"], chip: "💬 WhatsApp", label: "1-on-1 personal sessions" },
-      { words: ["weight", "fat", "slim", "tone", "lose"], chip: "💪 Weight Loss", label: "weight loss" },
-      { words: ["women", "ladies", "female"], chip: "👩 Women's Batch", label: "Women's Only batch" },
-      { words: ["meditat", "breath", "pranayama", "calm", "stress", "anxiety"], chip: "🌿 Benefits", label: "meditation & breathwork" },
-      { words: ["online", "zoom", "virtual", "home", "remote"], chip: "💰 Online Pricing", label: "online classes" },
-      { words: ["offline", "studio", "in person", "kharghar", "navi mumbai"], chip: "💰 Offline Pricing", label: "offline classes" },
-    ];
-    const matched = topicHints.find(h => h.words.some(w => lower2.includes(w)));
-    if (matched) {
-      // Fast path: keyword hint found — still use Gemini but with context
-      askGemini(msg, messages);
-    } else {
-      // Full Gemini response for anything else
-      askGemini(msg, messages);
-    }
+
+    /* ── Everything else → Gemini LLM ── */
+    askGemini(mapped || msg, messages);
   };
 
   const send = (overrideText = null) => {
