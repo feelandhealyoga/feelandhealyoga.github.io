@@ -765,17 +765,83 @@ export default function YogiChatbot() {
     if (personalStep === "mode") {
       setPersonalInfo(p => ({ ...p, mode: val }));
       setPersonalStep("timing");
-      setChips([]);
-      botReply(`What are your **preferred days in a week & timing**?\n\n_(e.g. Mon/Wed/Fri, 7am or Weekdays evenings 7pm)_`, 350);
+      const TIMING_CHIPS = [
+        "Mon–Fri, 6:00–7:00 AM",
+        "Mon–Fri, 7:00–8:00 AM",
+        "Mon–Fri, 8:00–9:00 AM",
+        "Mon–Fri, 10:00 AM–12:00 PM",
+        "Mon–Fri, 4:00–6:00 PM",
+        "Sat–Sun, Morning",
+      ];
+      setChips(TIMING_CHIPS);
+      botReply(
+        `What are your **preferred days & timing**?\n\n⏰ *Personal sessions are available:*\n• Mon – Sat: 6:00 AM – 7:00 PM\n• No sessions after 7:00 PM\n\nTap a slot below or type your preferred timing 👇`,
+        400
+      );
       return;
     }
     if (personalStep === "timing") {
+      const lower = val.toLowerCase();
+
+      /* ── Detect invalid / out-of-hours timings ── */
+      const isNightWord = /\b(night|midnight|late night|after midnight|12\s*am|1\s*am|2\s*am|3\s*am|4\s*am|5\s*am)\b/.test(lower);
+
+      // Extract PM hour if present (e.g. "8 pm", "9pm", "20:00")
+      const pmMatch = lower.match(/\b([7-9]|1[0-9]|2[0-3])\s*(?::|\.)?(?:\d{2})?\s*pm\b/)
+        || lower.match(/\b(19|20|21|22|23):?\d{0,2}\b/);
+      const isLatePM = !!pmMatch;
+
+      // 7:30 PM and later is also invalid for personal sessions
+      const sevenThirtyMatch = lower.match(/7\s*[:.]?\s*30\s*pm/) || lower.match(/19\s*[:.]?\s*30/);
+
+      const vagueLate = /\b(evening after 7|late evening|post 7|after 7|after seven|7\.30\s*pm|7:30\s*pm)\b/.test(lower);
+
+      if (isNightWord || isLatePM || sevenThirtyMatch || vagueLate) {
+        const TIMING_CHIPS = [
+          "Mon–Fri, 6:00–7:00 AM",
+          "Mon–Fri, 7:00–8:00 AM",
+          "Mon–Fri, 8:00–9:00 AM",
+          "Mon–Fri, 10:00 AM–12:00 PM",
+          "Mon–Fri, 4:00–6:00 PM",
+          "Sat–Sun, Morning",
+        ];
+        setChips(TIMING_CHIPS);
+        botReply(
+          `Sorry, we don't accept personal 1-to-1 session bookings after **7:00 PM**. 🙏\n\n⏰ *Available timings for personal sessions:*\n• Mon – Sat: **6:00 AM – 7:00 PM**\n\n_Our 7:30–8:30 PM slot is a group class only and is not available for personal sessions._\n\nCould you please choose a timing that works for you? 👇`,
+          500
+        );
+        // Do NOT advance the step — re-ask
+        return;
+      }
+
+      /* ── Detect completely vague responses ── */
+      const isVague = val.trim().length < 3
+        || /^(any|anytime|flexible|whenever|don't know|not sure|idk|ok|okay|yes|no|fine)$/i.test(val.trim());
+
+      if (isVague) {
+        const TIMING_CHIPS = [
+          "Mon–Fri, 6:00–7:00 AM",
+          "Mon–Fri, 7:00–8:00 AM",
+          "Mon–Fri, 8:00–9:00 AM",
+          "Mon–Fri, 4:00–6:00 PM",
+          "Sat–Sun, Morning",
+        ];
+        setChips(TIMING_CHIPS);
+        botReply(
+          `No worries! 😊 To help our team find you the right slot, could you share:\n\n• **Which days** work best? (e.g. Mon/Wed/Fri or weekdays)\n• **What time of day** do you prefer?\n\n⏰ *We're available Mon – Sat, 6:00 AM – 7:00 PM.*\n\nTap a slot below or type your preference 👇`,
+          450
+        );
+        return;
+      }
+
+      /* ── Valid timing — proceed ── */
       const info = { ...personalInfo, timing: val };
       setPersonalInfo(info);
       const isOffline = info.mode.toLowerCase().includes("offline");
+      setChips([]);
       if (isOffline) {
         setPersonalStep("address");
-        botReply(`Great! Please share your **complete address** (for the offline session):`, 300);
+        botReply(`Perfect! 🌿 Please share your **complete address** (for the offline session):`, 300);
       } else {
         setPersonalStep("");
         submitPersonalEnquiry({ ...info, address: "N/A (Online)" });
