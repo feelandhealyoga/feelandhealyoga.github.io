@@ -112,9 +112,8 @@ FRANCHISE: Feel & Heal offers franchise partnerships. Low investment, high commu
   /* ── 1. Try OpenRouter API (if OPENROUTER_API_KEY is configured) ── */
   if (openRouterKey) {
     const OR_MODELS = [
-      process.env.OPENROUTER_MODEL || "google/gemini-2.5-flash",
-      "anthropic/claude-3.5-haiku",
-      "openai/gpt-4o-mini",
+      process.env.OPENROUTER_MODEL || "openai/gpt-4o-mini",
+      "google/gemini-2.5-flash",
       "meta-llama/llama-3.3-70b-instruct",
       "deepseek/deepseek-chat",
     ];
@@ -142,7 +141,7 @@ FRANCHISE: Feel & Heal offers franchise partnerships. Low investment, high commu
             model: model,
             messages: openRouterMessages,
             temperature: 0.7,
-            max_tokens: 600,
+            max_tokens: 500,
           }),
         });
 
