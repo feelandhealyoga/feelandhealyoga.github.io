@@ -578,6 +578,35 @@ export default function YogiChatbot() {
     }, d);
   }, [addMsg]);
 
+  /* ── Gemini LLM call ─────────────────────────────────────────────── */
+  const askGemini = useCallback(async (userMessage, currentMessages) => {
+    setTyping(true);
+    try {
+      const res = await fetch("/api/yogi", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userMessage,
+          messages: currentMessages.slice(-14), // last 14 msgs for context
+        }),
+      });
+      if (!res.ok) throw new Error("API error");
+      const { reply } = await res.json();
+      setTyping(false);
+      addMsg("bot", reply);
+      // Show main menu chips after LLM reply
+      setTimeout(() => setChips(MENU_CHIPS), 600);
+    } catch {
+      setTyping(false);
+      // Fallback: show helpful default message
+      addMsg("bot", `Great question! 🌿 Let me get our team to help you with that.\n\nYou can also reach us directly on WhatsApp — we're very responsive! 🙏`);
+      setTimeout(() => {
+        addSpecial("wa", { text: "💬 Ask on WhatsApp", url: waUrl(`Hi! I have a question: ${userMessage}`) });
+        setChips(MENU_CHIPS);
+      }, 600);
+    }
+  }, [addMsg, addSpecial, setChips]);
+
   // ── Effects ────────────────────────────────────────────────────────
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -1091,23 +1120,11 @@ export default function YogiChatbot() {
     ];
     const matched = topicHints.find(h => h.words.some(w => lower2.includes(w)));
     if (matched) {
-      botReply(
-        `I understand you're asking about **${matched.label}**! 🌿\n\nI've got detailed info — tap a quick option below or ask me something more specific and I'll answer right away.`,
-        380
-      );
-      setTimeout(() => setChips([matched.chip, "🍯 Free Trial", "💬 WhatsApp"]), 600);
+      // Fast path: keyword hint found — still use Gemini but with context
+      askGemini(msg, messages);
     } else {
-      const aiResponses = [
-        `Great question! 🤔 I know a lot about Feel & Heal Yoga — let me help you.\n\nTry asking me about:\n• **Class timings** 📅\n• **Pricing plans** 💰\n• **Free trial** 🎉\n• **Weight loss yoga** 💪\n• **Which plan to choose** 🤔\n\nOr chat with our team directly on WhatsApp!`,
-        `Hmm, I didn't quite catch that! 🧘\n\nYou can ask me about **batch schedules**, **offline vs online pricing**, **couple/family plans**, **health conditions**, or **how to join** — I'll give you an instant smart answer! 🌿`,
-        `Let me make sure I give you the right info! 😊\n\nCould you rephrase that? Or pick one of the options below — I'm fully trained to answer most yoga queries instantly. 🌿`,
-      ];
-      const randomReply = aiResponses[Math.floor(Math.random() * aiResponses.length)];
-      botReply(randomReply, 420);
-      setTimeout(() => {
-        addSpecial("wa", { text: "💬 Ask on WhatsApp", url: waUrl(`Hi! I have a question: ${msg}`) });
-        setChips(["⏰ Class Timings", "💰 Pricing", "🍯 Free Trial", "🤔 Which Plan?"]);
-      }, 700);
+      // Full Gemini response for anything else
+      askGemini(msg, messages);
     }
   };
 
