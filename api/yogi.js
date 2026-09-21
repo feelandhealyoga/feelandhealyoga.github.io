@@ -120,8 +120,12 @@ FRANCHISE: Feel & Heal offers franchise partnerships. Low investment, high commu
   // Add current user message
   geminiMessages.push({ role: "user", parts: [{ text: userMessage }] });
 
-  // Try models in order — fallback on overload
-  const MODELS = ["gemini-3.6-flash", "gemini-2.5-flash-lite", "gemini-flash-lite-latest"];
+  // Try models in order — fallback on overload/error
+  const MODELS = [
+    "gemini-flash-lite-latest",   // resolves to gemini-3.5-flash-lite — confirmed working ✅
+    "gemini-2.5-flash-lite",
+    "gemini-flash-latest",
+  ];
 
   let lastError = null;
   for (const model of MODELS) {
@@ -135,10 +139,9 @@ FRANCHISE: Feel & Heal offers franchise partnerships. Low investment, high commu
             system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
             contents: geminiMessages,
             generationConfig: {
-              temperature: 0.7,
-              maxOutputTokens: 800,
+              temperature: 0.75,
+              maxOutputTokens: 600,
               topP: 0.9,
-              thinkingConfig: { thinkingBudget: 0 },
             },
             safetySettings: [
               { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
@@ -150,33 +153,32 @@ FRANCHISE: Feel & Heal offers franchise partnerships. Low investment, high commu
 
       const data = await response.json();
 
-      // Skip to next model on overload or not-found
+      // Skip to next model on transient/not-found errors
       if (!response.ok) {
-        const code = data?.error?.code;
-        if (code === 503 || code === 429 || code === 404) {
-          lastError = data;
-          continue;
-        }
-        return res.status(502).json({ error: "Gemini API error", details: data });
-      }
-
-      // Extract text — skip any internal thought parts
-      const parts = data?.candidates?.[0]?.content?.parts || [];
-      const text = parts.filter(p => !p.thought).map(p => p.text).join("").trim();
-
-      if (!text) {
-        lastError = { error: "empty response" };
+        lastError = data;
         continue;
       }
 
-      return res.status(200).json({ reply: text, model });
+      // Extract text — ignore thought/signature parts
+      const parts = data?.candidates?.[0]?.content?.parts || [];
+      const text = parts
+        .filter(p => !p.thought && typeof p.text === "string")
+        .map(p => p.text)
+        .join("")
+        .trim();
+
+      if (!text) {
+        lastError = { error: "empty text in response", raw: data };
+        continue;
+      }
+
+      return res.status(200).json({ reply: text });
     } catch (err) {
       lastError = err.message;
       continue;
     }
   }
 
-  // All models failed
   console.error("All Gemini models failed:", lastError);
   return res.status(502).json({ error: "All models unavailable", details: lastError });
 }
