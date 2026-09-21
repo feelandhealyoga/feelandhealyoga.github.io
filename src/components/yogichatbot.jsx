@@ -503,8 +503,10 @@ function findBestIntent(msg) {
 }
 
 /* ── Helpers ─────────────────────────────────────────────────────── */
+const cleanPhone = (s) =>
+  s.replace(/[\s\-()+]/g, "").replace(/^91(?=\d{10})|^0(?=\d{10})/, "");
 const phoneRe = /^[6-9]\d{9}$/;
-const validatePhone = (s) => phoneRe.test(s.replace(/[\s\-()]/g, ""));
+const validatePhone = (s) => phoneRe.test(cleanPhone(s));
 
 const LEAD_STEPS = ["name", "phone", "session_type"];
 const LEAD_LABELS = {
@@ -802,10 +804,18 @@ export default function YogiChatbot() {
     if (personalStep === "age") {
       // Check if user typed both age and gender (e.g. "28 male", "28, female", "28M")
       const genderMatch = val.match(/\b(male|female|other|man|woman|m|f)\b/i);
-      const ageMatch = val.match(/\b(\d{1,2})\b/);
+      const ageMatch = val.match(/\b(\d{1,3})\b/);
 
-      if (genderMatch && ageMatch) {
-        const extractedAge = ageMatch[1];
+      const parsedNum = ageMatch ? parseInt(ageMatch[1], 10) : null;
+      const isValidAge = parsedNum && parsedNum >= 5 && parsedNum <= 110;
+
+      if (!isValidAge && !genderMatch) {
+        botReply("Please enter a valid age (e.g. 28, 35, 42) 😊", 300);
+        return;
+      }
+
+      if (genderMatch && isValidAge) {
+        const extractedAge = parsedNum.toString();
         let extractedGender = genderMatch[1].toLowerCase();
         if (extractedGender === "m" || extractedGender === "man") extractedGender = "Male";
         else if (extractedGender === "f" || extractedGender === "woman") extractedGender = "Female";
@@ -818,7 +828,8 @@ export default function YogiChatbot() {
         return;
       }
 
-      setPersonalInfo(p => ({ ...p, age: val }));
+      const finalAge = isValidAge ? parsedNum.toString() : val;
+      setPersonalInfo(p => ({ ...p, age: finalAge }));
       setPersonalStep("gender");
       setChips(["Male", "Female", "Other"]);
       botReply(`Got it! What is your **Gender**?`, 300);
