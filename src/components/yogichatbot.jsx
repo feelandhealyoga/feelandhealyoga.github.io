@@ -774,6 +774,25 @@ export default function YogiChatbot() {
   const handlePersonalStep = (text) => {
     const val = text.trim();
     if (personalStep === "name") {
+      // Check if user answered with name + age + gender (e.g. "Rahul, 28 male" or "28 male")
+      const ageGenderMatch = val.match(/(.*?)(?:,\s*|\s+)(\d{1,2})\s*(male|female|other|m|f)\b/i);
+      if (ageGenderMatch) {
+        const rawName = ageGenderMatch[1].trim();
+        const namePart = rawName && !/^\d+$/.test(rawName) ? rawName : "Friend";
+        const agePart = ageGenderMatch[2];
+        let genderPart = ageGenderMatch[3].toLowerCase();
+        if (genderPart === "m") genderPart = "Male";
+        else if (genderPart === "f") genderPart = "Female";
+        else genderPart = genderPart.charAt(0).toUpperCase() + genderPart.slice(1);
+
+        setPersonalInfo(p => ({ ...p, name: namePart, age: agePart, gender: genderPart }));
+        if (namePart !== "Friend") setUserName(namePart);
+        setPersonalStep("mode");
+        setChips(["Online", "Offline"]);
+        botReply(`Thank you${namePart !== "Friend" ? `, **${namePart}**` : ""}! (Age ${agePart}, ${genderPart}) 🙏\n\nWould you prefer **Online** or **Offline** sessions?`, 350);
+        return;
+      }
+
       setPersonalInfo(p => ({ ...p, name: val }));
       setUserName(val.split(" ")[0]);
       setPersonalStep("age");
@@ -781,6 +800,24 @@ export default function YogiChatbot() {
       return;
     }
     if (personalStep === "age") {
+      // Check if user typed both age and gender (e.g. "28 male", "28, female", "28M")
+      const genderMatch = val.match(/\b(male|female|other|man|woman|m|f)\b/i);
+      const ageMatch = val.match(/\b(\d{1,2})\b/);
+
+      if (genderMatch && ageMatch) {
+        const extractedAge = ageMatch[1];
+        let extractedGender = genderMatch[1].toLowerCase();
+        if (extractedGender === "m" || extractedGender === "man") extractedGender = "Male";
+        else if (extractedGender === "f" || extractedGender === "woman") extractedGender = "Female";
+        else extractedGender = extractedGender.charAt(0).toUpperCase() + extractedGender.slice(1);
+
+        setPersonalInfo(p => ({ ...p, age: extractedAge, gender: extractedGender }));
+        setPersonalStep("mode");
+        setChips(["Online", "Offline"]);
+        botReply(`Got it! Age **${extractedAge}**, **${extractedGender}**. 🌿\n\nWould you prefer **Online** or **Offline** sessions?`, 300);
+        return;
+      }
+
       setPersonalInfo(p => ({ ...p, age: val }));
       setPersonalStep("gender");
       setChips(["Male", "Female", "Other"]);
@@ -924,17 +961,32 @@ export default function YogiChatbot() {
   };
 
   /* ── Structured Menu Handler ────────────────────────────────────── */
+  const getMenuNumber = (text, maxDigit = 6) => {
+    // Exact standalone digit match: "1", "1.", "1)", "#1", "option 1", etc.
+    // MUST NOT match multi-digit numbers or ages or quantities like "28 male", "25", "30 years", "6 pm", "3 months"
+    const regex = new RegExp(`^(?:option\\s*|#\\s*)?([1-${maxDigit}])(?!\\d|\\s*(?:am|pm|month|months|year|years|yr|yrs|k|rupees|rs))\\b(?:[.)\\s-]|$|️⃣)`, "i");
+    const m = text.match(regex);
+    if (m) return m[1];
+    return null;
+  };
+
   const handleMenuInput = (text) => {
     const t = text.trim().toLowerCase();
-    // Extract number from input ("1", "1️⃣", chip text starting with 1️⃣, etc.)
-    const num = t.match(/^([1-6])/) ? t.match(/^([1-6])/)[1]
-      : t.includes("1️⃣") || t.startsWith("personal") ? "1"
-      : t.includes("2️⃣") || t.startsWith("group") ? "2"
-      : t.includes("3️⃣") || t.startsWith("society") || t.startsWith("start yoga") ? "3"
-      : t.includes("4️⃣") || t.startsWith("corporate") ? "4"
-      : t.includes("5️⃣") || t.startsWith("yoga for specific") ? "5"
-      : t.includes("6️⃣") || t.startsWith("other") ? "6"
-      : null;
+    // Extract menu choice number safely — MUST NOT match "28 male", "25", etc.
+    const num = getMenuNumber(t, 6)
+      || (t.includes("1️⃣") ? "1"
+      : t.includes("2️⃣") ? "2"
+      : t.includes("3️⃣") ? "3"
+      : t.includes("4️⃣") ? "4"
+      : t.includes("5️⃣") ? "5"
+      : t.includes("6️⃣") ? "6"
+      : t === "1" || t === "personal" || t === "personal yoga" ? "1"
+      : t === "2" || t === "group" || t === "group yoga" ? "2"
+      : t === "3" || t === "society" || t === "society yoga" ? "3"
+      : t === "4" || t === "corporate" || t === "corporate wellness" ? "4"
+      : t === "5" || t === "specific goals" ? "5"
+      : t === "6" || t === "other" || t === "other enquiry" ? "6"
+      : null);
 
     if (menuStage === "main") {
       if (num === "1") {
@@ -1006,13 +1058,18 @@ export default function YogiChatbot() {
     }
 
     if (menuStage === "personal_sub") {
-      const subNum = t.match(/^([1-5])/) ? t.match(/^([1-5])/)[1]
-        : t.includes("1️⃣") || t.includes("fitness") || t.includes("strength") || t.includes("mobility") ? "1"
-        : t.includes("2️⃣") || t.includes("weight") ? "2"
-        : t.includes("3️⃣") || t.includes("stress") || t.includes("women") ? "3"
-        : t.includes("4️⃣") || t.includes("prenatal") || t.includes("postnatal") ? "4"
-        : t.includes("5️⃣") || t.includes("specific") ? "5"
-        : null;
+      const subNum = getMenuNumber(t, 5)
+        || (t.includes("1️⃣") ? "1"
+        : t.includes("2️⃣") ? "2"
+        : t.includes("3️⃣") ? "3"
+        : t.includes("4️⃣") ? "4"
+        : t.includes("5️⃣") ? "5"
+        : t === "fitness" || t === "strength" || t === "mobility" ? "1"
+        : t === "weight loss" || t === "weight gain" ? "2"
+        : t === "stress relief" || t === "women's wellness" ? "3"
+        : t === "prenatal" || t === "postnatal" ? "4"
+        : t === "specific needs" ? "5"
+        : null);
 
       const GOALS = {
         "1": "Fitness, Strength & Mobility",
