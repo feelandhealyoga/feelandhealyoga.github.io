@@ -120,45 +120,63 @@ FRANCHISE: Feel & Heal offers franchise partnerships. Low investment, high commu
   // Add current user message
   geminiMessages.push({ role: "user", parts: [{ text: userMessage }] });
 
-  try {
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${apiKey}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
-          contents: geminiMessages,
-          generationConfig: {
-            temperature: 0.7,
-            maxOutputTokens: 800,
-            topP: 0.9,
-            thinkingConfig: { thinkingBudget: 0 }, // disable thinking — use tokens for output only
-          },
-          safetySettings: [
-            { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
-            { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_NONE" },
-          ],
-        }),
+  // Try models in order — fallback on overload
+  const MODELS = ["gemini-3.6-flash", "gemini-2.5-flash-lite", "gemini-flash-lite-latest"];
+
+  let lastError = null;
+  for (const model of MODELS) {
+    try {
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
+            contents: geminiMessages,
+            generationConfig: {
+              temperature: 0.7,
+              maxOutputTokens: 800,
+              topP: 0.9,
+              thinkingConfig: { thinkingBudget: 0 },
+            },
+            safetySettings: [
+              { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
+              { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_NONE" },
+            ],
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      // Skip to next model on overload or not-found
+      if (!response.ok) {
+        const code = data?.error?.code;
+        if (code === 503 || code === 429 || code === 404) {
+          lastError = data;
+          continue;
+        }
+        return res.status(502).json({ error: "Gemini API error", details: data });
       }
-    );
 
-    const data = await response.json();
+      // Extract text — skip any internal thought parts
+      const parts = data?.candidates?.[0]?.content?.parts || [];
+      const text = parts.filter(p => !p.thought).map(p => p.text).join("").trim();
 
-    if (!response.ok) {
-      console.error("Gemini API error:", data);
-      return res.status(502).json({ error: "Gemini API error", details: data });
+      if (!text) {
+        lastError = { error: "empty response" };
+        continue;
+      }
+
+      return res.status(200).json({ reply: text, model });
+    } catch (err) {
+      lastError = err.message;
+      continue;
     }
-
-    // Extract text — skip any internal thought parts (thought: true)
-    const parts = data?.candidates?.[0]?.content?.parts || [];
-    const text = parts.filter(p => !p.thought).map(p => p.text).join("").trim();
-
-    if (!text) return res.status(502).json({ error: "Empty response from Gemini" });
-
-    return res.status(200).json({ reply: text });
-  } catch (err) {
-    console.error("Yogi API error:", err);
-    return res.status(500).json({ error: "Internal error" });
   }
+
+  // All models failed
+  console.error("All Gemini models failed:", lastError);
+  return res.status(502).json({ error: "All models unavailable", details: lastError });
 }
