@@ -57,44 +57,19 @@ type FamCount = 3 | 4 | 5;
 const track = (event: string, params?: Record<string, string>) => {
   try {
     (window as any).gtag?.("event", event, { event_category: "pricing", ...params });
-  } catch {}
+  } catch (_) {
+    // ignore analytics errors
+  }
 };
 
 /* ─────────────────────────────────────────────────────────────────────────────
    MAIN COMPONENT
 ───────────────────────────────────────────────────────────────────────────── */
 export const ScheduleSection = () => {
-  const [mode,      setMode]      = useState<Mode>("offline");
-  const [ptype,     setPtype]     = useState<PType>("individual");
-  const [famCount,  setFamCount]  = useState<FamCount>(3);
   const [mainTab,   setMainTab]   = useState<"group" | "oneone">("group");
-  const [highlight, setHighlight] = useState<"one" | "three" | "six">("three");
-  const [stickyVis, setStickyVis] = useState(false);
   const sectionRef  = useRef<HTMLElement>(null);
 
-  /* Sticky CTA visibility */
-  useEffect(() => {
-    const io = new IntersectionObserver(
-      ([e]) => setStickyVis(e.isIntersecting),
-      { rootMargin: "-60px 0px -60px 0px" }
-    );
-    if (sectionRef.current) io.observe(sectionRef.current);
-    return () => io.disconnect();
-  }, []);
-
-  /* Track section view once */
-  useEffect(() => { track("pricing_section_viewed"); }, []);
-
   const openModal = () => window.dispatchEvent(new CustomEvent("open-yogi-trial"));
-
-  const p = PC[mode];
-
-  /* ── Sticky 3-month price for bottom bar ── */
-  const stickyPrice = ptype === "individual"
-    ? p.individual.three.monthly
-    : ptype === "couple"
-      ? p.couple.three.monthly
-      : p.family.three.monthly;
 
   return (
     <section
@@ -106,7 +81,7 @@ export const ScheduleSection = () => {
 
         {/* ── Section Header ── */}
         <div className="text-center mb-12">
-          <div className="yogic-label mb-3">Class Schedule &amp; Pricing</div>
+          <div className="yogic-label mb-3">Class Schedule</div>
           <h2 className="yogic-section-heading section-title-decor mb-3">
             Find Your Perfect Batch
           </h2>
@@ -153,120 +128,9 @@ export const ScheduleSection = () => {
             {/* ── Schedule strips ── */}
             <GroupScheduleStrips openModal={openModal} />
 
-            {/* ═══ PRICING ═══ */}
-            <div className="mt-16">
-
-              {/* Pricing section header */}
-              <div className="text-center mb-8">
-                <div className="yogic-label mb-2">Membership Plans</div>
-                <h3 className="text-2xl font-bold text-[hsl(20,20%,14%)] mb-2"
-                  style={{ fontFamily: "'Playfair Display',serif" }}>
-                  Choose the Commitment That Works for You
-                </h3>
-                <p className="text-sm text-[hsl(20,14%,44%)] max-w-md mx-auto leading-relaxed">
-                  Not sure where to start? We recommend{" "}
-                  <span className="font-bold text-[hsl(145,38%,38%)]">3 months</span>{" "}
-                  to give yourself enough time to build consistency.
-                </p>
-              </div>
-
-              {/* ── Mode toggle: Online | Offline ── */}
-              <div className="flex justify-center mb-6">
-                <div className="inline-flex rounded-full border border-[hsl(38,25%,84%)] p-1 bg-white shadow-sm">
-                  {(["offline","online"] as Mode[]).map((m) => (
-                    <button
-                      key={m}
-                      onClick={() => { setMode(m); track("mode_selected", { mode: m }); }}
-                      className={cn(
-                        "px-5 py-2 rounded-full text-sm font-bold transition-all duration-200",
-                        mode === m ? "text-white shadow" : "text-[hsl(20,18%,48%)] hover:text-[hsl(20,18%,22%)]"
-                      )}
-                      style={mode === m ? {
-                        background: "linear-gradient(135deg,hsl(145,40%,32%),hsl(160,42%,42%))",
-                        boxShadow: "0 3px 12px hsla(145,40%,32%,0.30)",
-                      } : {}}
-                    >
-                      {m === "offline" ? "🏠 Offline" : "🌐 Online"}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* ── Plan type: Individual | Couple | Family ── */}
-              <div className="flex justify-center gap-2 mb-8 flex-wrap">
-                {(["individual","couple","family"] as PType[]).map((pt) => (
-                  <button
-                    key={pt}
-                    onClick={() => { setPtype(pt); track("plan_type_selected", { plan_type: pt }); }}
-                    className={cn(
-                      "px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wide transition-all border",
-                      ptype === pt
-                        ? "border-transparent text-white shadow"
-                        : "bg-white border-[hsl(38,22%,86%)] text-[hsl(20,18%,44%)] hover:bg-[hsl(38,30%,96%)]"
-                    )}
-                    style={ptype === pt ? {
-                      background: "linear-gradient(135deg,hsl(38,88%,50%),hsl(30,85%,44%))",
-                      boxShadow: "0 3px 12px hsla(38,88%,50%,0.32)",
-                    } : {}}
-                  >
-                    {pt === "individual" ? "👤 Individual" : pt === "couple" ? "👫 Couple" : "👨‍👩‍👧 Family"}
-                  </button>
-                ))}
-              </div>
-
-              {/* ── Family member selector ── */}
-              {ptype === "family" && (
-                <div className="flex justify-center gap-2 mb-6 flex-wrap">
-                  <span className="text-xs text-[hsl(20,14%,50%)] self-center font-medium">Family members:</span>
-                  {([3,4,5] as FamCount[]).map((n) => (
-                    <button
-                      key={n}
-                      onClick={() => setFamCount(n)}
-                      className={cn(
-                        "w-9 h-9 rounded-full text-sm font-bold border transition-all",
-                        famCount === n
-                          ? "border-transparent text-white bg-[hsl(145,38%,38%)]"
-                          : "bg-white border-[hsl(38,22%,86%)] text-[hsl(20,18%,44%)]"
-                      )}
-                    >
-                      {n}{n===5 ? "+" : ""}
-                    </button>
-                  ))}
-                </div>
-              )}
-
-              {/* ── Recommendation box ── */}
-              <RecommendationBox mode={mode} ptype={ptype} onSelect={() => setHighlight("three")} />
-
-              {/* ── Pricing Cards ── */}
-              {ptype === "individual" && (
-                <IndividualCards
-                  mode={mode}
-                  highlight={highlight}
-                  setHighlight={setHighlight}
-                  openModal={openModal}
-                />
-              )}
-              {ptype === "couple" && (
-                <CoupleCards mode={mode} openModal={openModal} />
-              )}
-              {ptype === "family" && (
-                <FamilyCards mode={mode} famCount={famCount} openModal={openModal} />
-              )}
-
-              {/* ── Why 3 Months ── */}
-              {ptype === "individual" && <WhyThreeMonths />}
-
-              {/* ── Free Trial CTA ── */}
-              <FreeTrial openModal={openModal} />
-
-            </div>
           </>
         )}
       </div>
-
-      {/* ── Sticky Mobile Bottom Bar ── */}
-      <StickyBar visible={stickyVis} mode={mode} price={stickyPrice} ptype={ptype} openModal={openModal} />
     </section>
   );
 };
