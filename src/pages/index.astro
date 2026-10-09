@@ -16,6 +16,7 @@ import { ContactSection } from "../components/ContactSection";
 import { TrialPopup } from "../components/TrialPopup";
 import { PremiumBackground } from "../components/PremiumBackground";
 import { MobileApp } from "../components/MobileApp";
+import { RetreatBanner } from "../components/RetreatBanner";
 import YogiChatbot from "../components/yogichatbot.jsx";
 import "../index.css";
 ---
@@ -159,6 +160,11 @@ import "../index.css";
     <!-- Mobile app shell (phones & tablets only) -->
     <MobileApp client:load />
 
+    <!-- Retreat banner: visible on mobile too -->
+    <div class="md:hidden">
+      <RetreatBanner client:load />
+    </div>
+
     <!-- Desktop: background (hidden on mobile) -->
     <div class="hidden md:block">
       <PremiumBackground client:load />
@@ -167,6 +173,7 @@ import "../index.css";
     <!-- Desktop: full page content (hidden on mobile) -->
     <main class="hidden md:block">
       <HeroSection client:load />
+      <RetreatBanner client:load />
       <AboutSection client:load />
       <InstructorSection client:load />
       <ExperienceSection client:load />

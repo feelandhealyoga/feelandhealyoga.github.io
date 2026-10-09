@@ -37,98 +37,17 @@ const KB = {
 
   free_trial: `Absolutely! 🎉 We offer a **FREE trial class** so you can experience the vibe before committing.\n\nNo strings attached — just show up with an open mind! 🌿\n\nTap below to send us a WhatsApp message and our team will confirm your free trial slot within minutes. ✅`,
 
-  pricing_offline: `Here are our **Offline Group Class** membership plans:
+  pricing_offline: `We'd love to share our **Offline Group Class** plans with you! 🏠\n\nOur team will give you a personalised quote based on your schedule and goals.\n\n📞 **Reach out on WhatsApp** and we'll get back to you within minutes. 🌿🙏`,
 
-👤 **Individual**
-• 1 Month — ₹2,499/month
-• 3 Months — ₹2,000/month *(Total ₹6,000 · Save ₹1,500 · ⭐ Most Popular)*
-• 6 Months — ₹1,850/month *(Total ₹11,100 · Save ₹3,900)*
+  pricing_online: `We'd love to share our **Online Group Class** plans with you! 🌐\n\nOur team will give you a personalised quote based on your schedule and goals.\n\n📞 **Reach out on WhatsApp** and we'll get back to you within minutes. 🌿🙏`,
 
-👫 **Couple** (per person)
-• 3 Months — ₹1,850/person/month *(Couple total: ₹11,100)*
-• 6 Months — ₹1,750/person/month *(Couple total: ₹21,000)*
+  pricing_compare: `We have a range of plans to suit every need — Individual, Couple, and Family options available for both online and offline classes! 🌿\n\nFor a personalised quote and plan recommendation, please reach out to our team directly. 🙏`,
 
-👨‍👩‍👧 **Family** (3+ members, per person)
-• 3 Months — ₹1,800/person/month
-• 6 Months — ₹1,700/person/month
+  which_plan: `Great question! 🌿 The best plan for you depends on your schedule, goals, and whether you'd prefer online or offline classes.\n\nOur team would love to help you pick the perfect fit! Reach out on WhatsApp and we'll guide you step by step. 🙏\n\n🌟 **Our honest advice:** Start with a **free trial first** — experience the class, then our team will suggest the ideal plan for you!`,
 
-💡 **We recommend the 3-Month plan** — it gives you enough time to build a real routine while saving ₹499/month vs the 1-month rate.`,
+  couple_pricing: `Yes! We have special **Couple Plans** 💕\n\nPractising together keeps you both accountable and comes with great savings vs individual plans!\n\nFor the exact rates, please reach out to our team on WhatsApp — we'll share all the details right away. 🙏`,
 
-  pricing_online: `Here are our **Online Group Class** membership plans:
-
-👤 **Individual**
-• 1 Month — ₹1,999/month
-• 3 Months — ₹1,500/month *(Total ₹4,500 · Save ₹1,499 · ⭐ Most Popular)*
-• 6 Months — ₹1,350/month *(Total ₹8,100 · Save ₹2,899)*
-
-👫 **Couple** (per person)
-• 3 Months — ₹1,350/person/month *(Couple total: ₹8,100)*
-• 6 Months — ₹1,250/person/month *(Couple total: ₹15,000)*
-
-👨‍👩‍👧 **Family** (3+ members, per person)
-• 3 Months — ₹1,250/person/month
-• 6 Months — ₹1,200/person/month
-
-💡 **We recommend the 3-Month plan** — it gives you time to build consistency while saving ₹499/month vs the 1-month rate.`,
-
-  pricing_compare: `Here's a quick **plan comparison** to help you decide:
-
-📊 **Offline Individual**
-| Plan | Monthly | Total | You Save |
-|------|---------|-------|----------|
-| 1 Month | ₹2,499 | ₹2,499 | — |
-| **3 Months** ⭐ | **₹2,000** | **₹6,000** | **₹1,500** |
-| 6 Months | ₹1,850 | ₹11,100 | ₹3,900 |
-
-📊 **Online Individual**
-| Plan | Monthly | Total | You Save |
-|------|---------|-------|----------|
-| 1 Month | ₹1,999 | ₹1,999 | — |
-| **3 Months** ⭐ | **₹1,500** | **₹4,500** | **₹1,499** |
-| 6 Months | ₹1,350 | ₹8,100 | ₹2,899 |`,
-
-  which_plan: `Great question! Here's an honest recommendation 🌿
-
-**Choose 1 Month if:**
-→ You're still deciding & want flexibility
-→ You haven't tried the classes yet (better to try the free trial first!)
-
-**Choose 3 Months if** *(most people start here)*:
-→ You're ready to commit to building a yoga habit
-→ You want to save ₹499/month vs month-to-month
-→ You want enough time to see real results without a big commitment
-
-**Choose 6 Months if:**
-→ You're fully committed and want the best per-month rate
-→ You've already done yoga before and know you'll stick with it
-
-🌟 **Our honest advice:** Start with a **free trial first**, then choose **3 months** — it's the sweet spot between flexibility and savings.`,
-
-  couple_pricing: `Yes! We have special **Couple Plans** 💕
-
-🏠 **Offline Couple (per person)**
-• 3 Months — ₹1,850/person/month *(₹11,100 total for 2)*
-• 6 Months — ₹1,750/person/month *(₹21,000 total for 2)*
-
-🌐 **Online Couple (per person)**
-• 3 Months — ₹1,350/person/month *(₹8,100 total for 2)*
-• 6 Months — ₹1,250/person/month *(₹15,000 total for 2)*
-
-💕 **Better Together** — practicing with your partner keeps you both accountable and saves more per person than individual plans!`,
-
-  family_pricing: `Yes! We have **Family Plans** for 3 or more members 🏡
-
-🏠 **Offline Family (per person)**
-• 3 Months — ₹1,800/person/month
-• 6 Months — ₹1,700/person/month
-
-🌐 **Online Family (per person)**
-• 3 Months — ₹1,250/person/month
-• 6 Months — ₹1,200/person/month
-
-**Example — 3 members, 3 months offline:** ₹1,800 × 3 months × 3 members = ₹16,200 total
-
-🏡 Make wellness a family habit — practice together, stay accountable together!`,
+  family_pricing: `Yes! We have **Family Plans** for 3 or more members 🏡\n\nMake wellness a family habit — practice together, stay accountable together!\n\nFor the exact rates, please reach out to our team on WhatsApp — we'll share all the details right away. 🙏`,
 
   beginner: `100% yes — beginners are always welcome! 🌱\n\nYou don't need to be flexible, fit, or have any prior experience. Our teacher guides every student patiently at their own pace.\n\nMany students join with zero yoga background and transform completely within just a few weeks. Your journey starts exactly where you are.`,
 
@@ -164,7 +83,22 @@ const KB = {
 };
 
 /* ── Intent Definitions ────────────────────────────────────────── */
+const RETREAT_INFO = {
+  dates: "24–25 October 2026 (Saturday–Sunday)",
+  location: "Karjat, Maharashtra",
+  activities: "Yoga & Meditation, Breathwork & Mindfulness, Mindful Tea, Meaningful Connections, Music, and Fun Games",
+  page: "https://feelandhealyoga.com/retreat/karjat-2026",
+};
+
 const intents = [
+  {
+    id: "retreat",
+    keys: ["retreat", "karjat", "mindfulness retreat", "1 night", "one night", "october retreat", "camp", "getaway", "weekend retreat", "nature retreat", "24 october", "25 october"],
+    answer: () => `Namaste! 🌿\n\nFeel & Heal Yoga is organising a **1-Night Mindfulness Retreat in Karjat** on **${RETREAT_INFO.dates}**.\n\nYou'll experience: ${RETREAT_INFO.activities}.\n\n✨ *"Your Phone Has Airplane Mode. Why Don't You?"*\n\nWould you like to know more about the activities or **register your interest**? 🙏`,
+    chips: ["📋 Register Interest", "🧘 Activities", "📍 Location", "❓ More Questions"],
+    noLead: true,
+  },
+
   {
     id: "greeting",
     keys: ["hi", "hello", "hey", "namaste", "hii", "helo", "good morning", "good evening", "good afternoon", "sup", "howdy", "namaskar"],
@@ -215,19 +149,19 @@ const intents = [
     id: "pricing_offline",
     keys: ["offline price", "offline fee", "offline cost", "offline rate", "offline package", "in person price", "studio fee", "offline plan"],
     answer: () => KB.pricing_offline,
-    chips: ["💰 Online Pricing", "🆚 Compare Plans", "🍯 Book Free Trial"],
+    chips: ["💬 WhatsApp", "🍯 Book Free Trial"],
   },
   {
     id: "pricing_online",
     keys: ["online price", "online fee", "online cost", "online rate", "online package", "virtual price", "zoom price", "online plan"],
     answer: () => KB.pricing_online,
-    chips: ["💰 Offline Pricing", "🆚 Compare Plans", "🍯 Book Free Trial"],
+    chips: ["💬 WhatsApp", "🍯 Book Free Trial"],
   },
   {
     id: "pricing",
     keys: ["fee", "price", "cost", "charge", "rate", "how much", "package", "offer", "fees", "monthly", "payment", "plan", "plans", "membership", "subscription"],
-    answer: () => `Here's a quick overview of our pricing 🌿\n\n🏠 **Offline** (Group Classes)\n• 1 Month — ₹2,499/month\n• **3 Months — ₹2,000/month** ⭐ Most Popular\n• 6 Months — ₹1,850/month\n\n🌐 **Online** (Group Classes)\n• 1 Month — ₹1,999/month\n• **3 Months — ₹1,500/month** ⭐ Most Popular\n• 6 Months — ₹1,350/month\n\nWe also have **Couple** and **Family** plans with extra savings!\n\nWant the full breakdown?`,
-    chips: ["💰 Offline Pricing", "💰 Online Pricing", "👫 Couple Plans", "🆚 Compare Plans"],
+    answer: () => `We have flexible plans for every need — Individual, Couple, and Family options, both Online and Offline! 🌿\n\nFor personalised pricing, please reach out to our team directly and we'll help you find the perfect fit. 🙏`,
+    chips: ["💬 WhatsApp", "🍯 Book Free Trial"],
   },
   {
     id: "pricing_compare",
@@ -239,19 +173,19 @@ const intents = [
     id: "which_plan",
     keys: ["which plan", "what plan", "recommend", "suggestion", "which one", "best plan", "best option", "what should i", "help me choose", "not sure", "confused", "which membership"],
     answer: () => KB.which_plan,
-    chips: ["🍯 Book Free Trial First", "💰 See All Prices", "💬 WhatsApp"],
+    chips: ["🍯 Book Free Trial First", "💬 WhatsApp"],
   },
   {
     id: "three_month",
     keys: ["3 month", "three month", "3month", "quarterly", "3 months plan", "three months"],
-    answer: () => `The **3-Month Plan** is our most popular choice! ⭐\n\n🏠 **Offline** — ₹2,000/month (Total ₹6,000, save ₹1,500)\n🌐 **Online** — ₹1,500/month (Total ₹4,500, save ₹1,499)\n\n✅ Save ₹499/month vs the 1-month rate\n✅ Enough time to see real, visible results\n✅ Build a consistent yoga habit\n✅ Less commitment than 6 months\n\nThis is the plan we recommend for most beginners. 🌿`,
-    chips: ["💬 Enroll on WhatsApp", "🍯 Try Free First", "🆚 Compare Plans"],
+    answer: () => `The **3-Month Plan** is our most popular choice! ⭐\n\nIt gives you enough time to build a real yoga habit and see visible results, without a huge commitment. 🌿\n\nFor exact pricing and to enrol, please reach out to our team on WhatsApp — they'll get you started right away! 🙏`,
+    chips: ["💬 Enroll on WhatsApp", "🍯 Try Free First"],
   },
   {
     id: "six_month",
     keys: ["6 month", "six month", "6month", "half year", "6 months plan", "six months"],
-    answer: () => `The **6-Month Plan** is our best value for committed practitioners! 🏆\n\n🏠 **Offline** — ₹1,850/month (Total ₹11,100, save ₹3,900)\n🌐 **Online** — ₹1,350/month (Total ₹8,100, save ₹2,899)\n\n✅ Lowest per-month rate\n✅ Maximum savings\n✅ Best for those who know they love yoga\n\n💡 **Not sure yet?** We recommend starting with the **3-month plan** or a **free trial** first. 🌿`,
-    chips: ["💬 Enroll on WhatsApp", "🍯 Try Free First", "🤔 Which Plan?"],
+    answer: () => `The **6-Month Plan** is our best value option for committed practitioners! 🏆\n\n✅ Lowest per-month rate\n✅ Maximum savings\n✅ Best for those who know they love yoga\n\n💡 **Not sure yet?** We recommend starting with a **free trial** first. Our team will then help you pick the ideal plan. 🌿`,
+    chips: ["💬 Enroll on WhatsApp", "🍯 Try Free First"],
   },
   {
     id: "couple_pricing",
@@ -429,9 +363,9 @@ const PERSONAL_SUB_CHIPS = [
 const DEFAULT_CHIPS = [
   "⏰ Class Timings",
   "🍯 Free Trial",
-  "💰 Pricing",
   "💪 Weight Loss",
   "🌿 Benefits",
+  "💬 WhatsApp",
 ];
 
 const CHIP_MAP = {
@@ -462,10 +396,6 @@ const CHIP_MAP = {
   "🧘 book 1-on-1 session": "join",
   "💬 whatsapp": "__wa__",
   "💬 enroll on whatsapp": "__wa_enroll__",
-  "💰 pricing": "pricing",
-  "💰 see all prices": "pricing",
-  "💰 offline pricing": "offline price",
-  "💰 online pricing": "online price",
   "🆚 compare plans": "compare plans",
   "🤔 which plan?": "which plan",
   "👫 couple plans": "couple pricing",
@@ -642,6 +572,23 @@ export default function YogiChatbot() {
     window.addEventListener("open-yogi-chat", handler);
     return () => window.removeEventListener("open-yogi-chat", handler);
   }, []);
+
+  // Listen for open-yogi-retreat — dispatched by retreat banner/page buttons
+  useEffect(() => {
+    const handler = () => {
+      setOpen(true);
+      setUnread(0);
+      setTimeout(() => {
+        botReply(
+          `Namaste! 🌿\n\nI'm **Yogi**, and I'd love to help you with the **Karjat Mindfulness Retreat**!\n\nFeel & Heal Yoga is organising a **1-Night Mindfulness Retreat in Karjat** on **24–25 October 2026**.\n\nActivities include Yoga & Meditation, Breathwork, Mindful Tea, Music, and meaningful connections in nature. 🌿\n\nWould you like to **register your interest** or do you have any questions?`,
+          300,
+          ["📋 Register Interest", "🧘 Activities", "📍 Where is Karjat?", "❓ FAQ"]
+        );
+      }, 350);
+    };
+    window.addEventListener("open-yogi-retreat", handler);
+    return () => window.removeEventListener("open-yogi-retreat", handler);
+  }, [botReply]);
 
   useEffect(() => {
     if (!open || collecting) return;

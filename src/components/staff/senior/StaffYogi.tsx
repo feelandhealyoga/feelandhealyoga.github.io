@@ -27,7 +27,7 @@ function parseDate(text: string): string {
       return d.toISOString().split('T')[0];
     }
   }
-  const slashMatch = text.match(/(\d{1,2})[\/\-](\d{1,2})/);
+  const slashMatch = text.match(/(\d{1,2})[/-](\d{1,2})/);
   if (slashMatch) {
     const d = new Date(today.getFullYear(), parseInt(slashMatch[2]) - 1, parseInt(slashMatch[1]));
     return d.toISOString().split('T')[0];

@@ -215,7 +215,7 @@ function load<T>(key: string, fallback: T): T {
   catch { return fallback; }
 }
 function save(key: string, value: unknown) {
-  try { localStorage.setItem(key, JSON.stringify(value)); } catch {}
+  try { localStorage.setItem(key, JSON.stringify(value)); } catch (_) { /* ignore storage errors */ }
 }
 
 // ─── PORTAL DB ────────────────────────────────────────────

@@ -1,0 +1,54 @@
+---
+import { RetreatPage } from "../../components/RetreatPage";
+import YogiChatbot from "../../components/yogichatbot.jsx";
+import { Navigation } from "../../components/Navigation";
+import "../../index.css";
+---
+
+<html lang="en">
+  <head>
+    <!-- Google tag -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16486354854"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-16486354854');
+    </script>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="canonical" href="https://feelandhealyoga.com/retreat/karjat-2026" />
+
+    <title>Karjat Mindfulness Retreat | 24–25 Oct 2026 | Feel & Heal Yoga</title>
+    <meta name="description" content="Join Feel & Heal Yoga for a 1-Night Mindfulness Retreat in Karjat on 24–25 October 2026. Yoga, meditation, breathwork, music, and meaningful connections surrounded by nature. Register your interest today." />
+
+    <!-- OG -->
+    <meta property="og:type" content="event" />
+    <meta property="og:url" content="https://feelandhealyoga.com/retreat/karjat-2026" />
+    <meta property="og:title" content="Karjat Mindfulness Retreat | Feel & Heal Yoga" />
+    <meta property="og:description" content="Your Phone Has Airplane Mode. Why Don't You? A 1-Night Mindfulness Retreat in Karjat — 24–25 October 2026." />
+    <meta property="og:image" content="https://feelandhealyoga.com/assets/feel-and-heal-yoga-logo.svg" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@500&display=swap" rel="stylesheet" />
+
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; font-family: 'Inter', sans-serif; background: #fff; }
+    </style>
+  </head>
+  <body>
+    <Navigation client:load />
+
+    <div style="padding-top: 64px;">
+      <RetreatPage client:load />
+    </div>
+
+    <!-- YOGI chatbot (carries retreat context via open-yogi-retreat event) -->
+    <YogiChatbot client:load />
+  </body>
+</html>
