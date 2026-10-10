@@ -361,139 +361,321 @@ const Topbar = ({ title, setMenu, setTab }: { title:string; setMenu:(v:boolean)=
    HOME SCREEN — ZERO SCROLL
    Hero (flex:1) + Yogi + Teacher strip + Book CTA
 ═════════════════════════════════════*/
-const HomeScreen = ({ setTab, setMenu }: { setTab:(t:Tab)=>void; setMenu:(v:boolean)=>void }) => (
-  <div style={{
-    minHeight:"calc(100dvh - max(80px, calc(60px + max(18px, env(safe-area-inset-bottom)))))",
-    display:"flex", flexDirection:"column",
-  }}>
+const HomeScreen = ({ setTab, setMenu }: { setTab:(t:Tab)=>void; setMenu:(v:boolean)=>void }) => {
+  const openRetreat = () => window.dispatchEvent(new CustomEvent("open-yogi-retreat"));
 
-    {/* ════ HERO ════ */}
-    <section style={{ flex:1, position:"relative", overflow:"hidden", minHeight:0 }}>
-      <img src="/assets/hero-yoga.jpg" alt="Feel &amp; Heal Yoga"
-        loading="eager"
-        style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center 30%", display:"block" }} />
-      <div style={{ position:"absolute", inset:0,
-        background:"linear-gradient(to bottom, rgba(5,15,10,0.15) 0%, rgba(5,15,10,0.75) 100%)" }} />
+  return (
+    <div style={{ display:"flex", flexDirection:"column", background:"#0D1F17" }}>
 
-      {/* Pill nav */}
-      <div style={{ position:"absolute", top:0, left:0, right:0, zIndex:2,
-        display:"flex", justifyContent:"center",
-        padding:"max(14px,env(safe-area-inset-top)) 16px 0",
-        pointerEvents:"none" }}>
-        <div style={{ pointerEvents:"all", display:"flex", alignItems:"center",
-          justifyContent:"space-between", width:"100%",
-          background:"rgba(255,255,255,0.10)", backdropFilter:"blur(16px)",
-          WebkitBackdropFilter:"blur(16px)", border:"1px solid rgba(255,255,255,0.22)",
-          borderRadius:99, padding:"8px 8px 8px 18px",
-          boxShadow:"0 2px 20px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.12)",
-        } as any}>
-          <div style={{ display:"flex", alignItems:"center" }}>
+      {/* ══════════════════════════════
+          SECTION 1 — IMMERSIVE HERO
+      ══════════════════════════════ */}
+      <section style={{
+        position:"relative",
+        height:"100dvh",
+        minHeight:520,
+        maxHeight:900,
+        overflow:"hidden",
+      }}>
+        {/* Full-bleed background image */}
+        <img src="/assets/hero-yoga.jpg" alt="Feel & Heal Yoga"
+          loading="eager"
+          style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover", objectPosition:"center 28%", display:"block" }} />
+
+        {/* Cinematic gradient — top fade + strong bottom fade */}
+        <div style={{ position:"absolute", inset:0,
+          background:"linear-gradient(180deg, rgba(13,31,23,0.35) 0%, rgba(13,31,23,0.0) 38%, rgba(13,31,23,0.55) 68%, rgba(13,31,23,0.92) 100%)"
+        }} />
+
+        {/* ── Top nav pill ── */}
+        <div style={{ position:"absolute", top:0, left:0, right:0, zIndex:10,
+          padding:"max(14px,env(safe-area-inset-top)) 18px 0", pointerEvents:"none" }}>
+          <div style={{ pointerEvents:"all", display:"flex", alignItems:"center",
+            justifyContent:"space-between",
+            background:"rgba(255,255,255,0.08)", backdropFilter:"blur(20px)",
+            WebkitBackdropFilter:"blur(20px)", border:"1px solid rgba(255,255,255,0.15)",
+            borderRadius:99, padding:"9px 9px 9px 20px",
+          } as any}>
             <span style={{ fontFamily:"'Playfair Display',serif", fontSize:13, fontWeight:700,
-              color:"rgba(255,255,255,0.95)", letterSpacing:"0.06em",
-              textTransform:"uppercase" as const }}>Feel &amp; Heal Yoga</span>
+              color:"rgba(255,255,255,0.95)", letterSpacing:"0.07em", textTransform:"uppercase" as const }}>
+              Feel &amp; Heal Yoga
+            </span>
+            <button onClick={()=>setMenu(true)} aria-label="Menu"
+              style={{ width:34, height:34, borderRadius:"50%",
+                background:"rgba(255,255,255,0.15)", border:"1px solid rgba(255,255,255,0.22)",
+                display:"flex", alignItems:"center", justifyContent:"center", cursor:"pointer", flexShrink:0 } as any}>
+              <svg width="14" height="14" viewBox="0 0 18 18" fill="none">
+                <line x1="2" y1="5" x2="16" y2="5" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
+                <line x1="2" y1="9" x2="12" y2="9" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
+                <line x1="2" y1="13" x2="16" y2="13" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
+              </svg>
+            </button>
           </div>
-          <button onClick={()=>setMenu(true)}
-            style={{ width:34, height:34, borderRadius:"50%",
-              background:"rgba(255,255,255,0.18)", border:"1px solid rgba(255,255,255,0.28)",
-              display:"flex", alignItems:"center", justifyContent:"center",
-              cursor:"pointer", flexShrink:0 } as any} aria-label="Menu">
-            <svg width="14" height="14" viewBox="0 0 18 18" fill="none">
-              <line x1="2" y1="5" x2="16" y2="5" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
-              <line x1="2" y1="9" x2="12" y2="9" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
-              <line x1="2" y1="13" x2="16" y2="13" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
-            </svg>
-          </button>
         </div>
-      </div>
 
-      {/* Hero content */}
-      <div style={{ position:"absolute", bottom:0, left:0, right:0, padding:"0 20px 22px" }}>
-        <div style={{ display:"flex", gap:8, marginBottom:12 }}>
-          {["\u2605 5.0","5+ Years"].map(t=>(
-            <span key={t} style={{ background:"rgba(255,255,255,0.16)", backdropFilter:"blur(6px)",
-              color:"rgba(255,255,255,0.90)", fontSize:10, fontWeight:600,
-              padding:"3px 10px", borderRadius:99 }}>{t}</span>
+        {/* ── Hero content — lower third, NO background box ── */}
+        <div style={{ position:"absolute", bottom:0, left:0, right:0, padding:"0 22px 32px", zIndex:5 }}>
+
+          {/* Trust indicators — tiny, subtle */}
+          <div style={{ display:"flex", gap:8, marginBottom:16, alignItems:"center" }}>
+            <span style={{ fontSize:9, fontWeight:600, letterSpacing:"0.12em", textTransform:"uppercase" as const,
+              color:"#C9A66B", opacity:0.9 }}>⭐ 5.0 · 5+ Years · Kharghar, Navi Mumbai</span>
+          </div>
+
+          {/* Main heading — editorial serif, directly on image */}
+          <h1 style={{
+            fontFamily:"'Playfair Display',serif",
+            fontSize:"clamp(36px,9.5vw,52px)",
+            fontWeight:700, lineHeight:1.05,
+            color:"#F7F4EC",
+            margin:"0 0 10px",
+            letterSpacing:"-0.01em",
+          }}>
+            Move Better.<br/>
+            <em style={{ fontStyle:"italic", color:"#A8C5A0" }}>Breathe Deeper.</em>
+          </h1>
+
+          {/* Subtitle */}
+          <p style={{ fontSize:13, color:"rgba(247,244,236,0.65)", margin:"0 0 22px",
+            fontWeight:400, letterSpacing:"0.01em", lineHeight:1.5 }}>
+            Find your balance with Feel &amp; Heal Yoga.
+          </p>
+
+          {/* CTA buttons */}
+          <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+            <button onClick={openTrial} className="fh-tap" style={{
+              padding:"15px 0", borderRadius:99, border:"none", cursor:"pointer",
+              background:"linear-gradient(135deg, #C9A66B, #B8924F)",
+              color:"#173F32", fontSize:14, fontWeight:700,
+              fontFamily:"'Inter',sans-serif", letterSpacing:"0.03em",
+              boxShadow:"0 6px 28px rgba(201,166,107,0.40)",
+            } as any}>Book a Free Trial →</button>
+            <button onClick={() => setTab("classes")} className="fh-tap" style={{
+              padding:"13px 0", borderRadius:99, cursor:"pointer",
+              background:"rgba(247,244,236,0.10)", border:"1px solid rgba(247,244,236,0.25)",
+              color:"#F7F4EC", fontSize:13, fontWeight:600,
+              fontFamily:"'Inter',sans-serif", letterSpacing:"0.02em",
+            } as any}>Explore Your Practice</button>
+          </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div style={{ position:"absolute", bottom:8, left:"50%", transform:"translateX(-50%)",
+          display:"flex", flexDirection:"column", alignItems:"center", gap:3, opacity:0.35, zIndex:4 }}>
+          <div style={{ width:1, height:20, background:"#F7F4EC", borderRadius:1 }} />
+        </div>
+      </section>
+
+      {/* ══════════════════════════════
+          SECTION 2 — DISCOVER YOUR PRACTICE
+      ══════════════════════════════ */}
+      <section style={{ background:"#F7F4EC", padding:"48px 22px 40px" }}>
+        <p style={{ fontSize:10, fontWeight:700, letterSpacing:"0.18em", textTransform:"uppercase" as const,
+          color:"#C9A66B", margin:"0 0 6px" }}>PROGRAMS</p>
+        <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:26, fontWeight:700,
+          color:"#173F32", margin:"0 0 6px", lineHeight:1.2 }}>Discover Your<br/>Practice</h2>
+        <p style={{ fontSize:12, color:"#5A7060", margin:"0 0 28px", lineHeight:1.6 }}>
+          Every body has a story. We help you write the next chapter.
+        </p>
+
+        {/* Program cards — horizontal scroll */}
+        <div className="fh-swipe" style={{ paddingBottom:4 }}>
+          {[
+            { label:"General Yoga",     emoji:"🧘", desc:"For all levels",     bg:"#173F32" },
+            { label:"Weight Loss",      emoji:"🔥", desc:"Dynamic sequences",  bg:"#2D6A4F" },
+            { label:"Therapeutic",      emoji:"💚", desc:"Healing & recovery", bg:"#103B2B" },
+            { label:"Kids Yoga",        emoji:"🌟", desc:"Ages 5–15",          bg:"#1B5E20" },
+            { label:"Prenatal",         emoji:"🌸", desc:"Safe & nurturing",   bg:"#3E4E3A" },
+            { label:"Meditation",       emoji:"🕯️",  desc:"Inner stillness",   bg:"#2A3D2F" },
+          ].map(p => (
+            <div key={p.label} className="fh-snap" onClick={() => setTab("classes")} style={{
+              minWidth:130, borderRadius:16, overflow:"hidden", cursor:"pointer",
+              background:p.bg, flexShrink:0, padding:"20px 14px 18px",
+              display:"flex", flexDirection:"column", gap:6,
+            }}>
+              <span style={{ fontSize:28 }}>{p.emoji}</span>
+              <p style={{ fontFamily:"'Playfair Display',serif", fontSize:14, fontWeight:700,
+                color:"#F7F4EC", margin:0, lineHeight:1.2 }}>{p.label}</p>
+              <p style={{ fontSize:10, color:"rgba(247,244,236,0.55)", margin:0 }}>{p.desc}</p>
+            </div>
           ))}
         </div>
-        <h1 style={{ fontFamily:"'Playfair Display',serif",
-          fontSize:"clamp(30px,8.5vw,40px)", fontWeight:700, color:"#fff",
-          lineHeight:1.08, margin:"0 0 4px" }}>Move Better.<br/>Breathe Deeper.</h1>
-        <p style={{ color:"rgba(255,255,255,0.60)", fontSize:11, margin:"0 0 16px" }}>
-          Online &amp; Offline Yoga · Kharghar, Navi Mumbai
+
+        <button onClick={() => setTab("classes")} className="fh-tap" style={{
+          marginTop:22, width:"100%", padding:"13px", borderRadius:99,
+          background:"#173F32", border:"none", cursor:"pointer",
+          color:"#F7F4EC", fontSize:13, fontWeight:600, fontFamily:"'Inter',sans-serif",
+          letterSpacing:"0.02em",
+        } as any}>View All Classes →</button>
+      </section>
+
+      {/* ══════════════════════════════
+          SECTION 3 — KARJAT RETREAT
+      ══════════════════════════════ */}
+      <section style={{
+        background:"linear-gradient(135deg, #0D1F17 0%, #173F32 55%, #1C2E20 100%)",
+        padding:"48px 22px 44px", position:"relative", overflow:"hidden",
+      }}>
+        {/* Subtle dot texture */}
+        <div aria-hidden style={{ position:"absolute", inset:0, opacity:0.04,
+          backgroundImage:"radial-gradient(#C9A66B 1px, transparent 1px)",
+          backgroundSize:"26px 26px" }} />
+
+        <div style={{ position:"relative", zIndex:1 }}>
+          {/* Label */}
+          <div style={{ display:"inline-flex", alignItems:"center", gap:6,
+            background:"rgba(201,166,107,0.15)", border:"1px solid rgba(201,166,107,0.30)",
+            borderRadius:99, padding:"4px 12px", marginBottom:18 }}>
+            <span style={{ width:6, height:6, borderRadius:"50%", background:"#C9A66B",
+              display:"inline-block", animation:"pulse-dot 2s infinite" }} />
+            <span style={{ fontSize:9, fontWeight:700, letterSpacing:"0.14em",
+              textTransform:"uppercase" as const, color:"#C9A66B" }}>Retreat · 24–25 Oct 2026</span>
+          </div>
+
+          <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:26, fontWeight:700,
+            color:"#F7F4EC", margin:"0 0 8px", lineHeight:1.2 }}>
+            Your Phone Has<br/>
+            <em style={{ color:"#A8C5A0", fontStyle:"italic" }}>Airplane Mode.</em>
+          </h2>
+          <p style={{ fontSize:12, color:"rgba(247,244,236,0.55)", margin:"0 0 6px" }}>
+            Why don't you?
+          </p>
+          <p style={{ fontSize:12, color:"rgba(247,244,236,0.45)", margin:"0 0 24px", lineHeight:1.65 }}>
+            📍 Karjat, Maharashtra &nbsp;·&nbsp; 1-Night Mindfulness Retreat
+          </p>
+
+          {/* Activities */}
+          <div style={{ display:"flex", flexWrap:"wrap", gap:6, marginBottom:24 }}>
+            {["🧘 Yoga","🌬️ Breathwork","🍵 Tea","🎵 Music","🤝 Connect","🎲 Games"].map(a => (
+              <span key={a} style={{ fontSize:10, color:"rgba(247,244,236,0.65)",
+                background:"rgba(255,255,255,0.07)", border:"1px solid rgba(255,255,255,0.10)",
+                borderRadius:99, padding:"4px 10px" }}>{a}</span>
+            ))}
+          </div>
+
+          <button onClick={openRetreat} className="fh-tap" style={{
+            width:"100%", padding:"14px", borderRadius:99, border:"none", cursor:"pointer",
+            background:"linear-gradient(135deg, #C9A66B, #B8924F)",
+            color:"#173F32", fontSize:14, fontWeight:700,
+            fontFamily:"'Inter',sans-serif", letterSpacing:"0.03em",
+            boxShadow:"0 6px 24px rgba(201,166,107,0.35)",
+          } as any}>Register with YOGI AI →</button>
+
+          <a href="/retreat/karjat-2026" style={{
+            display:"block", textAlign:"center" as const, marginTop:12,
+            fontSize:11, color:"rgba(247,244,236,0.40)", textDecoration:"none",
+          }}>View full retreat details ↗</a>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════
+          SECTION 4 — MEET YOGI AI
+      ══════════════════════════════ */}
+      <section style={{ background:"#F7F4EC", padding:"48px 22px 44px" }}>
+        <p style={{ fontSize:10, fontWeight:700, letterSpacing:"0.18em", textTransform:"uppercase" as const,
+          color:"#C9A66B", margin:"0 0 6px" }}>AI GUIDE</p>
+        <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:26, fontWeight:700,
+          color:"#173F32", margin:"0 0 10px", lineHeight:1.2 }}>
+          Meet<br/><em style={{ fontStyle:"italic" }}>YOGI AI</em>
+        </h2>
+        <p style={{ fontSize:12, color:"#5A7060", margin:"0 0 24px", lineHeight:1.65 }}>
+          Your personal AI wellness guide — recommends programs, shares schedules, and helps you register.
         </p>
+
+        {/* Feature pills */}
+        <div style={{ display:"flex", flexDirection:"column", gap:10, marginBottom:28 }}>
+          {[
+            ["🎯","Program Recommendations","Tailored to your goal & lifestyle"],
+            ["📅","Class Information","Timings, batches, and availability"],
+            ["📋","Registration Help","Guides you through booking in minutes"],
+            ["💬","Personalised Guidance","Answers any wellness question 24/7"],
+          ].map(([icon, title, sub]) => (
+            <div key={title as string} style={{ display:"flex", alignItems:"center", gap:14,
+              background:"#fff", border:"1px solid #E8E4DA",
+              borderRadius:14, padding:"14px 16px" }}>
+              <span style={{ fontSize:22, flexShrink:0 }}>{icon}</span>
+              <div>
+                <p style={{ fontSize:13, fontWeight:600, color:"#173F32", margin:0 }}>{title}</p>
+                <p style={{ fontSize:11, color:"#8A9A85", margin:0, marginTop:2 }}>{sub}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <button onClick={openYogi} className="fh-tap" style={{
+          width:"100%", padding:"14px", borderRadius:99, border:"none", cursor:"pointer",
+          background:"linear-gradient(135deg, #173F32, #0A3D2B)",
+          color:"#F7F4EC", fontSize:14, fontWeight:700,
+          fontFamily:"'Inter',sans-serif", letterSpacing:"0.03em",
+          boxShadow:"0 6px 24px rgba(23,63,50,0.35)",
+        } as any}>Chat with YOGI AI →</button>
+      </section>
+
+      {/* ══════════════════════════════
+          SECTION 5 — BEGIN YOUR JOURNEY
+      ══════════════════════════════ */}
+      <section style={{
+        background:"linear-gradient(135deg, #173F32 0%, #0D1F17 100%)",
+        padding:"52px 22px 48px", textAlign:"center" as const,
+      }}>
+        <p style={{ fontSize:10, fontWeight:700, letterSpacing:"0.18em", textTransform:"uppercase" as const,
+          color:"#C9A66B", margin:"0 0 10px" }}>FREE TRIAL</p>
+        <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:28, fontWeight:700,
+          color:"#F7F4EC", margin:"0 0 12px", lineHeight:1.2 }}>
+          Begin Your<br/>
+          <em style={{ fontStyle:"italic", color:"#A8C5A0" }}>Journey Today</em>
+        </h2>
+        <p style={{ fontSize:13, color:"rgba(247,244,236,0.55)", margin:"0 auto 28px", maxWidth:280, lineHeight:1.7 }}>
+          Your first class is completely free. No commitment. Just show up.
+        </p>
+
         <button onClick={openTrial} className="fh-tap" style={{
-            width:"100%", padding:"14px 0",
-            borderRadius:99,
-            background:"linear-gradient(135deg, hsl(38,92%,52%), hsl(30,86%,46%))",
-            border:"none", cursor:"pointer",
-            color:"hsl(220,18%,12%)",
-            fontSize:14, fontWeight:700,
-            fontFamily:"'Inter',sans-serif",
-            letterSpacing:"0.02em",
-            boxShadow:"0 6px 28px hsla(38,92%,52%,0.55), inset 0 1px 0 rgba(255,255,255,0.28)",
-          } as any}>🌿 Book Free Trial</button>
-      </div>
-    </section>
+          width:"100%", maxWidth:320, padding:"16px", borderRadius:99, border:"none", cursor:"pointer",
+          background:"linear-gradient(135deg, #C9A66B, #B8924F)",
+          color:"#173F32", fontSize:15, fontWeight:700,
+          fontFamily:"'Inter',sans-serif", letterSpacing:"0.03em",
+          boxShadow:"0 8px 32px rgba(201,166,107,0.40)",
+        } as any}>🌿 Book Your Free Trial</button>
 
-    {/* ════ BOTTOM STRIP ════ */}
-    <div style={{ background:T.white, flexShrink:0 }}>
+        <p style={{ fontSize:10, color:"rgba(247,244,236,0.30)", marginTop:16, lineHeight:1.6 }}>
+          Online &amp; Offline · Kharghar, Navi Mumbai<br/>Mon – Fri · 6 AM – 8:30 PM
+        </p>
+      </section>
 
-      {/* ── Retreat Banner Card ── */}
-      <button
-        onClick={() => window.dispatchEvent(new CustomEvent("open-yogi-retreat"))}
-        className="fh-tap"
-        style={{
-          display:"flex", alignItems:"center", gap:12,
-          width:"100%", padding:"11px 16px",
-          background:"linear-gradient(135deg, hsl(80,18%,14%) 0%, hsl(145,30%,18%) 60%, hsl(25,35%,22%) 100%)",
+      {/* ── Retreat card + YOGI strip ── */}
+      <div style={{ background:"#0D1F17", flexShrink:0 }}>
+        <button onClick={openYogi} className="fh-tap" style={{
+          display:"flex", alignItems:"center", gap:12, width:"100%", padding:"14px 20px",
+          background:"linear-gradient(135deg, #173F32, #0A3D2B)",
           border:"none", cursor:"pointer", textAlign:"left" as const,
-          borderBottom:"1px solid rgba(255,255,255,0.08)",
-        } as any}
-      >
-        <div style={{ width:36, height:36, borderRadius:"50%", background:"rgba(251,191,36,0.18)",
-          border:"1px solid rgba(251,191,36,0.35)",
-          display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, fontSize:18 }}>
-          🌿
-        </div>
-        <div style={{ flex:1, minWidth:0 }}>
-          <p style={{ color:"hsl(38,85%,78%)", fontWeight:700, fontSize:12, margin:0,
-            fontFamily:"'Playfair Display',serif", letterSpacing:"0.02em" }}>
-            Karjat Retreat · 24–25 Oct 2026
-          </p>
-          <p style={{ color:"rgba(255,255,255,0.55)", fontSize:10, margin:0, marginTop:1 }}>
-            Register with YOGI AI →
-          </p>
-        </div>
-        <span style={{
-          fontSize:9, fontWeight:700, letterSpacing:"0.08em", textTransform:"uppercase" as const,
-          background:"rgba(251,191,36,0.2)", border:"1px solid rgba(251,191,36,0.4)",
-          color:"hsl(38,90%,72%)", padding:"3px 8px", borderRadius:99, flexShrink:0,
-        }}>New</span>
-      </button>
+          borderTop:"1px solid rgba(255,255,255,0.06)",
+        } as any}>
+          <div style={{ width:36, height:36, borderRadius:"50%", background:"rgba(255,255,255,0.12)",
+            display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+            <YogiIcon />
+          </div>
+          <div style={{ flex:1 }}>
+            <p style={{ color:"#F7F4EC", fontWeight:700, fontSize:13, margin:0,
+              fontFamily:"'Playfair Display',serif" }}>Chat with YOGI AI</p>
+            <p style={{ color:"rgba(247,244,236,0.45)", fontSize:11, margin:0 }}>
+              Programs · Schedule · Guidance →
+            </p>
+          </div>
+          <span style={{ color:"rgba(247,244,236,0.35)", fontSize:20, flexShrink:0 }}>›</span>
+        </button>
+      </div>
 
-      {/* ── YOGI chat strip ── */}
-      <button onClick={openYogi} className="fh-tap" style={{ display:"flex", alignItems:"center",
-        gap:12, width:"100%", padding:"12px 16px",
-        background:`linear-gradient(135deg, ${T.yogi}, #2D6A4F)`,
-        border:"none", cursor:"pointer", textAlign:"left" as const } as any}>
-        <div style={{ width:36, height:36, borderRadius:"50%", background:"rgba(255,255,255,0.18)",
-          display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
-          <YogiIcon />
-        </div>
-        <div style={{ flex:1 }}>
-          <p style={{ color:"#fff", fontWeight:700, fontSize:13, margin:0,
-            fontFamily:"'Playfair Display',serif" }}>Chat with Yogi AI</p>
-          <p style={{ color:"rgba(255,255,255,0.60)", fontSize:11, margin:0 }}>
-            Programs · Schedule · Personalised plan →
-          </p>
-        </div>
-        <span style={{ color:"rgba(255,255,255,0.50)", fontSize:20, flexShrink:0 }}>›</span>
-      </button>
+      <style>{`
+        @keyframes pulse-dot {
+          0%,100%{opacity:1;transform:scale(1)}
+          50%{opacity:0.4;transform:scale(1.5)}
+        }
+      `}</style>
+
     </div>
+  );
+};
 
-
-  </div>
-);
 
 
 /* ═════════════════════════════════════
