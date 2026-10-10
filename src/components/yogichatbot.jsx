@@ -344,6 +344,7 @@ const intents = [
 ];
 
 const MENU_CHIPS = [
+  "🏕️ Karjat Retreat",
   "1️⃣ Personal 1-to-1 Yoga",
   "2️⃣ Group Yoga",
   "3️⃣ Society Yoga",
@@ -391,6 +392,8 @@ const CHIP_MAP = {
   "👩 book women's": "women_batch",
   "🌿 benefits": "benefit",
   "🏘️ society yoga": "society yoga",
+  "🏕️ karjat retreat": "__retreat_form__",
+  "🏕️ karjat retreat getaway": "__retreat_form__",
   "🏘️ submit society request": "__society_link__",
   "🏘️ view franchise page": "__franchise_link__",
   "📋 register interest": "__retreat_form__",

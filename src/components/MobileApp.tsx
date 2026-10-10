@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { RetreatPopup } from "./RetreatPopup";
 
 /* ─────────────────────────────────────
    LINKS & EVENTS
@@ -177,6 +178,9 @@ export const MobileApp = () => {
 
         {/* ── Menu drawer ── */}
         {menu && <MenuSheet onClose={()=>setMenu(false)} setTab={setTab} />}
+
+        {/* ── Retreat first-visit popup ── */}
+        <RetreatPopup />
       </div>
     </>
   );
