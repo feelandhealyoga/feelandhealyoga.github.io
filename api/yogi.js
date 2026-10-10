@@ -121,11 +121,11 @@ Activities included:
 Who can attend: Open to everyone — beginners, regular practitioners, all ages and fitness levels.
 Contact for retreat: +91 99201 55875 (WhatsApp/Call)
 Registration page: https://feelandhealyoga.com/retreat/karjat-2026
-Registration Form (Google Form): https://forms.gle/Es8r9aaNj4nqncWB6
+Registration: Via WhatsApp — +91 99201 55875
 
 RETREAT REGISTRATION FLOW (follow this when a visitor wants to register):
-Step 1: Share the Google Form link: https://forms.gle/Es8r9aaNj4nqncWB6
-Step 2: Tell them to fill it out and the Feel & Heal Yoga team will contact them.
+Step 1: Tell them to message the Feel & Heal Yoga team on WhatsApp: +91 99201 55875
+Step 2: Provide the pre-filled message: "Namaste! I am interested in the Karjat Mindfulness Retreat on 24-25 October 2026. Please share details."
 Step 3: Offer to answer any other questions.
 
 RETREAT RULES:

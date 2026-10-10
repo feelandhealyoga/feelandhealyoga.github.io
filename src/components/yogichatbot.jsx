@@ -94,7 +94,7 @@ const intents = [
   {
     id: "retreat",
     keys: ["retreat", "karjat", "mindfulness retreat", "1 night", "one night", "october retreat", "camp", "getaway", "weekend retreat", "nature retreat", "24 october", "25 october", "register interest", "register retreat"],
-    answer: () => `Namaste! 🌿\n\nFeel & Heal Yoga is organising a **1-Night Mindfulness Retreat in Karjat** on **${RETREAT_INFO.dates}**.\n\nActivities: ${RETREAT_INFO.activities}.\n\nTap **"📋 Open Registration Form"** below to register your interest — our team will contact you with all the details and confirm your spot! 🙏`,
+    answer: () => `Namaste! 🌿\n\nFeel & Heal Yoga is organising a **1-Night Mindfulness Retreat in Karjat** on **${RETREAT_INFO.dates}**.\n\nActivities: ${RETREAT_INFO.activities}.\n\nTap **"💬 Register on WhatsApp"** below to connect with our team — they'll share all the details and confirm your spot! 🙏`,
     chips: ["🧘 Activities", "📍 Karjat Location", "❓ FAQ", "💬 WhatsApp"],
     noLead: true,
   },
@@ -586,12 +586,12 @@ export default function YogiChatbot() {
       setUnread(0);
       setTimeout(() => {
         botReply(
-          `Namaste! 🌿\n\nFeel & Heal Yoga is organising a **1-Night Mindfulness Retreat in Karjat** on **24–25 October 2026**.\n\nActivities include Yoga & Meditation, Breathwork, Mindful Tea, Music, and meaningful connections in nature.\n\nTap the button below to register your interest — our team will contact you with all the details! 🙏`,
+          `Namaste! 🌿\n\nFeel & Heal Yoga is organising a **1-Night Mindfulness Retreat in Karjat** on **24–25 October 2026**.\n\nActivities include Yoga & Meditation, Breathwork, Mindful Tea, Music, and meaningful connections in nature.\n\nTap below to register your interest on WhatsApp — our team will reach out with all the details and confirm your spot! 🙏`,
           300,
-          ["🧘 Activities", "📍 Where is Karjat?", "❓ More Questions", "💬 WhatsApp Us"]
+          ["🧘 Activities", "📍 Where is Karjat?", "❓ More Questions"]
         );
         setTimeout(() => {
-          addSpecial("gform", { text: "📋 Open Retreat Registration Form", url: "https://forms.gle/Es8r9aaNj4nqncWB6" });
+          addSpecial("wa", { text: "💬 Register on WhatsApp", url: waUrl("Namaste! 🙏 I am interested in the Feel & Heal Yoga Karjat Mindfulness Retreat on 24–25 October 2026. Please share registration details and availability.") });
         }, 800);
       }, 350);
     };
@@ -1090,10 +1090,10 @@ export default function YogiChatbot() {
       return;
     }
     if (mapped === "__retreat_form__") {
-      botReply("Here's the registration form for the **Karjat Mindfulness Retreat** 🌿\n\nFill it out and our Feel & Heal Yoga team will reach out with all details and confirm your spot! 🙏", 400);
+      botReply("Tap below to connect with our Feel & Heal Yoga team on WhatsApp and register your interest in the **Karjat Mindfulness Retreat**! 🌿\n\nOur team will share all the details and confirm your spot. 🙏", 400);
       setTimeout(() => {
-        addSpecial("gform", { text: "📋 Open Retreat Registration Form", url: "https://forms.gle/Es8r9aaNj4nqncWB6" });
-        setChips(["🧘 Activities", "📍 Karjat Location", "❓ FAQ", "💬 WhatsApp"]);
+        addSpecial("wa", { text: "💬 Register on WhatsApp", url: waUrl("Namaste! 🙏 I am interested in the Feel & Heal Yoga Karjat Mindfulness Retreat on 24–25 October 2026. Please share registration details and availability.") });
+        setChips(["🧘 Activities", "📍 Karjat Location", "❓ FAQ"]);
       }, 1200);
       return;
     }
