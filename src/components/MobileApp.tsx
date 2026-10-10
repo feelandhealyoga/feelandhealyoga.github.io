@@ -363,8 +363,8 @@ const Topbar = ({ title, setMenu, setTab }: { title:string; setMenu:(v:boolean)=
 ═════════════════════════════════════*/
 const HomeScreen = ({ setTab, setMenu }: { setTab:(t:Tab)=>void; setMenu:(v:boolean)=>void }) => (
   <div style={{
-    height:"calc(100dvh - max(80px, calc(60px + max(18px, env(safe-area-inset-bottom)))))",
-    display:"flex", flexDirection:"column", overflow:"hidden",
+    minHeight:"calc(100dvh - max(80px, calc(60px + max(18px, env(safe-area-inset-bottom)))))",
+    display:"flex", flexDirection:"column",
   }}>
 
     {/* ════ HERO ════ */}
