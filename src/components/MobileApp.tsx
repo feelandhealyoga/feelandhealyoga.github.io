@@ -437,6 +437,41 @@ const HomeScreen = ({ setTab, setMenu }: { setTab:(t:Tab)=>void; setMenu:(v:bool
 
     {/* ════ BOTTOM STRIP ════ */}
     <div style={{ background:T.white, flexShrink:0 }}>
+
+      {/* ── Retreat Banner Card ── */}
+      <button
+        onClick={() => window.dispatchEvent(new CustomEvent("open-yogi-retreat"))}
+        className="fh-tap"
+        style={{
+          display:"flex", alignItems:"center", gap:12,
+          width:"100%", padding:"11px 16px",
+          background:"linear-gradient(135deg, hsl(80,18%,14%) 0%, hsl(145,30%,18%) 60%, hsl(25,35%,22%) 100%)",
+          border:"none", cursor:"pointer", textAlign:"left" as const,
+          borderBottom:"1px solid rgba(255,255,255,0.08)",
+        } as any}
+      >
+        <div style={{ width:36, height:36, borderRadius:"50%", background:"rgba(251,191,36,0.18)",
+          border:"1px solid rgba(251,191,36,0.35)",
+          display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, fontSize:18 }}>
+          🌿
+        </div>
+        <div style={{ flex:1, minWidth:0 }}>
+          <p style={{ color:"hsl(38,85%,78%)", fontWeight:700, fontSize:12, margin:0,
+            fontFamily:"'Playfair Display',serif", letterSpacing:"0.02em" }}>
+            Karjat Retreat · 24–25 Oct 2026
+          </p>
+          <p style={{ color:"rgba(255,255,255,0.55)", fontSize:10, margin:0, marginTop:1 }}>
+            Register with YOGI AI →
+          </p>
+        </div>
+        <span style={{
+          fontSize:9, fontWeight:700, letterSpacing:"0.08em", textTransform:"uppercase" as const,
+          background:"rgba(251,191,36,0.2)", border:"1px solid rgba(251,191,36,0.4)",
+          color:"hsl(38,90%,72%)", padding:"3px 8px", borderRadius:99, flexShrink:0,
+        }}>New</span>
+      </button>
+
+      {/* ── YOGI chat strip ── */}
       <button onClick={openYogi} className="fh-tap" style={{ display:"flex", alignItems:"center",
         gap:12, width:"100%", padding:"12px 16px",
         background:`linear-gradient(135deg, ${T.yogi}, #2D6A4F)`,

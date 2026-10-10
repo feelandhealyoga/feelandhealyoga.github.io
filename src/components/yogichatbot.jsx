@@ -93,9 +93,9 @@ const RETREAT_INFO = {
 const intents = [
   {
     id: "retreat",
-    keys: ["retreat", "karjat", "mindfulness retreat", "1 night", "one night", "october retreat", "camp", "getaway", "weekend retreat", "nature retreat", "24 october", "25 october"],
-    answer: () => `Namaste! 🌿\n\nFeel & Heal Yoga is organising a **1-Night Mindfulness Retreat in Karjat** on **${RETREAT_INFO.dates}**.\n\nYou'll experience: ${RETREAT_INFO.activities}.\n\n✨ *"Your Phone Has Airplane Mode. Why Don't You?"*\n\nWould you like to know more about the activities or **register your interest**? 🙏`,
-    chips: ["📋 Register Interest", "🧘 Activities", "📍 Location", "❓ More Questions"],
+    keys: ["retreat", "karjat", "mindfulness retreat", "1 night", "one night", "october retreat", "camp", "getaway", "weekend retreat", "nature retreat", "24 october", "25 october", "register interest", "register retreat"],
+    answer: () => `Namaste! 🌿\n\nFeel & Heal Yoga is organising a **1-Night Mindfulness Retreat in Karjat** on **${RETREAT_INFO.dates}**.\n\nActivities: ${RETREAT_INFO.activities}.\n\n📋 **Register your interest here:**\n[👉 Open Registration Form](https://forms.gle/Es8r9aaNj4nqncWB6)\n\nFill the form and our team will contact you with details and confirm your spot! 🙏`,
+    chips: ["🧘 Activities", "📍 Karjat Location", "❓ FAQ", "💬 WhatsApp"],
     noLead: true,
   },
 
@@ -580,9 +580,9 @@ export default function YogiChatbot() {
       setUnread(0);
       setTimeout(() => {
         botReply(
-          `Namaste! 🌿\n\nI'm **Yogi**, and I'd love to help you with the **Karjat Mindfulness Retreat**!\n\nFeel & Heal Yoga is organising a **1-Night Mindfulness Retreat in Karjat** on **24–25 October 2026**.\n\nActivities include Yoga & Meditation, Breathwork, Mindful Tea, Music, and meaningful connections in nature. 🌿\n\nWould you like to **register your interest** or do you have any questions?`,
+          `Namaste! 🌿\n\nFeel & Heal Yoga is organising a **1-Night Mindfulness Retreat in Karjat** on **24–25 October 2026**.\n\nActivities include Yoga & Meditation, Breathwork, Mindful Tea, Music, and meaningful connections in nature.\n\n📋 **Register here:** [Click to open Registration Form](https://forms.gle/Es8r9aaNj4nqncWB6)\n\nFill out the form and our team will reach out with all the details and confirm your spot! 🙏\n\nDo you have any questions about the retreat?`,
           300,
-          ["📋 Register Interest", "🧘 Activities", "📍 Where is Karjat?", "❓ FAQ"]
+          ["🧘 Activities", "📍 Where is Karjat?", "❓ More Questions", "💬 WhatsApp Us"]
         );
       }, 350);
     };
