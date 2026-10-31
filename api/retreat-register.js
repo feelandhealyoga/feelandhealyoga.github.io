@@ -42,7 +42,7 @@ export default async function handler(req, res) {
           "Prefer": "return=representation",
         },
         body: JSON.stringify({
-          retreat_id: "karjat-2026-oct",
+          retreat_id: "karjat-2026-nov",
           full_name: cleanName,
           phone: cleanPhone,
           email: cleanEmail || null,
@@ -60,7 +60,7 @@ export default async function handler(req, res) {
   }
 
   const waMsg = encodeURIComponent(
-    `Namaste! 🙏 I'm interested in the Feel & Heal Yoga Karjat Mindfulness Retreat on 24–25 October 2026.\n\nName: ${cleanName}\nPhone: ${cleanPhone}\nParticipants: ${pCount}\n\nPlease share registration details and availability. 🌿`
+    `Namaste! 🙏 I'm interested in the Feel & Heal Yoga Karjat Mindfulness Retreat on 28–29 November 2026.\n\nName: ${cleanName}\nPhone: ${cleanPhone}\nParticipants: ${pCount}\n\nPlease share registration details and availability. 🌿`
   );
 
   return res.status(200).json({

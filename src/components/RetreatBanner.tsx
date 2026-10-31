@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const RETREAT_DATE = new Date("2026-10-24T06:00:00+05:30");
+const RETREAT_DATE = new Date("2026-11-28T06:00:00+05:30");
 
 function useCountdown(target: Date) {
   const calc = () => {
@@ -90,7 +90,7 @@ export const RetreatBanner = () => {
           Switch off the noise. Tune into yourself.
         </p>
         <p style={{ textAlign: "center", color: "hsl(38,60%,80%)", fontSize: 14, fontWeight: 600, margin: "0 0 32px", letterSpacing: "0.02em" }}>
-          📅 24 – 25 October 2026 &nbsp;·&nbsp; 📍 Karjat, Maharashtra
+          📅 28 – 29 November 2026 &nbsp;·&nbsp; 📍 Karjat, Maharashtra
         </p>
 
         {/* Activities row */}

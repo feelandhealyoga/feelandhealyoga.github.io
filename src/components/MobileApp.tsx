@@ -533,7 +533,7 @@ const HomeScreen = ({ setTab, setMenu }: { setTab:(t:Tab)=>void; setMenu:(v:bool
             <span style={{ width:6, height:6, borderRadius:"50%", background:"#C9A66B",
               display:"inline-block", animation:"pulse-dot 2s infinite" }} />
             <span style={{ fontSize:9, fontWeight:700, letterSpacing:"0.14em",
-              textTransform:"uppercase" as const, color:"#C9A66B" }}>Retreat · 24–25 Oct 2026</span>
+              textTransform:"uppercase" as const, color:"#C9A66B" }}>Retreat · 28–29 Nov 2026</span>
           </div>
 
           <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:26, fontWeight:700,

@@ -105,7 +105,7 @@ FRANCHISE: Feel & Heal offers franchise partnerships. Low investment, high commu
 Event: 1-Night Mindfulness Retreat
 Organized by: Feel & Heal Yoga
 Location: Karjat, Maharashtra
-Dates: Saturday, 24 October – Sunday, 25 October 2026
+Dates: Saturday, 28 November – Sunday, 29 November 2026
 Marketing headline: "Your Phone Has Airplane Mode. Why Don't You?"
 Tagline: "Switch off the noise. Tune into yourself."
 Description: Step away from the noise for one night. Breathe deeper, feel lighter, reconnect with yourself, and enjoy meaningful experiences surrounded by nature.
@@ -125,7 +125,7 @@ Registration: Via WhatsApp — +91 99201 55875
 
 RETREAT REGISTRATION FLOW (follow this when a visitor wants to register):
 Step 1: Tell them to message the Feel & Heal Yoga team on WhatsApp: +91 99201 55875
-Step 2: Provide the pre-filled message: "Namaste! I am interested in the Karjat Mindfulness Retreat on 24-25 October 2026. Please share details."
+Step 2: Provide the pre-filled message: "Namaste! I am interested in the Karjat Mindfulness Retreat on 28-29 November 2026. Please share details."
 Step 3: Offer to answer any other questions.
 
 RETREAT RULES:

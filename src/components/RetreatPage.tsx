@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 
-const RETREAT_DATE = new Date("2026-10-24T06:00:00+05:30");
+const RETREAT_DATE = new Date("2026-11-28T06:00:00+05:30");
 const WA_MSG = encodeURIComponent(
-  "Namaste! I am interested in the Feel & Heal Yoga Karjat Mindfulness Retreat on 24–25 October 2026. Please share registration details and availability."
+  "Namaste! I am interested in the Feel & Heal Yoga Karjat Mindfulness Retreat on 28–29 November 2026. Please share registration details and availability."
 );
 const WA_URL = `https://wa.me/919920155875?text=${WA_MSG}`;
 
@@ -248,7 +248,7 @@ export const RetreatPage = () => {
             Switch off the noise. Tune into yourself.
           </p>
           <p style={{ color: "hsl(38,70%,78%)", fontWeight: 600, fontSize: 15, margin: "0 0 32px" }}>
-            📅 24 – 25 October 2026 &nbsp;·&nbsp; 📍 Karjat, Maharashtra
+            📅 28 – 29 November 2026 &nbsp;·&nbsp; 📍 Karjat, Maharashtra
           </p>
 
           {/* Countdown */}
@@ -329,7 +329,7 @@ export const RetreatPage = () => {
         <h2 style={h2Style}>Retreat Details</h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 16, marginTop: 28 }}>
           {[
-            { icon: "📅", label: "Dates", value: "Saturday, 24 October – Sunday, 25 October 2026" },
+            { icon: "📅", label: "Dates", value: "Saturday, 28 November – Sunday, 29 November 2026" },
             { icon: "📍", label: "Location", value: "Karjat, Maharashtra, India" },
             { icon: "🏕️", label: "Format", value: "1-Night Residential Retreat" },
             { icon: "☎️", label: "Contact", value: "+91 99201 55875" },

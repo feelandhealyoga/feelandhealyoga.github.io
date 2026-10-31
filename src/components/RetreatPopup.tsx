@@ -73,7 +73,7 @@ export const RetreatPopup = () => {
             display: "inline-block", animation: "pulse-dot 2s infinite" }} />
           <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.14em",
             textTransform: "uppercase" as const, color: "#C9A66B" }}>
-            Upcoming · 24–25 Oct 2026
+            Upcoming · 28–29 Nov 2026
           </span>
         </div>
 
